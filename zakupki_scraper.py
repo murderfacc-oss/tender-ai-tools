@@ -41,6 +41,8 @@ NOTICE_TYPES = [
 ]
 
 META_FILENAME = ".tender_meta.json"
+CONTRACT_META_FILENAME = ".contract_meta.json"
+CONTRACT_FOLDER_NAME = "Контракт"
 
 # ─────────────────── Классификация документов по папкам ───────────────────
 #
@@ -139,7 +141,7 @@ def _get_docs_page(reg_number: str):
     Находит страницу документов закупки.
     Перебирает типы закупок (ea44, ok44 и т.д.) пока не найдёт рабочую.
 
-    Возвращает: (html_text, final_url) или (None, None)
+    Возвращает: (html_text, final_url, notice_type) или (None, None, None)
     """
     session = requests.Session()
     for notice_type in NOTICE_TYPES:
@@ -156,10 +158,10 @@ def _get_docs_page(reg_number: str):
                 continue
             # Признак реальной страницы закупки — наличие ссылок на документы
             if "filestore" in r.text or "downloadDocument" in r.text:
-                return r.text, r.url
+                return r.text, r.url, notice_type
         except requests.RequestException:
             continue
-    return None, None
+    return None, None, None
 
 
 def _extract_docs(html: str) -> list:
@@ -292,6 +294,164 @@ def _download_file(url: str, folder: str, suggested_name: str) -> dict:
         return {"error": str(e)}
 
 
+# ───────────── Реестр контрактов: поиск и скачивание документов ───────────
+
+def _find_contract_by_notice(notice_reg_number: str, notice_type_hint: str = None) -> str | None:
+    """
+    Находит реестровый номер контракта по номеру извещения.
+    Идёт на страницу supplier-results.html извещения и ищет ссылку на карточку
+    контракта вида /epz/contract/contractCard/...?reestrNumber=NNN
+
+    Параметры:
+        notice_reg_number  : номер извещения (закупки)
+        notice_type_hint   : тип извещения (ea44, ok44, ...) если уже известен
+
+    Возвращает: реестровый номер контракта (строка) или None если контракт не найден
+                или конкурс ещё не завершён.
+    """
+    session = requests.Session()
+    types_to_try = [notice_type_hint] if notice_type_hint else NOTICE_TYPES
+    types_to_try = [t for t in types_to_try if t]  # убираем None
+
+    for notice_type in types_to_try:
+        url = (
+            f"https://zakupki.gov.ru/epz/order/notice/{notice_type}"
+            f"/view/supplier-results.html?regNumber={notice_reg_number}"
+        )
+        try:
+            r = session.get(url, headers=HEADERS, timeout=25, allow_redirects=True)
+            if r.status_code != 200:
+                continue
+            # Ищем ссылку на карточку контракта в реестре
+            # Формат: /epz/contract/contractCard/common-info.html?reestrNumber=NNNN
+            match = re.search(
+                r'/epz/contract/contractCard/[^"\']*reestrNumber=(\d+)',
+                r.text
+            )
+            if match:
+                return match.group(1)
+        except requests.RequestException:
+            continue
+
+    return None
+
+
+def _get_contract_docs_page(contract_reestr_number: str):
+    """
+    Получает страницу документов контракта из реестра контрактов.
+    URL: /epz/contract/contractCard/document-info.html?reestrNumber=NNN
+
+    Возвращает: (html_text, final_url) или (None, None)
+    """
+    url = (
+        f"https://zakupki.gov.ru/epz/contract/contractCard/document-info.html"
+        f"?reestrNumber={contract_reestr_number}"
+    )
+    try:
+        r = requests.get(url, headers=HEADERS, timeout=25, allow_redirects=True)
+        if r.status_code != 200:
+            return None, None
+        # Признак реальной страницы — наличие ссылок на файлы
+        if "filestore" not in r.text and "downloadDocument" not in r.text:
+            return None, None
+        return r.text, r.url
+    except requests.RequestException:
+        return None, None
+
+
+def download_contract(contract_reestr_number: str, folder: str) -> dict:
+    """
+    Скачивает все документы подписанного контракта из реестра контрактов
+    в подпапку "Контракт/" внутри указанной папки закупки.
+
+    На странице контракта обычно есть несколько групп документов:
+      - Информация о контракте (подписанный контракт, печатная форма, электронный)
+      - Исполнение контракта — Этап 1, Этап 2, ... (КС-2, КС-3, документы о приёмке,
+        платёжные поручения, акты экспертизы)
+
+    Все файлы складываются плоско в подпапку "Контракт/" (без подразделения по этапам).
+    Метаданные сохраняются в .contract_meta.json в самой папке "Контракт/".
+
+    Параметры:
+        contract_reestr_number : реестровый номер контракта (например 3366503536925000015)
+        folder                 : путь к папке закупки (туда уже могут быть скачаны
+                                 документы извещения через download_tender).
+                                 Подпапка "Контракт/" будет создана внутри.
+
+    Возвращает: словарь с результатами {ok, downloaded, errors, files, folder}
+    """
+    os.makedirs(folder, exist_ok=True)
+    contract_folder = os.path.join(folder, CONTRACT_FOLDER_NAME)
+    os.makedirs(contract_folder, exist_ok=True)
+
+    # Получаем страницу с документами контракта
+    html, page_url = _get_contract_docs_page(contract_reestr_number)
+    if not html:
+        return {
+            "ok": False,
+            "error": (
+                f"Страница документов контракта {contract_reestr_number} не найдена "
+                f"в реестре контрактов на zakupki.gov.ru"
+            ),
+        }
+
+    # Извлекаем список документов (тот же парсер что для извещения — формат ссылок похожий)
+    docs = _extract_docs(html)
+    if not docs:
+        return {
+            "ok": False,
+            "error": "Документы на странице контракта не обнаружены",
+        }
+
+    # Скачиваем каждый файл — все плоско в Контракт/
+    downloaded = []
+    errors = []
+    for doc in docs:
+        result = _download_file(doc["url"], contract_folder, doc["name"])
+        if "error" in result:
+            errors.append({"name": doc["name"], "error": result["error"]})
+        else:
+            downloaded.append({
+                "uid": doc["uid"],
+                "name": doc["name"],
+                "filename": result["filename"],
+                "size_bytes": result["size_bytes"],
+                "sha256": result["sha256"],
+                "url": doc["url"],
+                "downloaded_at": _now_iso(),
+            })
+
+    # Сохраняем метаданные контракта (отдельный файл в подпапке Контракт/)
+    contract_meta = {
+        "contract_reestr_number": contract_reestr_number,
+        "docs_url": page_url,
+        "downloaded_at": _now_iso(),
+        "last_checked": _now_iso(),
+        "files": downloaded,
+    }
+    contract_meta_path = os.path.join(contract_folder, CONTRACT_META_FILENAME)
+    with open(contract_meta_path, "w", encoding="utf-8") as f:
+        json.dump(contract_meta, f, ensure_ascii=False, indent=2)
+
+    # Также добавляем ссылку на контракт в основной .tender_meta.json
+    # (если он есть в родительской папке) — для отслеживания связи
+    parent_meta = _load_meta(folder)
+    if parent_meta:
+        parent_meta["contract_reestr_number"] = contract_reestr_number
+        parent_meta["contract_downloaded_at"] = _now_iso()
+        _save_meta(folder, parent_meta)
+
+    return {
+        "ok": True,
+        "downloaded": len(downloaded),
+        "errors": len(errors),
+        "files": downloaded,
+        "error_list": errors,
+        "folder": contract_folder,
+        "contract_reestr_number": contract_reestr_number,
+    }
+
+
 # ═══════════════════════════ ОСНОВНЫЕ ФУНКЦИИ ══════════════════════════════
 
 def download_tender(reg_number: str, folder: str) -> dict:
@@ -307,7 +467,7 @@ def download_tender(reg_number: str, folder: str) -> dict:
     os.makedirs(folder, exist_ok=True)
 
     # Ищем страницу документов
-    html, page_url = _get_docs_page(reg_number)
+    html, page_url, notice_type = _get_docs_page(reg_number)
     if not html:
         return {"ok": False, "error": f"Страница закупки {reg_number} не найдена на zakupki.gov.ru"}
 
@@ -343,16 +503,24 @@ def download_tender(reg_number: str, folder: str) -> dict:
                 "downloaded_at": _now_iso(),
             })
 
-    # Сохраняем метаданные
+    # Сохраняем метаданные (включая notice_type для последующего поиска контракта)
     meta = {
         "reg_number": reg_number,
         "fz": fz,
+        "notice_type": notice_type,
         "docs_url": page_url,
         "downloaded_at": _now_iso(),
         "last_checked": _now_iso(),
         "files": downloaded,
     }
     _save_meta(folder, meta)
+
+    # Дополнительно — пытаемся найти подписанный контракт в реестре контрактов
+    # Если контракт уже заключён, сразу скачиваем его документы в подпапку Контракт/
+    contract_result = None
+    contract_reestr = _find_contract_by_notice(reg_number, notice_type)
+    if contract_reestr:
+        contract_result = download_contract(contract_reestr, folder)
 
     return {
         "ok": True,
@@ -361,6 +529,7 @@ def download_tender(reg_number: str, folder: str) -> dict:
         "files": downloaded,
         "error_list": errors,
         "folder": folder,
+        "contract": contract_result,  # None если контракт ещё не подписан
     }
 
 
@@ -378,7 +547,7 @@ def check_updates(folder: str) -> dict:
     reg_number = meta["reg_number"]
 
     # Получаем актуальный список документов с сайта
-    html, page_url = _get_docs_page(reg_number)
+    html, page_url, _ = _get_docs_page(reg_number)
     if not html:
         return {"ok": False, "error": f"Не удалось подключиться к zakupki.gov.ru для закупки {reg_number}"}
 

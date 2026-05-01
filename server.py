@@ -3,9 +3,13 @@ MCP-сервер для работы с закупками.
 Данные берутся напрямую с zakupki.gov.ru — бесплатно, без API-ключей.
 
 Инструменты:
-  1. download_tender      — скачать все документы закупки по номеру извещения
-  2. check_tender_updates — проверить обновились ли документы на сайте
-  3. update_tender        — скачать обновления и показать что изменилось
+  1. download_tender      — скачать все документы извещения + (если есть) подписанный
+                            контракт по номеру извещения
+  2. download_contract    — скачать только документы контракта по реестровому номеру
+                            контракта (когда контракт уже известен или нужно обновить)
+  3. check_tender_updates — проверить обновились ли документы извещения на сайте
+  4. update_tender        — скачать обновления документов извещения и показать что
+                            изменилось
 
 Запуск для теста: python server.py
 Подключение: прописать в конфиг Claude Desktop (см. CLAUDE.md)
@@ -68,7 +72,73 @@ def download_tender(reg_number: str, folder: str) -> str:
         for e in result["error_list"]:
             lines.append(f"  ! {e['name']}: {e['error']}")
 
+    # Если по результатам поиска нашёлся подписанный контракт — выводим его тоже
+    contract = result.get("contract")
+    if contract:
+        if contract.get("ok"):
+            lines.append("")
+            lines.append(f"📑 Дополнительно: подписанный контракт найден в реестре")
+            lines.append(f"   Реестровый номер контракта: {contract['contract_reestr_number']}")
+            lines.append(f"   Скачано документов: {contract['downloaded']} → {contract['folder']}")
+            for f in contract["files"]:
+                size_kb = f["size_bytes"] // 1024
+                lines.append(f"     • {f['filename']} ({size_kb} КБ)")
+            if contract["errors"] > 0:
+                lines.append(f"   Не удалось скачать: {contract['errors']} файл(ов)")
+        else:
+            lines.append(f"\n⚠ Контракт найден, но скачать не удалось: {contract.get('error')}")
+    else:
+        lines.append(f"\nℹ Подписанный контракт в реестре не найден (возможно, торги ещё не завершились или контракт не размещён в ЕИС)")
+
     lines.append(f"\nДля проверки обновлений: check_tender_updates('{folder}')")
+    return "\n".join(lines)
+
+
+@mcp.tool()
+def download_contract(contract_reestr_number: str, folder: str) -> str:
+    """
+    Скачать документы подписанного контракта из реестра контрактов в подпапку
+    "Контракт/" внутри указанной папки закупки.
+
+    Когда использовать:
+    - Пользователь говорит "скачай контракт НОМЕР", "загрузи документы контракта"
+    - Контракт подписан позже чем выполнялся download_tender, и нужно дополнить
+    - Документы контракта обновились (доп. соглашение, документ о приёмке и т.п.)
+
+    На странице контракта обычно есть несколько групп документов:
+      - Информация о контракте (подписанный контракт, печатная форма, электронный)
+      - Исполнение контракта — Этапы 1, 2, 3, ... (КС-2, КС-3, документы о приёмке,
+        платёжные поручения, акты экспертизы)
+
+    Все файлы складываются плоско в подпапку "Контракт/".
+
+    Параметры:
+    - contract_reestr_number: реестровый номер КОНТРАКТА (не извещения!), например
+      3366503536925000015. Виден в URL карточки контракта или в результатах
+      определения поставщика на странице извещения.
+    - folder: путь к папке закупки (та же что использовалась в download_tender).
+      Подпапка "Контракт/" будет создана автоматически.
+    """
+    result = zakupki_scraper.download_contract(contract_reestr_number, folder)
+
+    if not result.get("ok"):
+        return f"Ошибка: {result.get('error', 'Неизвестная ошибка')}"
+
+    lines = [
+        f"Контракт {contract_reestr_number} — документы скачаны.",
+        f"Скачано файлов: {result['downloaded']} → {result['folder']}",
+        "",
+    ]
+
+    for f in result["files"]:
+        size_kb = f["size_bytes"] // 1024
+        lines.append(f"   • {f['filename']} ({size_kb} КБ)")
+
+    if result["errors"] > 0:
+        lines.append(f"\nНе удалось скачать: {result['errors']} файл(ов)")
+        for e in result["error_list"]:
+            lines.append(f"  ! {e['name']}: {e['error']}")
+
     return "\n".join(lines)
 
 
