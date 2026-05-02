@@ -17,7 +17,7 @@ AI-ассистент для участия в госзакупках по 44-Ф
 ### MCP-сервер
 
 `sabytrade-mcp` — скачивает документы закупок с ЕИС по реестровому номеру.
-Репозиторий: **github.com/[ваш-ник]/sabytrade-mcp**
+Репозиторий: **[github.com/murderfacc-oss/zakupki-eis](https://github.com/murderfacc-oss/zakupki-eis)**
 
 ## Установка
 

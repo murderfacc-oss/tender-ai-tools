@@ -28,7 +28,7 @@ cd C:\ClaudeCode
 git clone https://github.com/murderfacc-oss/tender-ai-tools.git Analiz-tender
 
 # Клонировать MCP-сервер
-git clone https://github.com/murderfacc-oss/sabytrade-mcp.git sabytrade-mcp
+git clone https://github.com/murderfacc-oss/zakupki-eis.git sabytrade-mcp
 ```
 
 > Заменить `[ваш-ник]` на реальный GitHub username — попросить у меня.
