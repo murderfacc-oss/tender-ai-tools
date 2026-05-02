@@ -149,7 +149,7 @@ def warn_box(slide, left, top, width, text, *, font_size=13):
                    bg=RED_BG, acc=RED_ACC, label="(!) Важно", font_size=font_size)
 
 
-def header_bar(slide, title, step_num=None, step_total=7):
+def header_bar(slide, title, step_num=None, step_total=6):
     """Синяя полоса сверху с заголовком шага."""
     add_rect(slide, 0, 0, W, Inches(1.2), BLUE)
     if step_num:
@@ -170,7 +170,7 @@ def header_bar(slide, title, step_num=None, step_total=7):
                 font_size=28, bold=True, color=WHITE)
 
 
-def progress_dots(slide, current, total=7):
+def progress_dots(slide, current, total=6):
     """Точки прогресса внизу слайда."""
     dot_r  = Inches(0.09)
     spacing = Inches(0.22)
@@ -274,14 +274,11 @@ def slide_requirements(prs):
         ("Аккаунт Cowork",
          "Платформа для скиллов\nПопроси приглашение у партнёра",
          GREEN),
-        ("API-ключ DaMIA",
-         "damia.ru → Регистрация\nТариф «API-Старт» — бесплатно, 100 запросов на метод",
-         RGBColor(0x6A, 0x1B, 0x9A)),
     ]
 
-    card_w = Inches(2.9)
-    gap    = Inches(0.22)
-    start_x = Inches(0.4)
+    card_w = Inches(3.9)
+    gap    = Inches(0.3)
+    start_x = Inches(0.5)
     top    = Inches(1.45)
     card_h = Inches(4.8)
 
@@ -436,44 +433,13 @@ def content_step3(sl):
 
 
 def content_step4(sl):
-    """Настроить MCP-сервер."""
-    blocks = [
-        ("1", "Найди файл  .env.example  в папке  mcp/",
-         "Скопируй его. Переименуй копию в  .env  (убери «.example» с конца)"),
-        ("2", "Открой .env в Блокноте",
-         "Правая кнопка мыши → Открыть с помощью → Блокнот"),
-        ("3", "Вставь свой API-ключ DaMIA",
-         "Замени  your_api_key_here  на свой ключ. Сохрани файл (Ctrl+S)"),
-    ]
-    y = Inches(1.45)
-    for num, h, sub in blocks:
-        add_rect(sl, Inches(0.4), y, Inches(0.5), Inches(0.5), BLUE)
-        tb_n = sl.shapes.add_textbox(Inches(0.4), y, Inches(0.5), Inches(0.5))
-        r = tb_n.text_frame.paragraphs[0].add_run()
-        r.text = num
-        r.font.size = Pt(18)
-        r.font.bold = True
-        r.font.color.rgb = WHITE
-        tb_n.text_frame.paragraphs[0].alignment = PP_ALIGN.CENTER
-
-        add_textbox(sl, Inches(1.05), y, Inches(11.8), Inches(0.4),
-                    h, font_size=16, bold=True, color=DARK)
-        add_textbox(sl, Inches(1.05), y + Inches(0.38), Inches(11.8),
-                    Inches(0.4), sub, font_size=14, color=GRAY)
-        y += Inches(1.25)
-
-    add_textbox(sl, Inches(0.5), Inches(5.0), Inches(5),
-                Inches(0.35), "Содержимое .env:", font_size=13, color=GRAY)
-    code_box(sl, Inches(0.5), Inches(5.45), Inches(9.5),
-             "DAMIA_API_KEY=вставь_свой_ключ_здесь")
-
-    warn_box(sl, Inches(0.5), Inches(6.08), Inches(12.3),
-             "API-ключ — личный. Не отправляй файл .env никому и не публикуй его.")
-
-
-def content_step5(sl):
     """Подключить MCP к Claude Code."""
     add_textbox(sl, Inches(0.5), Inches(1.42), Inches(12),
+                Inches(0.42),
+                "MCP-сервер скачивает документы напрямую с zakupki.gov.ru — бесплатно, без ключей.",
+                font_size=15, italic=True, color=GRAY)
+
+    add_textbox(sl, Inches(0.5), Inches(1.95), Inches(12),
                 Inches(0.42),
                 "Открой Claude Code → Настройки (⚙) → MCP Servers → Add server",
                 font_size=17, color=DARK)
@@ -490,7 +456,7 @@ def content_step5(sl):
     x1 = Inches(0.5)
     x2 = x1 + col_w1 + Inches(0.05)
     row_h = Inches(0.48)
-    y = Inches(2.1)
+    y = Inches(2.65)
 
     add_rect(sl, x1, y, col_w1, row_h, BLUE)
     add_rect(sl, x2, y, col_w2, row_h, BLUE)
@@ -518,18 +484,18 @@ def content_step5(sl):
         r.font.color.rgb = BLUE
         y += row_h
 
-    add_textbox(sl, Inches(0.5), Inches(5.2), Inches(12),
+    add_textbox(sl, Inches(0.5), Inches(5.65), Inches(12),
                 Inches(0.4),
                 "Сохрани → перезапусти Claude Code → создай новый чат и напечатай:",
                 font_size=14, color=GRAY)
-    code_box(sl, Inches(0.5), Inches(5.65), Inches(5), "@zakupki-eis")
-    add_textbox(sl, Inches(5.7), Inches(5.72), Inches(7),
+    code_box(sl, Inches(0.5), Inches(6.1), Inches(5), "@zakupki-eis")
+    add_textbox(sl, Inches(5.7), Inches(6.17), Inches(7),
                 Inches(0.35),
                 "— должен появиться список инструментов",
                 font_size=13, italic=True, color=GRAY)
 
 
-def content_step6(sl):
+def content_step5(sl):
     """Установить скиллы в Cowork."""
     add_textbox(sl, Inches(0.5), Inches(1.42), Inches(12),
                 Inches(0.42),
@@ -579,7 +545,7 @@ def content_step6(sl):
              "Cowork ожидает архив.")
 
 
-def content_step7(sl):
+def content_step6(sl):
     """Проверить работу."""
     add_textbox(sl, Inches(0.5), Inches(1.42), Inches(12),
                 Inches(0.42),
@@ -646,13 +612,12 @@ def generate(output_path: Path):
     slide_title(prs)
     slide_whats_inside(prs)
     slide_requirements(prs)
-    slide_step(prs, 1, "Шаг 1 — Установить Python",         content_step1)
+    slide_step(prs, 1, "Шаг 1 — Установить Python",          content_step1)
     slide_step(prs, 2, "Шаг 2 — Распаковать архив",          content_step2)
-    slide_step(prs, 3, "Шаг 3 — Установить зависимости",    content_step3)
-    slide_step(prs, 4, "Шаг 4 — Настроить MCP-сервер",      content_step4)
-    slide_step(prs, 5, "Шаг 5 — Подключить MCP к Claude",   content_step5)
-    slide_step(prs, 6, "Шаг 6 — Установить скиллы в Cowork", content_step6)
-    slide_step(prs, 7, "Шаг 7 — Проверить работу",          content_step7)
+    slide_step(prs, 3, "Шаг 3 — Установить зависимости",     content_step3)
+    slide_step(prs, 4, "Шаг 4 — Подключить MCP к Claude",    content_step4)
+    slide_step(prs, 5, "Шаг 5 — Установить скиллы в Cowork", content_step5)
+    slide_step(prs, 6, "Шаг 6 — Проверить работу",           content_step6)
     slide_done(prs)
 
     output_path.parent.mkdir(parents=True, exist_ok=True)

@@ -1,6 +1,6 @@
 # Инструкция по установке
 
-Настройка займёт ~20 минут. После неё у тебя будет:
+Настройка займёт ~15 минут. После неё у тебя будет:
 - 4 скилла в Cowork (анализ закупок, жалобы, запросы разъяснений)
 - MCP-сервер, скачивающий документы с ЕИС прямо в чат
 
@@ -11,7 +11,9 @@
 - **Python 3.10+** — скачать с python.org (отметить «Add to PATH» при установке)
 - **Claude Code** — десктоп-приложение Anthropic, скачать с claude.ai/download
 - **Аккаунт Cowork** — попросить у меня ссылку приглашения
-- **API-ключ DaMIA** — зарегистрироваться на damia.ru, тариф «API-Старт» (бесплатно, 100 запросов на метод)
+
+> MCP-сервер скачивает документы напрямую с zakupki.gov.ru — бесплатно,
+> без API-ключей и регистраций.
 
 ---
 
@@ -31,8 +33,6 @@ git clone https://github.com/murderfacc-oss/tender-ai-tools.git Analiz-tender
 git clone https://github.com/murderfacc-oss/zakupki-eis.git sabytrade-mcp
 ```
 
-> Заменить `[ваш-ник]` на реальный GitHub username — попросить у меня.
-
 ---
 
 ## Шаг 2. Установить зависимости Python
@@ -48,24 +48,9 @@ pip install python-docx
 
 ---
 
-## Шаг 3. Настроить MCP-сервер
+## Шаг 3. Подключить MCP к Claude Code
 
-**3.1.** Создать файл с API-ключом:
-
-```bash
-cd C:\ClaudeCode\sabytrade-mcp
-copy .env.example .env
-```
-
-**3.2.** Открыть `.env` в блокноте и заменить `your_api_key_here` на свой ключ DaMIA:
-
-```
-DAMIA_API_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-```
-
-**3.3.** Зарегистрировать MCP в Claude Code.
-
-Открыть Claude Code → нажать иконку настроек (⚙) → **MCP Servers** → **Add server** → заполнить:
+Открыть Claude Code → иконка настроек (⚙) → **MCP Servers** → **Add server** → заполнить:
 
 | Поле | Значение |
 |---|---|
@@ -143,7 +128,7 @@ python scripts/pack_skills.py
 
 ```
 C:\ClaudeCode\
-  Analiz-tender\           ← этот репозиторий
+  Analiz-tender\           ← репозиторий со скиллами
     project\
       skills\              ← исходники скиллов
       research\            ← практика УФАС
@@ -153,7 +138,6 @@ C:\ClaudeCode\
     README.md
   sabytrade-mcp\           ← MCP-сервер
     server.py
-    .env                   ← API-ключ (твой, не светить)
     requirements.txt
 ```
 

@@ -26,7 +26,6 @@ MCP_INCLUDE = {
     "server.py",
     "zakupki_scraper.py",
     "requirements.txt",
-    ".env.example",
 }
 
 
