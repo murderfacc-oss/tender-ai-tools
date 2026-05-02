@@ -21,6 +21,7 @@ project/skills/*.zip
 *.docx
 *.pptx
 tender-ai-tools.zip
+/INSTALL_PROMPT.md
 
 # Исследование — если есть чувствительные данные, раскомментировать:
 # project/research/

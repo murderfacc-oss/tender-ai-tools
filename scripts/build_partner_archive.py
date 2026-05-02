@@ -2,10 +2,11 @@
 Собирает архив tender-ai-tools.zip для передачи партнёру.
 
 Содержимое архива:
-  skills/                  — zip-файлы всех скиллов
-  mcp/                     — сервер MCP (без .env и тестовых данных)
-  README.md                — обзор проекта
-  Установка Tender AI Tools.docx  — руководство по установке
+  skills/                          — zip-файлы всех скиллов
+  mcp/                             — сервер MCP (без .env и тестовых данных)
+  README.md                        — обзор проекта
+  INSTALL_PROMPT.md                — основной путь: промт для Claude Code
+  Установка Tender AI Tools.pptx   — fallback: ручная инструкция (11 слайдов)
 
 Использование:
     python scripts/build_partner_archive.py
@@ -42,9 +43,9 @@ def build_skills(root: Path) -> list[Path]:
 
 
 def build_guide(root: Path) -> Path:
-    """Генерирует презентацию по установке (PowerPoint)."""
+    """Генерирует презентацию по установке (PowerPoint, fallback)."""
     guide_path = root / "Установка Tender AI Tools.pptx"
-    print("Генерирую презентацию по установке...")
+    print("Генерирую презентацию (fallback)...")
     subprocess.run(
         [sys.executable, str(root / "scripts" / "generate_install_pptx.py"),
          "--output", str(guide_path)],
@@ -54,8 +55,22 @@ def build_guide(root: Path) -> Path:
     return guide_path
 
 
+def build_prompt(root: Path) -> Path:
+    """Генерирует INSTALL_PROMPT.md — основной путь установки."""
+    prompt_path = root / "INSTALL_PROMPT.md"
+    print("Генерирую INSTALL_PROMPT.md...")
+    subprocess.run(
+        [sys.executable, str(root / "scripts" / "generate_install_prompt.py"),
+         "--output", str(prompt_path)],
+        cwd=str(root),
+        check=True,
+    )
+    return prompt_path
+
+
 def build_archive(output_path: Path, root: Path, mcp_dir: Path):
     skill_zips = build_skills(root)
+    prompt_path = build_prompt(root)
     guide_path = build_guide(root)
 
     print(f"\nСобираю архив: {output_path.name}")
@@ -83,7 +98,12 @@ def build_archive(output_path: Path, root: Path, mcp_dir: Path):
             zf.write(readme, "README.md")
             print(f"  + README.md")
 
-        # руководство
+        # промт для Claude Code (основной путь)
+        if prompt_path.exists():
+            zf.write(prompt_path, prompt_path.name)
+            print(f"  + {prompt_path.name}")
+
+        # презентация (fallback)
         if guide_path.exists():
             zf.write(guide_path, guide_path.name)
             print(f"  + {guide_path.name}")
