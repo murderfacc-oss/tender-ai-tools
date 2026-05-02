@@ -42,11 +42,11 @@ def build_skills(root: Path) -> list[Path]:
 
 
 def build_guide(root: Path) -> Path:
-    """Генерирует руководство по установке."""
-    guide_path = root / "Установка Tender AI Tools.docx"
-    print("Генерирую руководство по установке...")
+    """Генерирует презентацию по установке (PowerPoint)."""
+    guide_path = root / "Установка Tender AI Tools.pptx"
+    print("Генерирую презентацию по установке...")
     subprocess.run(
-        [sys.executable, str(root / "scripts" / "generate_install_guide.py"),
+        [sys.executable, str(root / "scripts" / "generate_install_pptx.py"),
          "--output", str(guide_path)],
         cwd=str(root),
         check=True,
