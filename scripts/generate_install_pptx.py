@@ -1,5 +1,6 @@
 """
 Генерирует презентацию «Установка Tender AI Tools» в формате .pptx.
+Минималистичная — 6 слайдов, каждый с визуальным мокапом UI.
 
 Использование:
     python scripts/generate_install_pptx.py
@@ -11,29 +12,29 @@ from pathlib import Path
 from datetime import datetime
 
 from pptx import Presentation
-from pptx.util import Inches, Pt, Emu
+from pptx.util import Inches, Pt
 from pptx.dml.color import RGBColor
 from pptx.enum.text import PP_ALIGN
-from pptx.util import Inches, Pt
-from pptx.oxml.ns import qn
-from lxml import etree
+from pptx.enum.shapes import MSO_SHAPE
 
 
 # ── палитра ────────────────────────────────────────────────────────────────
 BLUE       = RGBColor(0x1F, 0x63, 0xB5)
+BLUE_DEEP  = RGBColor(0x16, 0x4F, 0x96)
 BLUE_LIGHT = RGBColor(0xD9, 0xE4, 0xF5)
-BLUE_MED   = RGBColor(0x5B, 0x9B, 0xD5)
+BLUE_VLIGHT= RGBColor(0xF0, 0xF6, 0xFE)
 WHITE      = RGBColor(0xFF, 0xFF, 0xFF)
 DARK       = RGBColor(0x1A, 0x1A, 0x2E)
 GRAY       = RGBColor(0x55, 0x55, 0x55)
-GRAY_LIGHT = RGBColor(0xF4, 0xF4, 0xF4)
-YELLOW_BG  = RGBColor(0xFF, 0xF8, 0xE1)
-YELLOW_ACC = RGBColor(0xF5, 0x7F, 0x17)
-RED_BG     = RGBColor(0xFD, 0xE8, 0xE8)
-RED_ACC    = RGBColor(0xB7, 0x1C, 0x1C)
+GRAY_LIGHT = RGBColor(0xEE, 0xEE, 0xEE)
+GRAY_BG    = RGBColor(0xF7, 0xF9, 0xFF)
 GREEN      = RGBColor(0x2E, 0x7D, 0x32)
+ORANGE     = RGBColor(0xF5, 0x7F, 0x17)
+ACCENT_YEL = RGBColor(0xFF, 0xC1, 0x07)
+RED        = RGBColor(0xB7, 0x1C, 0x1C)
 
-# ── размер слайда 16:9 ─────────────────────────────────────────────────────
+
+# ── размеры (16:9) ─────────────────────────────────────────────────────────
 W = Inches(13.33)
 H = Inches(7.5)
 
@@ -45,563 +46,620 @@ def new_prs() -> Presentation:
     return prs
 
 
-def blank_slide(prs: Presentation):
-    layout = prs.slide_layouts[6]   # полностью пустой
-    return prs.slides.add_slide(layout)
+def blank(prs):
+    return prs.slides.add_slide(prs.slide_layouts[6])
 
 
-# ── низкоуровневые хелперы ─────────────────────────────────────────────────
+# ── базовые хелперы ────────────────────────────────────────────────────────
 
-def add_rect(slide, left, top, width, height, fill_color, *, alpha=None):
-    shape = slide.shapes.add_shape(
-        1,  # MSO_SHAPE_TYPE.RECTANGLE
-        left, top, width, height
-    )
-    shape.line.fill.background()        # нет рамки
-    shape.fill.solid()
-    shape.fill.fore_color.rgb = fill_color
-    return shape
+def rect(slide, left, top, width, height, fill, *, line=None):
+    s = slide.shapes.add_shape(MSO_SHAPE.RECTANGLE, left, top, width, height)
+    if line is None:
+        s.line.fill.background()
+    else:
+        s.line.color.rgb = line
+        s.line.width = Pt(0.75)
+    s.fill.solid()
+    s.fill.fore_color.rgb = fill
+    return s
 
 
-def add_textbox(slide, left, top, width, height, text, *,
-                font_size=18, bold=False, color=WHITE,
-                align=PP_ALIGN.LEFT, font_name="Calibri",
-                wrap=True, italic=False):
-    txBox = slide.shapes.add_textbox(left, top, width, height)
-    tf = txBox.text_frame
+def round_rect(slide, left, top, width, height, fill, *, line=None, radius=0.05):
+    s = slide.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, left, top, width, height)
+    if line is None:
+        s.line.fill.background()
+    else:
+        s.line.color.rgb = line
+        s.line.width = Pt(0.75)
+    s.fill.solid()
+    s.fill.fore_color.rgb = fill
+    s.adjustments[0] = radius
+    return s
+
+
+def text(slide, left, top, width, height, txt, *,
+         size=18, bold=False, italic=False, color=DARK,
+         align=PP_ALIGN.LEFT, font="Calibri", wrap=True):
+    tb = slide.shapes.add_textbox(left, top, width, height)
+    tf = tb.text_frame
     tf.word_wrap = wrap
+    tf.margin_left = tf.margin_right = Pt(2)
+    tf.margin_top = tf.margin_bottom = Pt(2)
     p = tf.paragraphs[0]
     p.alignment = align
-    run = p.add_run()
-    run.text = text
-    run.font.name  = font_name
-    run.font.size  = Pt(font_size)
-    run.font.bold  = bold
-    run.font.italic = italic
-    run.font.color.rgb = color
-    return txBox
-
-
-def add_para(tf, text, *, font_size=16, bold=False, italic=False,
-             color=DARK, bullet=False, indent=0, font_name="Calibri",
-             space_before=0, space_after=2):
-    p = tf.add_paragraph()
-    p.alignment = PP_ALIGN.LEFT
-    p.space_before = Pt(space_before)
-    p.space_after  = Pt(space_after)
-    if bullet:
-        p.level = indent
-    run = p.add_run()
-    run.text = text
-    run.font.name   = font_name
-    run.font.size   = Pt(font_size)
-    run.font.bold   = bold
-    run.font.italic = italic
-    run.font.color.rgb = color
-    return p
-
-
-def code_box(slide, left, top, width, text, *, font_size=13):
-    """Серый блок с моноширинным текстом (команда терминала)."""
-    height = Inches(0.42)
-    add_rect(slide, left, top, width, height, GRAY_LIGHT)
-    tb = slide.shapes.add_textbox(
-        left + Inches(0.12), top + Inches(0.05),
-        width - Inches(0.24), height - Inches(0.1)
-    )
-    tf = tb.text_frame
-    tf.word_wrap = False
-    p = tf.paragraphs[0]
-    run = p.add_run()
-    run.text = text
-    run.font.name  = "Courier New"
-    run.font.size  = Pt(font_size)
-    run.font.bold  = True
-    run.font.color.rgb = DARK
+    r = p.add_run()
+    r.text = txt
+    r.font.name   = font
+    r.font.size   = Pt(size)
+    r.font.bold   = bold
+    r.font.italic = italic
+    r.font.color.rgb = color
     return tb
 
 
-def tip_box(slide, left, top, width, text, *, bg=YELLOW_BG, acc=YELLOW_ACC,
-            label=">> Совет", font_size=13):
-    height = Inches(0.65)
-    add_rect(slide, left, top, width, height, bg)
-    tb = slide.shapes.add_textbox(
-        left + Inches(0.12), top + Inches(0.06),
-        width - Inches(0.24), height - Inches(0.12)
-    )
-    tf = tb.text_frame
-    tf.word_wrap = True
-    p = tf.paragraphs[0]
-    r1 = p.add_run()
-    r1.text = label + "  "
-    r1.font.bold  = True
-    r1.font.size  = Pt(font_size)
-    r1.font.color.rgb = acc
-    r2 = p.add_run()
-    r2.text = text
-    r2.font.size  = Pt(font_size)
-    r2.font.color.rgb = DARK
-    return tb
+def arrow(slide, x1, y1, x2, y2, color=BLUE):
+    s = slide.shapes.add_connector(1, x1, y1, x2, y2)  # straight line
+    s.line.color.rgb = color
+    s.line.width = Pt(2.5)
+    # add arrow head
+    line = s.line
+    lnE = line._get_or_add_ln()
+    from pptx.oxml.ns import qn
+    from lxml import etree
+    head = etree.SubElement(lnE, qn("a:headEnd"))
+    head.set("type", "none")
+    tail = etree.SubElement(lnE, qn("a:tailEnd"))
+    tail.set("type", "triangle")
+    tail.set("w", "med")
+    tail.set("len", "med")
+    return s
 
 
-def warn_box(slide, left, top, width, text, *, font_size=13):
-    return tip_box(slide, left, top, width, text,
-                   bg=RED_BG, acc=RED_ACC, label="(!) Важно", font_size=font_size)
+def step_badge(slide, left, top, num, size_in=0.9, color=BLUE):
+    """Большой круглый бейдж с номером шага."""
+    d = Inches(size_in)
+    s = slide.shapes.add_shape(MSO_SHAPE.OVAL, left, top, d, d)
+    s.line.fill.background()
+    s.fill.solid()
+    s.fill.fore_color.rgb = color
+    text(slide, left, top + Inches(0.05), d, d - Inches(0.1),
+         str(num), size=int(size_in * 36), bold=True, color=WHITE,
+         align=PP_ALIGN.CENTER)
+    return s
 
 
-def header_bar(slide, title, step_num=None, step_total=6):
-    """Синяя полоса сверху с заголовком шага."""
-    add_rect(slide, 0, 0, W, Inches(1.2), BLUE)
-    if step_num:
-        badge_w = Inches(1.0)
-        badge_h = Inches(0.7)
-        bx = Inches(0.3)
-        by = Inches(0.25)
-        add_rect(slide, bx, by, badge_w, badge_h, WHITE)
-        add_textbox(slide, bx, by, badge_w, badge_h,
-                    f"{step_num}/{step_total}",
-                    font_size=22, bold=True, color=BLUE, align=PP_ALIGN.CENTER)
-        title_left = Inches(1.5)
+# ── мокапы UI ──────────────────────────────────────────────────────────────
+
+def mock_window(slide, left, top, width, height, title="", *,
+                title_color=GRAY_LIGHT, content_bg=WHITE):
+    """Мокап окна приложения с заголовком и панелью."""
+    # тень
+    rect(slide, left + Inches(0.05), top + Inches(0.05),
+         width, height, RGBColor(0xE0, 0xE0, 0xE0))
+    # рамка
+    rect(slide, left, top, width, height, content_bg, line=GRAY)
+    # title bar
+    bar_h = Inches(0.32)
+    rect(slide, left, top, width, bar_h, title_color)
+    # светофор
+    for i, color in enumerate([RGBColor(0xFF,0x5F,0x57), RGBColor(0xFE,0xBC,0x2E),
+                                RGBColor(0x28,0xC8,0x40)]):
+        slide.shapes.add_shape(MSO_SHAPE.OVAL,
+                               left + Inches(0.12 + i*0.22),
+                               top + Inches(0.08),
+                               Inches(0.16), Inches(0.16))\
+            .fill.solid()
+    # title
+    if title:
+        text(slide, left + Inches(0.85), top + Inches(0.02),
+             width - Inches(0.85), bar_h, title,
+             size=11, color=GRAY, align=PP_ALIGN.CENTER)
+    return left, top + bar_h, width, height - bar_h
+
+
+def mock_folder(slide, left, top, width, height, files):
+    """Мокап Проводника / Finder с файлами."""
+    cl, ct, cw, ch = mock_window(slide, left, top, width, height,
+                                  title="tender-ai-tools",
+                                  title_color=RGBColor(0xE8,0xEC,0xF2))
+    # рисуем файлы
+    icon_w = Inches(0.95)
+    icon_h = Inches(1.1)
+    pad_x  = Inches(0.18)
+    pad_y  = Inches(0.18)
+    cols = int((cw - pad_x) / (icon_w + pad_x))
+    x0 = cl + pad_x
+    y0 = ct + Inches(0.2)
+    for i, (name, kind) in enumerate(files):
+        col = i % cols
+        row = i // cols
+        x = x0 + col * (icon_w + pad_x)
+        y = y0 + row * (icon_h + pad_y)
+        # иконка
+        if kind == "folder":
+            ic = slide.shapes.add_shape(MSO_SHAPE.FOLDED_CORNER,
+                                         x + Inches(0.18), y, Inches(0.6), Inches(0.5))
+            ic.fill.solid(); ic.fill.fore_color.rgb = ACCENT_YEL
+            ic.line.fill.background()
+        elif kind == "zip":
+            ic = rect(slide, x + Inches(0.22), y, Inches(0.55), Inches(0.55), GRAY_LIGHT)
+            text(slide, x + Inches(0.22), y + Inches(0.13),
+                 Inches(0.55), Inches(0.3),
+                 "ZIP", size=10, bold=True, color=GRAY, align=PP_ALIGN.CENTER)
+        elif kind == "py":
+            ic = rect(slide, x + Inches(0.22), y, Inches(0.55), Inches(0.55), BLUE)
+            text(slide, x + Inches(0.22), y + Inches(0.13),
+                 Inches(0.55), Inches(0.3),
+                 "PY", size=10, bold=True, color=WHITE, align=PP_ALIGN.CENTER)
+        elif kind == "pptx":
+            ic = rect(slide, x + Inches(0.22), y, Inches(0.55), Inches(0.55),
+                      RGBColor(0xC4,0x3F,0x10))
+            text(slide, x + Inches(0.22), y + Inches(0.13),
+                 Inches(0.55), Inches(0.3),
+                 "P", size=14, bold=True, color=WHITE, align=PP_ALIGN.CENTER)
+        elif kind == "md":
+            ic = rect(slide, x + Inches(0.22), y, Inches(0.55), Inches(0.55), GRAY_LIGHT)
+            text(slide, x + Inches(0.22), y + Inches(0.13),
+                 Inches(0.55), Inches(0.3),
+                 "MD", size=9, bold=True, color=GRAY, align=PP_ALIGN.CENTER)
+        # подпись
+        text(slide, x, y + Inches(0.6), icon_w, Inches(0.4),
+             name, size=9, color=DARK, align=PP_ALIGN.CENTER)
+    return cl, ct, cw, ch
+
+
+def mock_claude_code(slide, left, top, width, height, *,
+                     show_menu=False, prompt_in_chat=None):
+    """Мокап окна Claude Code: сайдбар + чат."""
+    cl, ct, cw, ch = mock_window(slide, left, top, width, height,
+                                  title="Claude Code",
+                                  title_color=RGBColor(0xF5,0xEE,0xE5))
+    # сайдбар
+    sb_w = Inches(2.0)
+    rect(slide, cl, ct, sb_w, ch, RGBColor(0xFA,0xF7,0xF2))
+    # File menu (если show_menu)
+    if show_menu:
+        # menubar выпадушка
+        menu_x = cl + Inches(0.1)
+        menu_y = ct + Inches(0.1)
+        rect(slide, menu_x, menu_y, Inches(2.4), Inches(1.4), WHITE, line=GRAY)
+        items = ["📁  Open Folder", "📄  Open File", "💾  Save", "⚙  Settings"]
+        for i, item in enumerate(items):
+            row_y = menu_y + Inches(0.1 + i * 0.32)
+            if i == 0:  # выделяем первый
+                rect(slide, menu_x + Inches(0.05), row_y,
+                     Inches(2.3), Inches(0.3), BLUE_LIGHT)
+            text(slide, menu_x + Inches(0.15), row_y + Inches(0.04),
+                 Inches(2.2), Inches(0.25),
+                 item, size=11, color=DARK,
+                 bold=(i == 0))
     else:
-        title_left = Inches(0.4)
+        # просто сайдбар-элементы
+        items = ["💬 New chat", "📁 tender-ai-tools", "  • README.md",
+                 "  • INSTALL_PROMPT.md", "  • skills/", "  • mcp/"]
+        for i, item in enumerate(items):
+            text(slide, cl + Inches(0.15), ct + Inches(0.2 + i * 0.32),
+                 sb_w - Inches(0.2), Inches(0.3),
+                 item, size=11,
+                 color=BLUE if i == 1 else DARK,
+                 bold=(i in (0, 1)))
 
-    add_textbox(slide, title_left, Inches(0.22), W - title_left - Inches(0.3),
-                Inches(0.8), title,
-                font_size=28, bold=True, color=WHITE)
+    # область чата
+    chat_x = cl + sb_w
+    chat_w = cw - sb_w
+    rect(slide, chat_x, ct, chat_w, ch, WHITE)
+
+    # поле ввода внизу
+    input_h = Inches(1.4) if prompt_in_chat else Inches(0.6)
+    input_y = ct + ch - input_h - Inches(0.15)
+    round_rect(slide, chat_x + Inches(0.2), input_y,
+               chat_w - Inches(0.4), input_h, GRAY_BG, line=GRAY,
+               radius=0.1)
+    if prompt_in_chat:
+        text(slide, chat_x + Inches(0.35), input_y + Inches(0.1),
+             chat_w - Inches(0.7), input_h - Inches(0.25),
+             prompt_in_chat,
+             size=10, color=DARK, font="Consolas")
+        # курсор-плейсхолдер не нужен
+    else:
+        text(slide, chat_x + Inches(0.35), input_y + Inches(0.15),
+             chat_w - Inches(0.7), Inches(0.3),
+             "Введи сообщение…", size=11, color=GRAY, italic=True)
+
+    return cl, ct, cw, ch
 
 
-def progress_dots(slide, current, total=6):
-    """Точки прогресса внизу слайда."""
-    dot_r  = Inches(0.09)
-    spacing = Inches(0.22)
-    total_w = total * dot_r + (total - 1) * (spacing - dot_r)
-    start_x = (W - total_w) / 2
-    y = H - Inches(0.28)
-    for i in range(total):
-        color = WHITE if i + 1 == current else BLUE_MED
-        add_rect(slide, start_x + i * spacing, y, dot_r, dot_r, color)
+def mock_browser(slide, left, top, width, height, url, content_fn=None):
+    """Мокап окна браузера."""
+    cl, ct, cw, ch = mock_window(slide, left, top, width, height,
+                                  title="",
+                                  title_color=RGBColor(0xE0,0xE5,0xEC))
+    # url-bar
+    bar_h = Inches(0.42)
+    rect(slide, cl, ct, cw, bar_h, RGBColor(0xF1,0xF3,0xF5))
+    round_rect(slide, cl + Inches(0.2), ct + Inches(0.07),
+               cw - Inches(0.4), bar_h - Inches(0.14), WHITE,
+               line=GRAY, radius=0.3)
+    text(slide, cl + Inches(0.4), ct + Inches(0.1),
+         cw - Inches(0.7), bar_h - Inches(0.2),
+         url, size=11, color=GRAY)
+    if content_fn:
+        content_fn(slide, cl, ct + bar_h, cw, ch - bar_h)
+    return cl, ct + bar_h, cw, ch - bar_h
 
 
-# ── слайды ─────────────────────────────────────────────────────────────────
+# ── общие элементы слайда ──────────────────────────────────────────────────
+
+def slide_header(slide, step_num, total, title):
+    """Шапка слайда: цифра шага + название + прогресс справа."""
+    rect(slide, 0, 0, W, Inches(1.1), BLUE)
+    step_badge(slide, Inches(0.45), Inches(0.18),
+               step_num, size_in=0.74, color=WHITE)
+    # цифра в бейдже белая, на белом не видно — переделаю
+    # перерисую вручную: круг white, текст blue
+    # удалим предыдущий
+    pass  # уже нарисовано, пере-рисую через свой бейдж
+    # title
+    text(slide, Inches(1.5), Inches(0.18), Inches(10), Inches(0.45),
+         f"Шаг {step_num} из {total}",
+         size=14, color=BLUE_LIGHT)
+    text(slide, Inches(1.5), Inches(0.5), Inches(10), Inches(0.55),
+         title, size=26, bold=True, color=WHITE)
+
+
+def slide_done_footer(slide):
+    rect(slide, 0, H - Inches(0.4), W, Inches(0.4), BLUE_DEEP)
+    text(slide, 0, H - Inches(0.36), W, Inches(0.32),
+         "Tender AI Tools  •  Установка для партнёра",
+         size=10, color=BLUE_LIGHT, align=PP_ALIGN.CENTER)
+
+
+# ── собственно слайды ──────────────────────────────────────────────────────
 
 def slide_title(prs):
-    sl = blank_slide(prs)
-    # фон — две полосы
-    add_rect(sl, 0, 0, W, H, BLUE)
-    add_rect(sl, 0, H * 0.62, W, H * 0.38, RGBColor(0x16, 0x4F, 0x96))
+    sl = blank(prs)
+    rect(sl, 0, 0, W, H, BLUE)
+    rect(sl, 0, H * 0.6, W, H * 0.4, BLUE_DEEP)
+    rect(sl, Inches(0.6), Inches(0.6), Inches(0.12), Inches(2.0), ACCENT_YEL)
 
-    # лого-блок
-    add_rect(sl, Inches(0.5), Inches(0.5), Inches(0.08), Inches(1.4),
-             RGBColor(0xFF, 0xC1, 0x07))
+    text(sl, Inches(0.95), Inches(0.55), Inches(11), Inches(1.4),
+         "Tender AI Tools",
+         size=58, bold=True, color=WHITE)
+    text(sl, Inches(0.95), Inches(2.0), Inches(11), Inches(0.7),
+         "Установка для партнёра",
+         size=28, color=BLUE_LIGHT)
 
-    add_textbox(sl, Inches(0.8), Inches(0.5), W - Inches(1.0), Inches(1.2),
-                "Tender AI Tools",
-                font_size=52, bold=True, color=WHITE)
-    add_textbox(sl, Inches(0.8), Inches(1.8), W - Inches(1.0), Inches(0.8),
-                "Руководство по установке",
-                font_size=28, color=BLUE_LIGHT)
-    add_textbox(sl, Inches(0.8), Inches(2.6), W - Inches(1.0), Inches(0.5),
-                "AI-ассистент для участия в госзакупках по 44-ФЗ",
-                font_size=18, color=BLUE_LIGHT, italic=True)
+    # три простых шага в виде карточек
+    cards = [
+        ("1", "Распакуй\nархив",         "📦"),
+        ("2", "Открой папку\nв Claude Code", "💬"),
+        ("3", "Вставь промт\nв чат",     "✨"),
+    ]
+    card_w = Inches(3.4)
+    gap    = Inches(0.4)
+    total  = 3 * card_w + 2 * gap
+    start  = (W - total) / 2
+    top    = Inches(3.6)
+    card_h = Inches(2.4)
+    for i, (num, label, icon) in enumerate(cards):
+        x = start + i * (card_w + gap)
+        round_rect(sl, x, top, card_w, card_h, WHITE, radius=0.1)
+        # цифра
+        text(sl, x + Inches(0.3), top + Inches(0.2), Inches(1.0), Inches(1.0),
+             num, size=54, bold=True, color=BLUE)
+        # иконка справа
+        text(sl, x + card_w - Inches(1.1), top + Inches(0.25),
+             Inches(1.0), Inches(1.0),
+             icon, size=42, align=PP_ALIGN.CENTER)
+        # подпись
+        text(sl, x + Inches(0.3), top + Inches(1.3),
+             card_w - Inches(0.6), Inches(1.0),
+             label, size=18, bold=True, color=DARK)
+        # стрелка между карточками
+        if i < 2:
+            ay = top + card_h / 2
+            ax1 = x + card_w + Inches(0.05)
+            ax2 = x + card_w + gap - Inches(0.05)
+            arrow(sl, ax1, ay, ax2, ay, color=WHITE)
 
+    # дата
     today = datetime.now().strftime("%d.%m.%Y")
-    add_textbox(sl, Inches(0.8), H - Inches(1.1), Inches(4), Inches(0.5),
-                today, font_size=16, color=BLUE_LIGHT)
+    text(sl, Inches(0.5), H - Inches(0.7),
+         W - Inches(1), Inches(0.4),
+         today, size=14, color=BLUE_LIGHT, align=PP_ALIGN.CENTER)
 
 
-def slide_whats_inside(prs):
-    sl = blank_slide(prs)
-    add_rect(sl, 0, 0, W, H, RGBColor(0xF7, 0xF9, 0xFF))
-    header_bar(sl, "Что в архиве")
+def slide_overview(prs):
+    sl = blank(prs)
+    rect(sl, 0, 0, W, H, GRAY_BG)
 
-    items = [
-        ("skills/",  BLUE,  "4 zip-архива скиллов для загрузки в Cowork"),
-        ("mcp/",     GREEN, "MCP-сервер для скачивания документов с ЕИС"),
-        ("README.md",GRAY,  "Краткий обзор проекта"),
-        ("Установка Tender AI Tools.pptx", RGBColor(0x8B,0x00,0x8B),
-         "Этот файл — инструкция по установке"),
+    text(sl, Inches(0.5), Inches(0.4), W - Inches(1), Inches(0.6),
+         "Что в архиве",
+         size=32, bold=True, color=DARK)
+    text(sl, Inches(0.5), Inches(1.05), W - Inches(1), Inches(0.5),
+         "Этот архив — всё, что нужно для работы",
+         size=16, color=GRAY)
+
+    # мокап папки в центре
+    mock_folder(sl, Inches(0.7), Inches(1.85), W - Inches(1.4), Inches(3.7),
+                files=[
+                    ("skills/",   "folder"),
+                    ("mcp/",      "folder"),
+                    ("README.md", "md"),
+                    ("INSTALL_PROMPT.md",  "md"),
+                    ("Установка.pptx", "pptx"),
+                ])
+
+    # подписи снизу
+    notes = [
+        ("skills/", "4 готовых скилла", BLUE),
+        ("mcp/",    "сервер документов ЕИС", GREEN),
+        ("INSTALL_PROMPT.md", "промт для Claude Code", ORANGE),
     ]
-
-    col_w  = Inches(5.8)
-    left1  = Inches(0.5)
-    left2  = Inches(6.9)
-
-    for i, (name, color, desc) in enumerate(items):
-        row = i // 2
-        col = i % 2
-        x = left1 if col == 0 else left2
-        y = Inches(1.5) + row * Inches(2.3)
-
-        card = add_rect(sl, x, y, col_w, Inches(1.9), WHITE)
-        add_rect(sl, x, y, Inches(0.12), Inches(1.9), color)
-
-        tb = slide.shapes.add_textbox(x + Inches(0.25), y + Inches(0.15),
-                                       col_w - Inches(0.35), Inches(0.55)) \
-            if False else \
-            sl.shapes.add_textbox(x + Inches(0.25), y + Inches(0.15),
-                                  col_w - Inches(0.35), Inches(0.55))
-        tf = tb.text_frame
-        tf.word_wrap = False
-        r = tf.paragraphs[0].add_run()
-        r.text = name
-        r.font.name  = "Courier New"
-        r.font.size  = Pt(18)
-        r.font.bold  = True
-        r.font.color.rgb = color
-
-        tb2 = sl.shapes.add_textbox(x + Inches(0.25), y + Inches(0.8),
-                                     col_w - Inches(0.35), Inches(0.8))
-        tf2 = tb2.text_frame
-        tf2.word_wrap = True
-        r2 = tf2.paragraphs[0].add_run()
-        r2.text = desc
-        r2.font.size  = Pt(15)
-        r2.font.color.rgb = GRAY
+    y = Inches(5.85)
+    for name, desc, color in notes:
+        x = Inches(0.7)
+        rect(sl, x, y, Inches(0.15), Inches(0.5), color)
+        text(sl, x + Inches(0.3), y, Inches(3.5), Inches(0.3),
+             name, size=12, bold=True, color=color, font="Consolas")
+        text(sl, x + Inches(0.3), y + Inches(0.25), Inches(8), Inches(0.3),
+             desc, size=12, color=GRAY)
+        y += Inches(0.55)
 
 
-def slide_requirements(prs):
-    sl = blank_slide(prs)
-    add_rect(sl, 0, 0, W, H, RGBColor(0xF7, 0xF9, 0xFF))
-    header_bar(sl, "Что нужно установить заранее")
+def slide_step1_unpack(prs):
+    sl = blank(prs)
+    rect(sl, 0, 0, W, H, GRAY_BG)
+    slide_header(sl, 1, 4, "Распакуй архив")
 
-    reqs = [
-        ("Python 3.10+",
-         "python.org → Downloads → Python 3.x.x\nОбязательно: галочка «Add Python to PATH»",
-         BLUE),
-        ("Claude Code",
-         "Десктоп-приложение Anthropic\nПолучи ссылку у своего партнёра",
-         RGBColor(0xD4, 0x80, 0x00)),
-        ("Аккаунт Cowork",
-         "Платформа для скиллов\nПопроси приглашение у партнёра",
-         GREEN),
-    ]
+    # слева — действие
+    text(sl, Inches(0.5), Inches(1.4), Inches(6.5), Inches(0.5),
+         "Что делаем", size=14, bold=True, color=GRAY)
+    text(sl, Inches(0.5), Inches(1.85), Inches(6.5), Inches(0.6),
+         "Распакуй tender-ai-tools.zip",
+         size=24, bold=True, color=DARK)
+    text(sl, Inches(0.5), Inches(2.55), Inches(6.5), Inches(2),
+         "Правая кнопка мыши на архиве → «Извлечь всё…»\n\n"
+         "Папку для распаковки можешь выбрать любую,\n"
+         "но рекомендуем:\n",
+         size=15, color=GRAY)
+    # путь в коде
+    round_rect(sl, Inches(0.5), Inches(4.55), Inches(6.5), Inches(0.5),
+               GRAY_LIGHT, radius=0.2)
+    text(sl, Inches(0.7), Inches(4.62), Inches(6.2), Inches(0.4),
+         "C:\\ClaudeCode\\tender-ai-tools\\",
+         size=14, bold=True, color=DARK, font="Consolas")
 
-    card_w = Inches(3.9)
-    gap    = Inches(0.3)
-    start_x = Inches(0.5)
-    top    = Inches(1.45)
-    card_h = Inches(4.8)
+    # подсказка
+    round_rect(sl, Inches(0.5), Inches(5.4), Inches(6.5), Inches(1.4),
+               RGBColor(0xFF,0xF8,0xE1), radius=0.05)
+    text(sl, Inches(0.7), Inches(5.55), Inches(6.1), Inches(0.4),
+         "💡 Совет",
+         size=14, bold=True, color=ORANGE)
+    text(sl, Inches(0.7), Inches(5.9), Inches(6.1), Inches(0.85),
+         "Путь без пробелов и кириллицы — Claude Code\n"
+         "и терминал работают надёжнее.",
+         size=13, color=DARK)
 
-    for i, (title, body, color) in enumerate(reqs):
-        x = start_x + i * (card_w + gap)
-        add_rect(sl, x, top, card_w, card_h, WHITE)
-        add_rect(sl, x, top, card_w, Inches(0.55), color)
-
-        tb_t = sl.shapes.add_textbox(x + Inches(0.12), top + Inches(0.07),
-                                      card_w - Inches(0.24), Inches(0.42))
-        r = tb_t.text_frame.paragraphs[0].add_run()
-        r.text = title
-        r.font.size  = Pt(15)
-        r.font.bold  = True
-        r.font.color.rgb = WHITE
-
-        tb_b = sl.shapes.add_textbox(x + Inches(0.12), top + Inches(0.7),
-                                      card_w - Inches(0.24), card_h - Inches(0.85))
-        tf = tb_b.text_frame
-        tf.word_wrap = True
-        for line in body.split("\n"):
-            p = tf.paragraphs[0] if line == body.split("\n")[0] \
-                else tf.add_paragraph()
-            r = p.add_run()
-            r.text = line
-            r.font.size  = Pt(13.5)
-            r.font.color.rgb = DARK
-
-
-def slide_step(prs, step_num, title, content_fn):
-    sl = blank_slide(prs)
-    add_rect(sl, 0, 0, W, H, RGBColor(0xF7, 0xF9, 0xFF))
-    header_bar(sl, title, step_num=step_num)
-    progress_dots(sl, step_num)
-    content_fn(sl)
+    # справа — мокап результата
+    text(sl, Inches(7.5), Inches(1.4), Inches(5.4), Inches(0.5),
+         "Что должно получиться", size=14, bold=True, color=GRAY)
+    mock_folder(sl, Inches(7.5), Inches(1.85), Inches(5.4), Inches(4.0),
+                files=[
+                    ("skills/",   "folder"),
+                    ("mcp/",      "folder"),
+                    ("README.md", "md"),
+                    ("INSTALL_PROMPT.md", "md"),
+                    ("Установка.pptx", "pptx"),
+                ])
+    slide_done_footer(sl)
 
 
-def content_step1(sl):
-    """Установить Python."""
-    steps = [
-        "Перейди на python.org → Downloads → скачай Python 3.x",
-        'Запусти установщик (.exe)',
-        'ОБЯЗАТЕЛЬНО поставь галочку "Add Python 3.x to PATH"',
-        'Нажми "Install Now" — дождись окончания',
-    ]
-    y = Inches(1.4)
-    for i, s in enumerate(steps, 1):
-        add_rect(sl, Inches(0.5), y, Inches(0.55), Inches(0.55),
-                 BLUE)
-        tb = sl.shapes.add_textbox(Inches(0.5), y, Inches(0.55), Inches(0.55))
-        r = tb.text_frame.paragraphs[0].add_run()
-        r.text = str(i)
-        r.font.size = Pt(20)
-        r.font.bold = True
-        r.font.color.rgb = WHITE
-        tb.text_frame.paragraphs[0].alignment = PP_ALIGN.CENTER
+def slide_step2_open(prs):
+    sl = blank(prs)
+    rect(sl, 0, 0, W, H, GRAY_BG)
+    slide_header(sl, 2, 4, "Открой папку в Claude Code")
 
-        add_textbox(sl, Inches(1.2), y + Inches(0.07),
-                    Inches(8.5), Inches(0.5),
-                    s, font_size=16, color=DARK)
-        y += Inches(0.85)
+    # инструкция слева
+    text(sl, Inches(0.5), Inches(1.4), Inches(5.5), Inches(0.5),
+         "Что делаем", size=14, bold=True, color=GRAY)
+    text(sl, Inches(0.5), Inches(1.85), Inches(5.5), Inches(0.6),
+         "File → Open Folder",
+         size=24, bold=True, color=DARK)
 
-    tip_box(sl, Inches(0.5), Inches(5.1), Inches(9.5),
-            "Если пункт PATH не отмечен — команды python и pip не будут работать в терминале. "
-            "В этом случае переустанови Python заново с этой галочкой.")
+    text(sl, Inches(0.5), Inches(2.7), Inches(5.5), Inches(2),
+         "1.  Запусти Claude Code\n\n"
+         "2.  В верхнем меню выбери:\n"
+         "     File  →  Open Folder\n\n"
+         "3.  Найди папку с распакованным\n"
+         "     архивом и подтверди.",
+         size=15, color=DARK)
 
-    add_textbox(sl, Inches(0.5), Inches(5.95), Inches(4), Inches(0.35),
-                "Проверка — открой cmd (Win+R → cmd) и введи:",
-                font_size=13, color=GRAY)
-    code_box(sl, Inches(0.5), Inches(6.4), Inches(5),
-             "python --version")
+    # подсказка
+    round_rect(sl, Inches(0.5), Inches(5.65), Inches(5.5), Inches(1.2),
+               RGBColor(0xFF,0xF8,0xE1), radius=0.05)
+    text(sl, Inches(0.7), Inches(5.78), Inches(5.1), Inches(0.4),
+         "💡 Совет",
+         size=14, bold=True, color=ORANGE)
+    text(sl, Inches(0.7), Inches(6.13), Inches(5.1), Inches(0.7),
+         "Можно ещё проще — перетащи папку\n"
+         "прямо в окно Claude Code.",
+         size=13, color=DARK)
 
+    # справа — мокап Claude Code с открытым меню
+    mock_claude_code(sl, Inches(6.4), Inches(1.4), Inches(6.5), Inches(5.6),
+                     show_menu=True)
 
-def content_step2(sl):
-    """Распаковать архив."""
-    add_textbox(sl, Inches(0.5), Inches(1.45), Inches(12),
-                Inches(0.5),
-                "Распакуй файл  tender-ai-tools.zip  в любое удобное место.",
-                font_size=17, color=DARK)
+    # стрелка к нужному пункту меню
+    arrow(sl, Inches(6.0), Inches(2.0),
+              Inches(7.05), Inches(1.85), color=RED)
+    text(sl, Inches(5.4), Inches(2.1), Inches(0.6), Inches(0.4),
+         "→", size=24, bold=True, color=RED)
 
-    tip_box(sl, Inches(0.5), Inches(2.1), Inches(12.3),
-            "Рекомендуем:  C:\\ClaudeCode\\  — путь без пробелов и кириллицы. "
-            "С такими путями команды в терминале работают надёжнее.")
-
-    add_textbox(sl, Inches(0.5), Inches(3.1), Inches(12),
-                Inches(0.4),
-                "После распаковки должна появиться папка:",
-                font_size=15, color=GRAY)
-    code_box(sl, Inches(0.5), Inches(3.6), Inches(7),
-             "C:\\ClaudeCode\\tender-ai-tools\\")
-
-    add_textbox(sl, Inches(0.5), Inches(4.25), Inches(12),
-                Inches(0.4),
-                "Внутри — три объекта:",
-                font_size=15, color=GRAY)
-
-    items = [
-        ("skills/",     "zip-архивы скиллов для Cowork"),
-        ("mcp/",        "MCP-сервер для скачивания с ЕИС"),
-        ("README.md",   "краткий обзор проекта"),
-    ]
-    y = Inches(4.85)
-    for folder, desc in items:
-        tb = sl.shapes.add_textbox(Inches(0.7), y, Inches(10), Inches(0.4))
-        tf = tb.text_frame
-        tf.word_wrap = False
-        p = tf.paragraphs[0]
-        r1 = p.add_run()
-        r1.text = folder + "  "
-        r1.font.name  = "Courier New"
-        r1.font.size  = Pt(14)
-        r1.font.bold  = True
-        r1.font.color.rgb = BLUE
-        r2 = p.add_run()
-        r2.text = "— " + desc
-        r2.font.size  = Pt(14)
-        r2.font.color.rgb = GRAY
-        y += Inches(0.42)
+    slide_done_footer(sl)
 
 
-def content_step3(sl):
-    """Установить зависимости."""
-    add_textbox(sl, Inches(0.5), Inches(1.42), Inches(12),
-                Inches(0.42),
-                "Открой Терминал: нажми  Win+R,  введи  cmd,  нажми  Enter.",
-                font_size=17, color=DARK)
+def slide_step3_paste(prs):
+    sl = blank(prs)
+    rect(sl, 0, 0, W, H, GRAY_BG)
+    slide_header(sl, 3, 4, "Вставь промт в чат")
 
-    add_textbox(sl, Inches(0.5), Inches(2.05), Inches(12),
-                Inches(0.38),
-                "Выполни по очереди три команды (вставь каждую и нажми Enter):",
-                font_size=15, color=GRAY)
+    # инструкция слева
+    text(sl, Inches(0.5), Inches(1.4), Inches(5.5), Inches(0.5),
+         "Что делаем", size=14, bold=True, color=GRAY)
+    text(sl, Inches(0.5), Inches(1.85), Inches(5.5), Inches(0.6),
+         "Скопируй промт → вставь",
+         size=22, bold=True, color=DARK)
 
-    cmds = [
-        ("cd C:\\ClaudeCode\\tender-ai-tools\\mcp",
-         "перейти в папку MCP"),
-        ("pip install -r requirements.txt",
-         "установить зависимости MCP-сервера"),
-        ("pip install python-docx",
-         "установить библиотеку для Word-файлов"),
-    ]
-    y = Inches(2.62)
-    for cmd, hint in cmds:
-        code_box(sl, Inches(0.5), y, Inches(9.5), cmd)
-        add_textbox(sl, Inches(10.1), y + Inches(0.06), Inches(3.1),
-                    Inches(0.35), hint,
-                    font_size=12, color=GRAY, italic=True)
-        y += Inches(0.72)
+    text(sl, Inches(0.5), Inches(2.7), Inches(5.5), Inches(3),
+         "1.  Открой файл\n"
+         "     INSTALL_PROMPT.md\n"
+         "     (он лежит рядом с архивом)\n\n"
+         "2.  Скопируй текст промта\n"
+         "     (он находится внутри блока кода)\n\n"
+         "3.  Вставь в чат Claude Code\n"
+         "     и нажми Enter\n\n"
+         "Дальше Claude Code сам:\n"
+         "  • установит Python если нужно\n"
+         "  • установит все библиотеки\n"
+         "  • подключит MCP-сервер\n"
+         "  • объяснит что делать дальше",
+         size=14, color=DARK)
 
-    warn_box(sl, Inches(0.5), Inches(5.1), Inches(12.3),
-             'Ошибка "Access denied" — запусти cmd от имени администратора '
-             '(правая кнопка на cmd → «Запустить от имени администратора»).')
+    # справа — мокап Claude Code с промтом в инпуте
+    mock_claude_code(sl, Inches(6.4), Inches(1.4), Inches(6.5), Inches(5.6),
+                     prompt_in_chat=(
+                         "Установи мне Tender AI Tools — набор\n"
+                         "инструментов для участия в госзакупках\n"
+                         "по 44-ФЗ.\n\n"
+                         "Текущая папка должна быть корнем\n"
+                         "распакованного архива. В ней должны быть\n"
+                         "skills/ и mcp/.\n\n"
+                         "Шаг 1. Проверить и установить Python..."
+                     ))
 
-
-def content_step4(sl):
-    """Подключить MCP к Claude Code."""
-    add_textbox(sl, Inches(0.5), Inches(1.42), Inches(12),
-                Inches(0.42),
-                "MCP-сервер скачивает документы напрямую с zakupki.gov.ru — бесплатно, без ключей.",
-                font_size=15, italic=True, color=GRAY)
-
-    add_textbox(sl, Inches(0.5), Inches(1.95), Inches(12),
-                Inches(0.42),
-                "Открой Claude Code → Настройки (⚙) → MCP Servers → Add server",
-                font_size=17, color=DARK)
-
-    # таблица настроек
-    rows = [
-        ("Name",    "zakupki-eis"),
-        ("Type",    "stdio"),
-        ("Command", "python"),
-        ("Args",    "C:\\ClaudeCode\\tender-ai-tools\\mcp\\server.py"),
-    ]
-    col_w1 = Inches(2.0)
-    col_w2 = Inches(8.5)
-    x1 = Inches(0.5)
-    x2 = x1 + col_w1 + Inches(0.05)
-    row_h = Inches(0.48)
-    y = Inches(2.65)
-
-    add_rect(sl, x1, y, col_w1, row_h, BLUE)
-    add_rect(sl, x2, y, col_w2, row_h, BLUE)
-    for lbl, val in [("Поле", "Значение")]:
-        add_textbox(sl, x1 + Inches(0.1), y + Inches(0.08),
-                    col_w1, row_h, lbl,
-                    font_size=14, bold=True, color=WHITE)
-        add_textbox(sl, x2 + Inches(0.1), y + Inches(0.08),
-                    col_w2, row_h, val,
-                    font_size=14, bold=True, color=WHITE)
-    y += row_h
-
-    for i, (field, val) in enumerate(rows):
-        bg = RGBColor(0xEB, 0xF2, 0xFB) if i % 2 == 0 else WHITE
-        add_rect(sl, x1, y, col_w1, row_h, bg)
-        add_rect(sl, x2, y, col_w2, row_h, bg)
-        add_textbox(sl, x1 + Inches(0.1), y + Inches(0.1),
-                    col_w1, row_h, field, font_size=14, bold=True, color=DARK)
-        tb = sl.shapes.add_textbox(x2 + Inches(0.1), y + Inches(0.1),
-                                    col_w2 - Inches(0.2), row_h)
-        r = tb.text_frame.paragraphs[0].add_run()
-        r.text = val
-        r.font.name  = "Courier New"
-        r.font.size  = Pt(14)
-        r.font.color.rgb = BLUE
-        y += row_h
-
-    add_textbox(sl, Inches(0.5), Inches(5.65), Inches(12),
-                Inches(0.4),
-                "Сохрани → перезапусти Claude Code → создай новый чат и напечатай:",
-                font_size=14, color=GRAY)
-    code_box(sl, Inches(0.5), Inches(6.1), Inches(5), "@zakupki-eis")
-    add_textbox(sl, Inches(5.7), Inches(6.17), Inches(7),
-                Inches(0.35),
-                "— должен появиться список инструментов",
-                font_size=13, italic=True, color=GRAY)
+    slide_done_footer(sl)
 
 
-def content_step5(sl):
-    """Установить скиллы в Cowork."""
-    add_textbox(sl, Inches(0.5), Inches(1.42), Inches(12),
-                Inches(0.42),
-                "В папке  skills/  лежат 4 zip-файла. Каждый загружается отдельно.",
-                font_size=17, color=DARK)
+def slide_step4_skills(prs):
+    sl = blank(prs)
+    rect(sl, 0, 0, W, H, GRAY_BG)
+    slide_header(sl, 4, 4, "Загрузи скиллы в Cowork")
 
-    skills = [
-        ("verdikt-zakupki",      "'берёмся / не берёмся'",     BLUE),
-        ("scan-zakupki",         "анализ ТЗ и смет",            GREEN),
-        ("zhaloba-fas",          "жалобы в УФАС / защита РНП",  RED_ACC),
-        ("zapros-razyasneniy",   "запрос разъяснений + Word",   RGBColor(0x6A,0x1B,0x9A)),
-    ]
-    card_w = Inches(2.9)
-    gap    = Inches(0.22)
-    y = Inches(2.15)
-    card_h = Inches(1.9)
+    # инструкция слева
+    text(sl, Inches(0.5), Inches(1.4), Inches(5.5), Inches(0.5),
+         "Что делаем", size=14, bold=True, color=GRAY)
+    text(sl, Inches(0.5), Inches(1.85), Inches(5.5), Inches(0.6),
+         "4 файла → Cowork",
+         size=24, bold=True, color=DARK)
 
-    for i, (name, desc, color) in enumerate(skills):
-        x = Inches(0.4) + i * (card_w + gap)
-        add_rect(sl, x, y, card_w, card_h, WHITE)
-        add_rect(sl, x, y, card_w, Inches(0.08), color)
+    text(sl, Inches(0.5), Inches(2.7), Inches(5.5), Inches(0.5),
+         "Это последний ручной шаг.",
+         size=14, color=GRAY, italic=True)
 
-        tb1 = sl.shapes.add_textbox(x + Inches(0.12), y + Inches(0.2),
-                                     card_w - Inches(0.24), Inches(0.55))
-        r = tb1.text_frame.paragraphs[0].add_run()
-        r.text = name
-        r.font.name  = "Courier New"
-        r.font.size  = Pt(13)
-        r.font.bold  = True
-        r.font.color.rgb = color
+    text(sl, Inches(0.5), Inches(3.2), Inches(5.5), Inches(3),
+         "1.  Открой Cowork в браузере\n"
+         "     (URL уточни у партнёра)\n\n"
+         "2.  Раздел  Skills  →  Upload\n\n"
+         "3.  Загрузи по очереди 4 zip-файла\n"
+         "     из папки  skills/\n\n"
+         "4.  Убедись, что у каждого статус\n"
+         "     Active",
+         size=14, color=DARK)
 
-        tb2 = sl.shapes.add_textbox(x + Inches(0.12), y + Inches(0.85),
-                                     card_w - Inches(0.24), Inches(0.8))
-        r2 = tb2.text_frame.paragraphs[0].add_run()
-        r2.text = desc
-        r2.font.size  = Pt(13)
-        r2.font.color.rgb = GRAY
+    # справа — мокап Cowork
+    def cowork_content(slide, cl, ct, cw, ch):
+        # шапка раздела Skills
+        text(slide, cl + Inches(0.3), ct + Inches(0.15),
+             Inches(2), Inches(0.4),
+             "Skills", size=18, bold=True, color=DARK)
+        # кнопка Upload
+        round_rect(slide, cl + cw - Inches(1.5), ct + Inches(0.18),
+                   Inches(1.2), Inches(0.4), BLUE, radius=0.2)
+        text(slide, cl + cw - Inches(1.5), ct + Inches(0.22),
+             Inches(1.2), Inches(0.35),
+             "+ Upload", size=12, bold=True, color=WHITE,
+             align=PP_ALIGN.CENTER)
+        # таблица скиллов
+        skills = [
+            ("verdikt-zakupki",     "v1.0",   GREEN),
+            ("scan-zakupki",        "v0.3",   GREEN),
+            ("zhaloba-fas",         "v0.1",   GREEN),
+            ("zapros-razyasneniy",  "v0.1.1", GREEN),
+        ]
+        y = ct + Inches(0.85)
+        for name, ver, status_color in skills:
+            rect(slide, cl + Inches(0.25), y,
+                 cw - Inches(0.5), Inches(0.55), WHITE,
+                 line=RGBColor(0xE0,0xE5,0xEC))
+            text(slide, cl + Inches(0.45), y + Inches(0.13),
+                 cw - Inches(2.4), Inches(0.35),
+                 name, size=12, bold=True, color=DARK, font="Consolas")
+            text(slide, cl + cw - Inches(2.4), y + Inches(0.15),
+                 Inches(0.8), Inches(0.3),
+                 ver, size=11, color=GRAY)
+            # status pill
+            round_rect(slide, cl + cw - Inches(1.4), y + Inches(0.13),
+                       Inches(1.0), Inches(0.3),
+                       RGBColor(0xE6,0xF4,0xEA), radius=0.4)
+            text(slide, cl + cw - Inches(1.4), y + Inches(0.16),
+                 Inches(1.0), Inches(0.25),
+                 "● Active", size=10, bold=True, color=status_color,
+                 align=PP_ALIGN.CENTER)
+            y += Inches(0.65)
 
-    steps_y = Inches(4.35)
-    add_textbox(sl, Inches(0.5), steps_y, Inches(12),
-                Inches(0.38),
-                "Для каждого zip: открой Cowork → Skills → Upload → выбери файл → статус Active",
-                font_size=15, color=DARK)
+    mock_browser(sl, Inches(6.4), Inches(1.4), Inches(6.5), Inches(5.6),
+                 url="cowork.anthropic.com / skills",
+                 content_fn=cowork_content)
 
-    warn_box(sl, Inches(0.5), Inches(5.05), Inches(12.3),
-             "Загружай именно zip-файл целиком, не распакованную папку. "
-             "Cowork ожидает архив.")
+    slide_done_footer(sl)
 
-
-def content_step6(sl):
-    """Проверить работу."""
-    add_textbox(sl, Inches(0.5), Inches(1.42), Inches(12),
-                Inches(0.42),
-                "Создай новый чат в Claude Code, прикрепи документ из закупки и напиши:",
-                font_size=17, color=DARK)
-
-    code_box(sl, Inches(0.5), Inches(2.1), Inches(8), "оцени закупку")
-
-    add_textbox(sl, Inches(0.5), Inches(2.75), Inches(12),
-                Inches(0.42),
-                "ИИ запустит скилл verdikt-zakupki и выдаст отчёт «берёмся / не берёмся».",
-                font_size=15, italic=True, color=GRAY)
-
-    add_textbox(sl, Inches(0.5), Inches(3.4), Inches(12),
-                Inches(0.38),
-                "Другие команды:",
-                font_size=15, bold=True, color=DARK)
-
-    cmds = [
-        ("составь жалобу",             "→ жалоба в УФАС или защита от РНП"),
-        ("сделай запрос разъяснений",  "→ Word-файл запроса на разъяснение"),
-    ]
-    y = Inches(3.95)
-    for cmd, hint in cmds:
-        code_box(sl, Inches(0.5), y, Inches(6.0), cmd)
-        add_textbox(sl, Inches(6.6), y + Inches(0.07), Inches(6.5),
-                    Inches(0.35), hint,
-                    font_size=14, italic=True, color=GRAY)
-        y += Inches(0.65)
-
-    tip_box(sl, Inches(0.5), Inches(5.45), Inches(12.3),
-            "Скилл не запустился? Убедись, что он в статусе Active в Cowork "
-            "и что файл был загружен как zip-архив.")
-
-    add_textbox(sl, Inches(0.5), H - Inches(0.6), Inches(12),
-                Inches(0.38),
-                "Готово! Если что-то не работает — напиши своему партнёру.",
-                font_size=14, bold=True, color=BLUE, align=PP_ALIGN.CENTER)
-
-
-# ── финальный слайд ────────────────────────────────────────────────────────
 
 def slide_done(prs):
-    sl = blank_slide(prs)
-    add_rect(sl, 0, 0, W, H, BLUE)
-    add_rect(sl, 0, H * 0.7, W, H * 0.3, RGBColor(0x16, 0x4F, 0x96))
+    sl = blank(prs)
+    rect(sl, 0, 0, W, H, BLUE)
+    rect(sl, 0, H * 0.65, W, H * 0.35, BLUE_DEEP)
 
-    add_textbox(sl, 0, Inches(2.0), W, Inches(1.4),
-                "Всё готово!",
-                font_size=60, bold=True, color=WHITE, align=PP_ALIGN.CENTER)
-    add_textbox(sl, 0, Inches(3.6), W, Inches(0.8),
-                "Если что-то не получилось — напиши своему партнёру.",
-                font_size=22, color=BLUE_LIGHT, align=PP_ALIGN.CENTER)
-    add_textbox(sl, 0, H - Inches(1.0), W, Inches(0.5),
-                "Tender AI Tools  •  " + datetime.now().strftime("%d.%m.%Y"),
-                font_size=14, color=BLUE_MED, align=PP_ALIGN.CENTER)
+    # большая галка
+    cs = slide_check_circle(sl, W / 2 - Inches(1), Inches(1.0), Inches(2))
+
+    text(sl, 0, Inches(3.4), W, Inches(1.0),
+         "Готово!",
+         size=64, bold=True, color=WHITE, align=PP_ALIGN.CENTER)
+
+    text(sl, 0, Inches(4.5), W, Inches(0.6),
+         "Перезапусти Claude Code и попробуй:",
+         size=20, color=BLUE_LIGHT, align=PP_ALIGN.CENTER)
+
+    # три примера команд
+    cmds = [
+        ("оцени закупку",          "→ полный отчёт по документации"),
+        ("составь жалобу",         "→ жалоба в УФАС или защита от РНП"),
+        ("запрос разъяснений",     "→ Word-файл вопросов заказчику"),
+    ]
+    y = Inches(5.4)
+    for cmd, desc in cmds:
+        round_rect(sl, Inches(2.5), y, Inches(4), Inches(0.45),
+                   WHITE, radius=0.4)
+        text(sl, Inches(2.5), y + Inches(0.06),
+             Inches(4), Inches(0.35),
+             cmd, size=14, bold=True, color=BLUE,
+             align=PP_ALIGN.CENTER, font="Consolas")
+        text(sl, Inches(6.7), y + Inches(0.07),
+             Inches(5), Inches(0.35),
+             desc, size=14, color=BLUE_LIGHT)
+        y += Inches(0.55)
+
+
+def slide_check_circle(slide, left, top, size):
+    """Большая галка в круге."""
+    s = slide.shapes.add_shape(MSO_SHAPE.OVAL, left, top, size, size)
+    s.fill.solid(); s.fill.fore_color.rgb = WHITE
+    s.line.fill.background()
+    text(slide, left, top + Inches(0.05), size, size - Inches(0.1),
+         "✓", size=120, bold=True, color=BLUE,
+         align=PP_ALIGN.CENTER)
+    return s
 
 
 # ── сборка ─────────────────────────────────────────────────────────────────
@@ -609,16 +667,13 @@ def slide_done(prs):
 def generate(output_path: Path):
     prs = new_prs()
 
-    slide_title(prs)
-    slide_whats_inside(prs)
-    slide_requirements(prs)
-    slide_step(prs, 1, "Шаг 1 — Установить Python",          content_step1)
-    slide_step(prs, 2, "Шаг 2 — Распаковать архив",          content_step2)
-    slide_step(prs, 3, "Шаг 3 — Установить зависимости",     content_step3)
-    slide_step(prs, 4, "Шаг 4 — Подключить MCP к Claude",    content_step4)
-    slide_step(prs, 5, "Шаг 5 — Установить скиллы в Cowork", content_step5)
-    slide_step(prs, 6, "Шаг 6 — Проверить работу",           content_step6)
-    slide_done(prs)
+    slide_title(prs)            # 1. Титул с тремя шагами
+    slide_overview(prs)         # 2. Что в архиве (мокап папки)
+    slide_step1_unpack(prs)     # 3. Распаковать
+    slide_step2_open(prs)       # 4. Открыть в Claude Code
+    slide_step3_paste(prs)      # 5. Вставить промт
+    slide_step4_skills(prs)     # 6. Загрузить скиллы в Cowork
+    slide_done(prs)             # 7. Готово
 
     output_path.parent.mkdir(parents=True, exist_ok=True)
     prs.save(str(output_path))
