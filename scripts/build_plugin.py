@@ -24,7 +24,7 @@ MCP_DIR    = ROOT.parent / "sabytrade-mcp"
 BUILD_DIR  = ROOT / "plugin-build" / "tender-ai"
 
 SKILLS = ["scan-zakupki", "zhaloba-fas", "zapros-razyasneniy"]
-MCP_FILES = ["server.py", "zakupki_scraper.py", "requirements.txt"]
+MCP_FILES = ["launcher.py", "server.py", "zakupki_scraper.py"]
 
 
 PLUGIN_JSON = """\
@@ -46,18 +46,10 @@ MCP_JSON = """\
   "mcpServers": {
     "zakupki-eis": {
       "command": "python",
-      "args": ["${CLAUDE_PLUGIN_ROOT}/mcp/server.py"]
+      "args": ["${CLAUDE_PLUGIN_ROOT}/mcp/launcher.py"]
     }
   }
 }
-"""
-
-REQUIREMENTS = """\
-mcp
-requests
-beautifulsoup4
-lxml
-python-docx
 """
 
 README = """\
@@ -81,21 +73,21 @@ README = """\
 `zakupki-eis` — скачивает документы закупок напрямую с zakupki.gov.ru.
 Бесплатно, без API-ключей. Доступен через `@zakupki-eis` в чате.
 
-## Установка зависимостей
+## Установка
 
-После установки плагина один раз выполни:
+1. Перетащи `tender-ai.plugin` в Claude Code → нажми **Install**.
+2. Перезапусти Claude Code.
 
-```
-pip install -r <папка_плагина>/mcp/requirements.txt
-```
+При первом запуске MCP-сервер сам поставит свои Python-зависимости через
+pip — никаких ручных команд в терминале не требуется.
 
-Требуется Python 3.10+.
+**Требуется только Python 3.10+ в системе.** Если его нет — поставь с
+python.org с галочкой «Add Python to PATH».
 
 ## Проверка
 
-1. Перезапусти Claude Code.
-2. В новом чате `@zakupki-eis` — должны появиться инструменты.
-3. Прикрепи документ закупки и напиши «прочитай закупку».
+1. В новом чате `@zakupki-eis` — должны появиться инструменты.
+2. Прикрепи документ закупки и напиши «прочитай закупку».
 
 ## Источник данных
 
@@ -117,8 +109,6 @@ def build():
         PLUGIN_JSON, encoding="utf-8")
     (BUILD_DIR / ".mcp.json").write_text(MCP_JSON, encoding="utf-8")
     (BUILD_DIR / "README.md").write_text(README, encoding="utf-8")
-    (BUILD_DIR / "mcp" / "requirements.txt").write_text(
-        REQUIREMENTS, encoding="utf-8")
 
     # копируем скиллы
     for name in SKILLS:
@@ -133,8 +123,6 @@ def build():
     # копируем MCP
     for fname in MCP_FILES:
         src = MCP_DIR / fname
-        if fname == "requirements.txt":
-            continue   # уже создан выше с python-docx
         if not src.exists():
             print(f"WARN: файл MCP не найден — {src}")
             continue
@@ -166,6 +154,8 @@ def validate():
             errors.append(f"в skills/{s.name}/ нет SKILL.md")
     if not (BUILD_DIR / "mcp" / "server.py").exists():
         errors.append("нет mcp/server.py")
+    if not (BUILD_DIR / "mcp" / "launcher.py").exists():
+        errors.append("нет mcp/launcher.py")
     if errors:
         print("\nОШИБКИ ВАЛИДАЦИИ:")
         for e in errors:
