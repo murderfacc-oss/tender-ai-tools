@@ -30,6 +30,11 @@ def pack_skill(skill_dir: Path) -> Path:
     version = get_version(skill_dir)
     zip_path = SKILLS_DIR / f"{skill_dir.name}-{version}.zip"
 
+    # удалить старые zip этого скилла
+    for old in SKILLS_DIR.glob(f"{skill_dir.name}-v*.zip"):
+        if old != zip_path:
+            old.unlink()
+
     with zipfile.ZipFile(zip_path, "w", zipfile.ZIP_DEFLATED) as zf:
         for file in sorted(skill_dir.rglob("*")):
             if file.is_file():
