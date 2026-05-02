@@ -1,5 +1,4 @@
 mcp
 requests
-python-dotenv
 beautifulsoup4
 lxml
