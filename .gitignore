@@ -1,0 +1,26 @@
+# Реальные документы закупок — никогда не публиковать
+project/tenders/
+
+# Секреты
+.env
+*.env
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.venv/
+venv/
+env/
+
+# Zip-архивы скиллов — собираются скриптом, не хранятся в репо
+project/skills/*.zip
+
+# Исследование — если есть чувствительные данные, раскомментировать:
+# project/research/
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
