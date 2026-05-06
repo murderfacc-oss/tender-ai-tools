@@ -30,7 +30,7 @@ MCP_FILES = ["launcher.py", "server.py", "zakupki_scraper.py"]
 PLUGIN_JSON = """\
 {
   "name": "tender-ai",
-  "version": "0.1.0",
+  "version": "0.4.0",
   "description": "Инструменты для участия в госзакупках по 44-ФЗ на монтаж слаботочки. Сопровождение закупки от подачи до закрытия, жалобы в УФАС, запросы разъяснений + MCP-сервер для скачивания документов с ЕИС.",
   "author": {
     "name": "Artem",
