@@ -5,8 +5,8 @@
   .claude-plugin/plugin.json   — манифест
   .mcp.json                    — конфиг MCP-сервера
   README.md                    — описание плагина
-  skills/<имя>/                — 4 скилла
-  mcp/server.py + ...          — MCP-сервер
+  skills/<имя>/                — 3 скилла (verdikt-zakupki не входит)
+  mcp/server.py + ...          — MCP-сервер из mcp/ корневой папки репо
 
 Использование:
     python scripts/build_plugin.py
@@ -20,7 +20,7 @@ from pathlib import Path
 
 ROOT       = Path(__file__).parent.parent
 SKILLS_DIR = ROOT / "project" / "skills"
-MCP_DIR    = ROOT.parent / "sabytrade-mcp"
+MCP_DIR    = ROOT / "mcp"
 BUILD_DIR  = ROOT / "plugin-build" / "tender-ai"
 
 SKILLS = ["scan-zakupki", "zhaloba-fas", "zapros-razyasneniy"]

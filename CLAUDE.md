@@ -24,12 +24,20 @@ project/
   PROJECT.md                ← цели и контекст проекта
   tenders/                  ← реальные документы закупок [в .gitignore]
 
+mcp/                        ← MCP-сервер zakupki-eis (раньше отдельный репо)
+  launcher.py               ← обёртка: при первом запуске ставит pip
+  server.py                 ← FastMCP, 4 инструмента
+  zakupki_scraper.py        ← парсер zakupki.gov.ru
+  requirements.txt
+  CLAUDE.md                 ← локальное описание MCP
+
 scripts/
   build_plugin.py           ← собирает tender-ai.plugin (ZIP)
   pack_skills.py            ← упаковать отдельные скиллы (для Cowork, legacy)
 
 plugin-build/               ← рабочая папка сборки [в .gitignore]
 tender-ai.plugin            ← готовый плагин для отправки партнёру [в .gitignore]
+Для партнёра/               ← готовая папка для отправки [в .gitignore]
 INSTALL.md                  ← инструкция для партнёра
 ```
 
@@ -37,12 +45,13 @@ INSTALL.md                  ← инструкция для партнёра
 
 ## MCP-сервер zakupki-eis
 
-Живёт в **отдельной папке**: `E:\ClaudeCode\sabytrade-mcp\`  
-GitHub: `github.com/murderfacc-oss/zakupki-eis`
+Живёт в этом же репо, в папке `mcp/`. Раньше был отдельным репозиторием
+`github.com/murderfacc-oss/zakupki-eis` — слит сюда через `git subtree`,
+история сохранена. Старый репо архивирован.
 
 Скачивает документы закупок напрямую с **zakupki.gov.ru** — без API-ключей, без регистрации.
 
-**Файлы:**
+**Файлы (в `mcp/`):**
 - `server.py` — MCP-сервер (4 инструмента)
 - `launcher.py` — обёртка: при первом запуске ставит pip-зависимости автоматически
 - `zakupki_scraper.py` — парсер ЕИС
@@ -99,7 +108,7 @@ Python-зависимости MCP ставятся автоматически п
 
 ## Связанные репозитории
 
-| Репо | Описание |
+| Репо | Статус |
 |---|---|
-| `murderfacc-oss/tender-ai-tools` | Этот репо: скиллы + скрипты сборки |
-| `murderfacc-oss/zakupki-eis` | MCP-сервер для ЕИС |
+| `murderfacc-oss/tender-ai-tools` | **Активный** — единое место: скиллы, MCP, скрипты, документация |
+| `murderfacc-oss/zakupki-eis` | Архивирован — содержимое перенесено в `mcp/` основного репо |
