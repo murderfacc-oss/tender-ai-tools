@@ -294,6 +294,133 @@ def _download_file(url: str, folder: str, suggested_name: str) -> dict:
         return {"error": str(e)}
 
 
+# ─────────────────────── Печатная форма извещения ────────────────────────
+
+PRINT_FORM_HTML = "print_form.html"
+PRINT_FORM_TEXT = "print_form.txt"
+
+
+def _get_print_form(reg_number: str, notice_type: str = None) -> tuple:
+    """
+    Качает HTML печатной формы извещения с zakupki.gov.ru.
+
+    На ЕИС у каждого извещения есть кнопка «Печатная форма» — это страница
+    со всей сводной информацией (заказчик, объект закупки, график, требования,
+    финансовые условия) в структурированном виде. Часто полнее, чем приложения.
+
+    URL обычно: /epz/order/notice/<type>/view/printForm.html?regNumber=XXX
+
+    Параметры:
+        reg_number   : номер извещения
+        notice_type  : тип извещения (ea44/ok44/...) если уже известен —
+                       поможет попасть с первой попытки
+
+    Возвращает: (html_text, final_url) или (None, None)
+    """
+    session = requests.Session()
+    urls_to_try = []
+
+    # Если тип извещения известен — пробуем его первым
+    if notice_type:
+        urls_to_try.append(
+            f"https://zakupki.gov.ru/epz/order/notice/{notice_type}"
+            f"/view/printForm.html?regNumber={reg_number}"
+        )
+
+    # Универсальный fallback (некоторые типы редиректят на нужный)
+    urls_to_try.append(
+        f"https://zakupki.gov.ru/epz/order/notice/printForm/view.html"
+        f"?regNumber={reg_number}"
+    )
+
+    # Полный перебор по типам — на случай если notice_type не угадан
+    for nt in NOTICE_TYPES:
+        if nt == notice_type:
+            continue  # уже пробовали
+        urls_to_try.append(
+            f"https://zakupki.gov.ru/epz/order/notice/{nt}"
+            f"/view/printForm.html?regNumber={reg_number}"
+        )
+
+    for url in urls_to_try:
+        try:
+            r = session.get(url, headers=HEADERS, timeout=25, allow_redirects=True)
+            if r.status_code != 200:
+                continue
+            # Признак реальной печатной формы — содержит регистрационный номер
+            # и ключевые поля извещения
+            if reg_number in r.text and (
+                "Печатная форма" in r.text
+                or "Регистрационный номер" in r.text
+                or "Идентификационный код закупки" in r.text
+                or "Объект закупки" in r.text
+            ):
+                return r.text, r.url
+        except requests.RequestException:
+            continue
+
+    return None, None
+
+
+def _save_print_form(html: str, folder: str) -> dict:
+    """
+    Сохраняет печатную форму в папку закупки как HTML и как plain-text.
+
+    Plain-text версия удобна для LLM — читается напрямую без парсинга
+    HTML, и не съедает контекст «голым» HTML-разметкой.
+
+    Возвращает: {html_path, text_path, html_size, text_size}
+    """
+    html_path = os.path.join(folder, PRINT_FORM_HTML)
+    text_path = os.path.join(folder, PRINT_FORM_TEXT)
+
+    # Сырой HTML — на случай если понадобится оригинал
+    with open(html_path, "w", encoding="utf-8") as f:
+        f.write(html)
+
+    # Извлечение чистого текста
+    soup = BeautifulSoup(html, "html.parser")
+
+    # Удаляем шум: скрипты, стили, навигация, кнопки
+    for tag in soup(["script", "style", "noscript", "header", "footer", "nav"]):
+        tag.decompose()
+
+    # На страницах ЕИС шапка/футер ещё могут быть в div'ах с классами:
+    for selector in [
+        "div.top-section", "div.header", "div.footer",
+        "div.menu", "div.breadcrumbs", "div.btn-group",
+        "button", "input[type=button]",
+    ]:
+        for tag in soup.select(selector):
+            tag.decompose()
+
+    text = soup.get_text(separator="\n")
+
+    # Чистим лишние пустые строки и trailing whitespace
+    lines = [line.rstrip() for line in text.splitlines()]
+    cleaned_lines = []
+    prev_blank = False
+    for line in lines:
+        is_blank = not line.strip()
+        # Не больше одной подряд пустой строки
+        if is_blank and prev_blank:
+            continue
+        cleaned_lines.append(line)
+        prev_blank = is_blank
+
+    cleaned = "\n".join(cleaned_lines).strip() + "\n"
+
+    with open(text_path, "w", encoding="utf-8") as f:
+        f.write(cleaned)
+
+    return {
+        "html_path": html_path,
+        "text_path": text_path,
+        "html_size": os.path.getsize(html_path),
+        "text_size": os.path.getsize(text_path),
+    }
+
+
 # ───────────── Реестр контрактов: поиск и скачивание документов ───────────
 
 def _find_contract_by_notice(notice_reg_number: str, notice_type_hint: str = None) -> str | None:
@@ -503,6 +630,22 @@ def download_tender(reg_number: str, folder: str) -> dict:
                 "downloaded_at": _now_iso(),
             })
 
+    # Дополнительно — печатная форма извещения (часто полнее, чем приложения)
+    print_form_info = None
+    print_html, print_url = _get_print_form(reg_number, notice_type)
+    if print_html:
+        try:
+            saved = _save_print_form(print_html, folder)
+            print_form_info = {
+                "url": print_url,
+                "html_path": saved["html_path"],
+                "text_path": saved["text_path"],
+                "html_size": saved["html_size"],
+                "text_size": saved["text_size"],
+            }
+        except Exception as e:
+            print_form_info = {"error": f"Не удалось сохранить печатную форму: {e}"}
+
     # Сохраняем метаданные (включая notice_type для последующего поиска контракта)
     meta = {
         "reg_number": reg_number,
@@ -512,6 +655,7 @@ def download_tender(reg_number: str, folder: str) -> dict:
         "downloaded_at": _now_iso(),
         "last_checked": _now_iso(),
         "files": downloaded,
+        "print_form": print_form_info,
     }
     _save_meta(folder, meta)
 
@@ -530,6 +674,7 @@ def download_tender(reg_number: str, folder: str) -> dict:
         "error_list": errors,
         "folder": folder,
         "contract": contract_result,  # None если контракт ещё не подписан
+        "print_form": print_form_info,  # None если печатная форма не нашлась
     }
 
 
