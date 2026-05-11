@@ -17,8 +17,9 @@ env/
 # Zip-архивы скиллов (вспомогательно) — собираются pack_skills.py
 skills/*.zip
 
-# Zip-плагина — собирается build_plugin.py, не хранится в репо
-/tender-ai-v*.zip
+# Готовый zip-плагин (`tender-ai-v*.zip`) — хранится в репо
+# для прямой раздачи коллегам по GitHub raw-URL. Собирается
+# через `python scripts/build_plugin.py`.
 
 # Генерируемые выходные файлы
 *.docx
