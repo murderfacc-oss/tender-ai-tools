@@ -8,10 +8,14 @@
   "plugins": [
     {
       "name": "tender-ai",
-      "source": "./",
+      "source": {
+        "source": "url",
+        "url": "https://github.com/murderfacc-oss/tender-ai-tools.git"
+      },
       "description": "Помощник по госзакупкам 44-ФЗ для слаботочки: разбор закупки, жалобы в УФАС, запросы разъяснений + MCP zakupki-eis.",
       "category": "russia-gov-procurement",
       "tags": ["44-fz", "zakupki", "fas", "slabotochka"]
     }
   ]
 }
+
