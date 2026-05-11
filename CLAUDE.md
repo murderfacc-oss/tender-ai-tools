@@ -2,7 +2,9 @@
 
 ## Что это
 
-Плагин для Claude Code: инструменты для участия в госзакупках по **44-ФЗ** на монтаж слаботочных систем (видеонаблюдение, СКУД, речевое оповещение, СКС).
+Плагин Claude (Desktop и Code) для участия в госзакупках по **44-ФЗ** на монтаж слаботочных систем (видеонаблюдение, СКУД, речевое оповещение, СКС).
+
+В одном плагине: 3 скилла (`scan-zakupki`, `zhaloba-fas`, `zapros-razyasneniy`) + MCP-сервер `zakupki-eis` для скачивания документов с ЕИС. Распространяется как один файл `tender-ai-v<версия>.zip` (через **Upload plugin** в Claude Desktop) или через GitHub-marketplace (через **Add marketplace**).
 
 Владелец: Артём (murderfacc@gmail.com)  
 Дата начала: 2025  
@@ -13,32 +15,36 @@
 ## Структура репозитория
 
 ```
-project/
-  skills/                   ← исходники скиллов (в плагин идут 3 из 4)
-    scan-zakupki/           ← анализ закупки от подачи до закрытия
-    zhaloba-fas/            ← жалобы в УФАС, защита от РНП
-    zapros-razyasneniy/     ← запрос разъяснений + Word-файл
-    verdikt-zakupki/        ← [не в плагине] остался для истории
-  research/                 ← практика УФАС, исследования
-  observations.md           ← наблюдения по закупкам
-  PROJECT.md                ← цели и контекст проекта
-  tenders/                  ← реальные документы закупок [в .gitignore]
+.claude-plugin/             ← метаданные плагина (видит Claude при установке)
+  plugin.json               ← манифест: name, version, author
+  marketplace.json          ← каталог для Add marketplace по GitHub-URL
+.mcp.json                   ← конфиг MCP-серверов плагина (использует ${CLAUDE_PLUGIN_ROOT})
 
-mcp/                        ← MCP-сервер zakupki-eis (раньше отдельный репо)
+skills/                     ← скиллы (видны Claude как часть плагина)
+  scan-zakupki/             ← анализ закупки от подачи до закрытия
+  zhaloba-fas/              ← жалобы в УФАС, защита от РНП
+  zapros-razyasneniy/       ← запрос разъяснений + Word-файл
+
+mcp/                        ← MCP-сервер zakupki-eis
   launcher.py               ← обёртка: при первом запуске ставит pip
   server.py                 ← FastMCP, 4 инструмента
   zakupki_scraper.py        ← парсер zakupki.gov.ru
   requirements.txt
   CLAUDE.md                 ← локальное описание MCP
 
-scripts/
-  build_plugin.py           ← собирает tender-ai.plugin (ZIP)
-  pack_skills.py            ← упаковать отдельные скиллы (для Cowork, legacy)
+project/                    ← заметки проекта (НЕ часть плагина)
+  research/                 ← практика УФАС, исследования
+  observations.md           ← наблюдения по закупкам
+  PROJECT.md                ← цели и контекст проекта
+  CHANGELOG.md              ← журнал проектных решений
+  tenders/                  ← реальные документы закупок [в .gitignore]
 
-plugin-build/               ← рабочая папка сборки [в .gitignore]
-tender-ai.plugin            ← готовый плагин для отправки партнёру [в .gitignore]
-Для партнёра/               ← готовая папка для отправки [в .gitignore]
-INSTALL.md                  ← инструкция для партнёра
+scripts/
+  build_plugin.py           ← основной: собирает tender-ai-v<версия>.zip для Upload plugin
+  pack_skills.py            ← вспомогательный: упаковка отдельных скиллов (для Cowork)
+
+INSTALL.md                  ← инструкция для партнёра (установка плагина)
+README.md                   ← публичное описание
 ```
 
 ---
@@ -66,21 +72,43 @@ INSTALL.md                  ← инструкция для партнёра
 
 ---
 
-## Плагин tender-ai.plugin
+## Дистрибуция
 
-Собирается командой:
+**Один плагин, два способа установки** — выбирает пользователь.
+
+### Способ 1. Upload plugin (zip-файл)
+
+Собираем плагин:
 ```bash
 python scripts/build_plugin.py
+# → tender-ai-v0.5.0.zip
 ```
 
-Что входит в плагин:
-- 3 скилла: `scan-zakupki`, `zhaloba-fas`, `zapros-razyasneniy`
-- MCP-сервер: `launcher.py`, `server.py`, `zakupki_scraper.py`
-- Манифест `.claude-plugin/plugin.json`
-- `.mcp.json` с конфигом MCP
+Партнёр:
+1. Открывает Claude Desktop.
+2. **Customize → Personal plugins → `+` → Create plugin → Upload plugin**.
+3. Выбирает полученный zip.
+4. Перезапуск Claude → плагин активен.
 
-Партнёр устанавливает: перетаскивает `.plugin` в Claude Code → Install → перезапуск.  
-Python-зависимости MCP ставятся автоматически при первом использовании.
+### Способ 2. Add marketplace (GitHub)
+
+В корне репо лежит `.claude-plugin/marketplace.json` — каталог из одного плагина.
+Партнёр:
+1. **Customize → Personal plugins → `+` → Create plugin → Add marketplace**.
+2. Вводит URL: `https://github.com/murderfacc-oss/tender-ai-tools`.
+3. Находит в списке плагин `tender-ai` → Install.
+
+**Обновления** при способе 2 — автоматически: `git push` на main → пользователь делает Refresh marketplace и получает свежую версию.
+
+### Что про MCP
+
+MCP-сервер `zakupki-eis` подцепляется автоматически — он описан в `.mcp.json` плагина. `launcher.py` при первом запуске сам ставит pip-зависимости. Никаких `claude mcp add` руками.
+
+### Прошлое решение про «отказ от плагина» было ошибочным
+
+В мае 2026 в репо было записано «отказались от плагинного пути в пользу раздельной установки». Причина была — Python-зависимости и сложность установки. **На практике Claude Desktop с весны 2026 поддерживает плагины через UI** (`Customize → Personal plugins → Upload plugin / Add marketplace`), и `launcher.py` снимает проблему с pip. Плагин снова сделан основным способом дистрибуции.
+
+`scripts/pack_skills.py` оставлен как вспомогательный — для случаев, когда нужно загрузить один скилл отдельно (в Cowork, для тестов).
 
 ---
 
@@ -88,21 +116,20 @@ Python-зависимости MCP ставятся автоматически п
 
 | Решение | Обоснование |
 |---|---|
-| Плагин как единый `.plugin` файл | Партнёр устанавливает одной кнопкой, без терминала |
-| `launcher.py` вместо прямого запуска `server.py` | Автоустановка pip-зависимостей при первом старте |
+| Плагин как основной способ дистрибуции | Claude Desktop UI принимает плагины через Upload plugin / Add marketplace одним действием |
+| Структура репо = структура плагина (skills/, mcp/, .mcp.json в корне) | Один источник правды; zip — это просто архив нужных папок репо |
+| `${CLAUDE_PLUGIN_ROOT}` в `.mcp.json` | Портабельный путь — работает у любого пользователя без правок |
+| `launcher.py` вместо прямого запуска `server.py` | Автоустановка pip-зависимостей при первом старте, нужен только Python 3.10+ в системе |
 | Скрапинг zakupki.gov.ru | Никаких API-ключей, данные открыты |
-| verdikt-zakupki не в плагине | Не используется в текущем процессе работы |
-| `${CLAUDE_PLUGIN_ROOT}` в `.mcp.json` | Портабельный путь, работает у любого пользователя |
+| verdikt-zakupki удалён из репо | Не используется в текущем процессе работы; история — в git |
 
 ---
 
 ## Конфиг claude_desktop_config.json
 
-Расположен: `C:\Users\user\AppData\Roaming\Claude\claude_desktop_config.json`
+При установке плагина MCP-серверы регистрируются автоматически через `.mcp.json` плагина — руками править `claude_desktop_config.json` не нужно. Файл нужен только для отдельных не-плагинных MCP-серверов (например, `analiz-tender-fs` — filesystem-сервер для доступа к файлам из чата).
 
-Сейчас зарегистрированы два MCP-сервера:
-- `zakupki-eis` — запускает MCP напрямую из `sabytrade-mcp/server.py`
-- `analiz-tender-fs` — filesystem-сервер для доступа к файлам проекта из чата
+Расположение на Windows: `C:\Users\<имя>\AppData\Roaming\Claude\claude_desktop_config.json`.
 
 ---
 

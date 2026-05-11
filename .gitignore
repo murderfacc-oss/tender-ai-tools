@@ -14,8 +14,12 @@ __pycache__/
 venv/
 env/
 
-# Zip-архивы скиллов — собираются скриптом, не хранятся в репо
-project/skills/*.zip
+# Zip-архивы скиллов (вспомогательно) — собираются pack_skills.py
+skills/*.zip
+
+# Готовый zip-плагин (`tender-ai-v*.zip`) — хранится в репо
+# для прямой раздачи коллегам по GitHub raw-URL. Собирается
+# через `python scripts/build_plugin.py`.
 
 # Генерируемые выходные файлы
 *.docx
