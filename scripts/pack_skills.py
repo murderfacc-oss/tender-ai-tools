@@ -1,11 +1,15 @@
 """
-Упаковывает скиллы в zip-архивы для загрузки в Cowork.
+Упаковывает отдельные скиллы в zip-архивы — для загрузки в Cowork или
+ручной установки скилла без всего плагина.
+
+Это **вспомогательный** скрипт. Основной путь распространения —
+плагин целиком через `scripts/build_plugin.py`.
 
 Использование:
     python scripts/pack_skills.py              # все скиллы
     python scripts/pack_skills.py zhaloba-fas  # конкретный скилл
 
-Zip кладётся рядом со скиллом: project/skills/<имя>-v<версия>.zip
+Zip кладётся рядом со скиллом: skills/<имя>-v<версия>.zip
 Версия берётся из первой строки ## vX.X в CHANGELOG.md.
 """
 
@@ -14,7 +18,7 @@ import sys
 import zipfile
 from pathlib import Path
 
-SKILLS_DIR = Path(__file__).parent.parent / "project" / "skills"
+SKILLS_DIR = Path(__file__).parent.parent / "skills"
 
 
 def get_version(skill_dir: Path) -> str:

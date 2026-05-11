@@ -1,12 +1,12 @@
 # Tender AI Tools
 
-Инструменты для Claude Code: участие в госзакупках по 44-ФЗ на монтаж
+Плагин Claude (Desktop и Code) для участия в госзакупках по 44-ФЗ на монтаж
 слаботочных систем (видеонаблюдение, СКУД, речевое оповещение, СКС).
 
-Распространяются по отдельности — скиллы как zip-архивы, MCP-сервер
-подключается командой `claude mcp add`. Раньше всё собиралось в один
-`.plugin` файл, от этого подхода отказались — отдельная установка
-проще и надёжнее.
+В одном плагине:
+- **3 скилла** — `scan-zakupki`, `zhaloba-fas`, `zapros-razyasneniy`;
+- **MCP-сервер `zakupki-eis`** — скачивает документы закупок напрямую с
+  `zakupki.gov.ru` без API-ключей и регистрации.
 
 ## Что входит
 
@@ -18,9 +18,10 @@
 | `zhaloba-fas` | «составь жалобу», «защита от РНП» | Жалобы в УФАС и антимонопольные заявления |
 | `zapros-razyasneniy` | «запрос разъяснений» | Запрос разъяснений + Word-файл |
 
-### MCP-сервер `zakupki-eis`
+Скиллы активируются **автоматически** по описанию (`description` во frontmatter
+`SKILL.md`) — ничего вручную выбирать не надо.
 
-Скачивает документы закупок напрямую с zakupki.gov.ru без API-ключей.
+### MCP-сервер `zakupki-eis`
 
 | Инструмент | Что делает |
 |---|---|
@@ -29,53 +30,62 @@
 | `check_tender_updates` | Проверка изменений на сайте |
 | `update_tender` | Скачать обновления и показать что изменилось |
 
-## Дистрибуция
+## Установка
 
-### Скиллы — отдельными zip-архивами
+**Способ 1 — Upload plugin** (zip-файл):
+1. Скачиваешь `tender-ai-v0.5.0.zip` (выпуски — в Releases репо).
+2. Claude Desktop → **Customize → Personal plugins → `+` → Create plugin → Upload plugin** → выбираешь zip.
+3. Перезапуск приложения.
+
+**Способ 2 — Add marketplace** (через GitHub, с авто-обновлениями):
+1. Claude Desktop → **Customize → Personal plugins → `+` → Create plugin → Add marketplace**.
+2. Вводишь URL: `https://github.com/murderfacc-oss/tender-ai-tools`.
+3. В списке плагинов нажимаешь **Install** у `tender-ai`.
+
+Подробная инструкция — в [INSTALL.md](INSTALL.md).
+
+**Требование:** Python 3.10+ в системе (для MCP-сервера). При первом
+обращении к MCP `launcher.py` сам поставит pip-зависимости.
+
+## Сборка плагина (для разработчика)
 
 ```bash
-python scripts/pack_skills.py              # все скиллы
-python scripts/pack_skills.py zhaloba-fas  # один скилл
+python scripts/build_plugin.py
+# → tender-ai-v0.5.0.zip в корне репо
 ```
-Результат — `project/skills/<имя>-v<версия>.zip`. Партнёр устанавливает
-каждый zip как отдельный скилл.
 
-### MCP — через `claude mcp add`
+Версия читается из `.claude-plugin/plugin.json`. Зипуется структура репо:
+`.claude-plugin/`, `.mcp.json`, `skills/`, `mcp/`, `README.md`.
 
-```bash
-claude mcp add --scope user zakupki-eis python /полный/путь/mcp/launcher.py
-```
-`launcher.py` при первом обращении сам поставит pip-зависимости —
-терминал нужен один раз для регистрации. Требование: Python 3.10+ в системе.
-
-Подробная пошаговая инструкция для партнёра — в [INSTALL.md](INSTALL.md).
-
-### Старый плагинный путь (deprecated)
-
-`scripts/build_plugin.py` собирал всё в один `tender-ai.plugin` файл — в
-текущем флоу не используется. Скрипт оставлен в репо для истории.
+Дополнительный скрипт `scripts/pack_skills.py` — упаковывает отдельные
+скиллы (если нужно загрузить один скилл в Cowork без всего плагина).
 
 ## Структура репозитория
 
 ```
 .
-├── README.md, CLAUDE.md, TODO.md, INSTALL.md
-├── project/
-│   ├── skills/                    ← исходники скиллов
-│   │   ├── scan-zakupki/
-│   │   ├── zhaloba-fas/
-│   │   └── zapros-razyasneniy/
-│   ├── research/                  ← практика УФАС
-│   ├── observations.md            ← наблюдения по закупкам
-│   └── PROJECT.md                 ← цели и контекст
-├── mcp/                           ← MCP-сервер (был отдельным репо zakupki-eis)
+├── .claude-plugin/                ← метаданные плагина
+│   ├── plugin.json                  манифест: name, version, author
+│   └── marketplace.json             каталог для Add marketplace
+├── .mcp.json                      ← конфиг MCP-сервера плагина
+├── skills/                        ← скиллы
+│   ├── scan-zakupki/
+│   ├── zhaloba-fas/
+│   └── zapros-razyasneniy/
+├── mcp/                           ← MCP-сервер zakupki-eis
 │   ├── launcher.py                  обёртка с auto-pip + UTF-8
 │   ├── server.py                    FastMCP, 4 инструмента
 │   ├── zakupki_scraper.py           парсер zakupki.gov.ru
 │   └── requirements.txt
-└── scripts/
-    ├── pack_skills.py             ← основной: упаковка скиллов в отдельные zip
-    └── build_plugin.py            ← [DEPRECATED] плагинный путь, не используется
+├── project/                       ← заметки проекта (НЕ часть плагина)
+│   ├── research/                    практика УФАС
+│   ├── observations.md              наблюдения по закупкам
+│   ├── PROJECT.md                   цели и контекст
+│   └── CHANGELOG.md                 журнал решений
+├── scripts/
+│   ├── build_plugin.py            ← собирает tender-ai-v*.zip
+│   └── pack_skills.py             ← упаковка отдельных скиллов (вспомогательно)
+├── README.md, CLAUDE.md, TODO.md, INSTALL.md
 ```
 
 ## История репозиториев
@@ -83,10 +93,12 @@ claude mcp add --scope user zakupki-eis python /полный/путь/mcp/launch
 Раньше MCP-сервер жил в отдельном репозитории
 [`zakupki-eis`](https://github.com/murderfacc-oss/zakupki-eis). С версии
 0.5 он влит в этот репо как папка `mcp/` через `git subtree` — история
-сохранена. Старый репо архивирован, ссылки на него остаются рабочими
-для read-only.
+сохранена. Старый репо архивирован.
 
 ## Версионирование
 
-- **Скиллы** — версии в их `CHANGELOG.md`. `pack_skills.py` берёт версию из первой строки `## vX.X` и кладёт её в имя zip-архива.
-- **MCP** — версии в коммитах (CHANGELOG отсутствует, ведётся в основной TODO.md).
+- **Плагин** — версия в `.claude-plugin/plugin.json` (читает `build_plugin.py`).
+- **Скиллы** — версии в их `CHANGELOG.md`.
+- **MCP** — версии в коммитах, ведётся в основной `TODO.md`.
+
+Текущая версия плагина: **0.5.0**.
