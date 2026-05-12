@@ -7,12 +7,14 @@
 
 ## Способ 1. Upload plugin (один zip-файл)
 
-Подходит если: получил файл `tender-ai-v0.5.2.zip` от меня в личке и хочешь поставить разово.
+Подходит если: хочешь поставить разово, без авто-обновлений.
 
-1. Открой **Claude Desktop**.
-2. **Customize → Personal plugins → `+` → Create plugin → Upload plugin**.
-3. Выбери файл `tender-ai-v0.5.2.zip`.
-4. Перезапусти Claude Desktop.
+1. Скачай свежий `tender-ai-v<версия>.zip` со страницы
+   [Releases](https://github.com/murderfacc-oss/tender-ai-tools/releases).
+2. Открой **Claude Desktop**.
+3. **Customize → Personal plugins → `+` → Create plugin → Upload plugin**.
+4. Выбери скачанный zip.
+5. Перезапусти Claude Desktop.
 
 Готово. Скиллы и MCP подцепятся автоматически.
 

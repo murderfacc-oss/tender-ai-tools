@@ -33,7 +33,7 @@
 ## Установка
 
 **Способ 1 — Upload plugin** (zip-файл):
-1. Скачиваешь `tender-ai-v0.5.2.zip` (выпуски — в Releases репо).
+1. Скачиваешь свежий `tender-ai-v<версия>.zip` со страницы [Releases](https://github.com/murderfacc-oss/tender-ai-tools/releases).
 2. Claude Desktop → **Customize → Personal plugins → `+` → Create plugin → Upload plugin** → выбираешь zip.
 3. Перезапуск приложения.
 
@@ -51,7 +51,7 @@
 
 ```bash
 python scripts/build_plugin.py
-# → tender-ai-v0.5.2.zip в корне репо
+# → tender-ai-v<версия>.zip в корне репо (в .gitignore — выкладывается на Releases вручную)
 ```
 
 Версия читается из `.claude-plugin/plugin.json`. Зипуется структура репо:
@@ -101,4 +101,4 @@ python scripts/build_plugin.py
 - **Скиллы** — версии в их `CHANGELOG.md`.
 - **MCP** — версии в коммитах, ведётся в основной `TODO.md`.
 
-Текущая версия плагина: **0.5.2**.
+Текущая версия плагина: **0.5.3**.
