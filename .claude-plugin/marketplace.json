@@ -1,21 +1,20 @@
 {
   "name": "tender-ai-marketplace",
   "owner": {
-    "name": "Artem",
-    "email": "murderfacc@gmail.com"
+    "name": "Artem"
   },
-  "description": "Маркетплейс плагинов Tender AI — инструменты для участия в госзакупках по 44-ФЗ.",
+  "metadata": {
+    "description": "Маркетплейс плагинов Tender AI — инструменты для участия в госзакупках по 44-ФЗ.",
+    "version": "0.5.3"
+  },
   "plugins": [
     {
       "name": "tender-ai",
-      "source": {
-        "source": "github",
-        "repo": "murderfacc-oss/tender-ai-tools"
-      },
+      "source": "./",
       "description": "Помощник по госзакупкам 44-ФЗ для слаботочки: разбор закупки, жалобы в УФАС, запросы разъяснений + MCP zakupki-eis.",
+      "version": "0.5.3",
       "category": "russia-gov-procurement",
       "tags": ["44-fz", "zakupki", "fas", "slabotochka"]
     }
   ]
 }
-

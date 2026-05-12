@@ -53,8 +53,13 @@ def _excluded(rel: Path) -> bool:
 
 
 def _read_version() -> str:
-    manifest = ROOT / ".claude-plugin" / "plugin.json"
-    return json.loads(manifest.read_text(encoding="utf-8"))["version"]
+    # Версия живёт в marketplace.json (как у Databricks ai-dev-kit).
+    # В plugin.json её нет, чтобы не дублировать (docs: avoid setting
+    # version in both — plugin.json wins silently и маскирует
+    # marketplace-версию).
+    manifest = ROOT / ".claude-plugin" / "marketplace.json"
+    data = json.loads(manifest.read_text(encoding="utf-8"))
+    return data["plugins"][0]["version"]
 
 
 def main() -> int:
