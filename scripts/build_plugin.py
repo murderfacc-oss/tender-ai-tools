@@ -53,13 +53,14 @@ def _excluded(rel: Path) -> bool:
 
 
 def _read_version() -> str:
-    # Версия живёт в marketplace.json (как у Databricks ai-dev-kit).
-    # В plugin.json её нет, чтобы не дублировать (docs: avoid setting
-    # version in both — plugin.json wins silently и маскирует
-    # marketplace-версию).
-    manifest = ROOT / ".claude-plugin" / "marketplace.json"
+    # Источник правды — plugin.json. Per docs: если version указан и в
+    # plugin.json, и в marketplace entry, plugin.json wins. Без version
+    # в plugin.json Claude кеширует плагин по git SHA — это мешает
+    # переустановке: новый коммит = новая версия в кеше, MCP-сервер
+    # не перерегистрируется детерминированно.
+    manifest = ROOT / ".claude-plugin" / "plugin.json"
     data = json.loads(manifest.read_text(encoding="utf-8"))
-    return data["plugins"][0]["version"]
+    return data["version"]
 
 
 def main() -> int:
