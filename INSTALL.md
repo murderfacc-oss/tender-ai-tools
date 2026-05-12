@@ -67,10 +67,12 @@
 
 | Симптом | Что проверить |
 |---|---|
-| `@zakupki-eis` не появляется | Перезапусти Claude Desktop полностью (не просто закрытие окна, а через трей) |
-| MCP падает на старте | Открой консоль приложения — там будет ошибка от `launcher.py`. Чаще всего: нет Python в PATH |
+| `@zakupki-eis` не появляется | 1) Перезапусти Claude Desktop полностью (через трей, не крестиком). 2) Проверь что в `cmd` команда `python --version` печатает 3.10+ — если нет, поставь с python.org с галочкой «Add Python to PATH». 3) В Personal plugins нажми **Disable → Enable** у `tender-ai`, чтобы Claude перезагрузил `.mcp.json`. |
+| `python` открывает Microsoft Store | Это заглушка Windows. Поставь настоящий Python с [python.org](https://python.org) (с галочкой «Add Python to PATH») и перезапусти Claude. В логах launcher напишет об этом явно. |
+| MCP падает на старте | Открой консоль приложения — там будет строка `[zakupki-eis launcher] python=...` от `launcher.py`. Если её **нет совсем** — Claude вообще не нашёл Python (ставь с python.org). Если есть, но дальше ошибка — `pip` не смог поставить зависимости. |
 | Скилл не активируется | Перезапуск приложения; убедись что плагин включён в **Personal plugins** |
 | `pip install` падает на корпоративном прокси | В консоли увидишь это; задайте переменную `HTTPS_PROXY` или ставьте пакеты вручную: `pip install mcp requests beautifulsoup4 lxml` |
+| MCP «работает у разработчика, у меня нет» | На машине разработчика MCP мог быть прописан **отдельно** через `claude mcp add` или руками в `claude_desktop_config.json` — это не часть плагина. Проверь, что у тебя плагин действительно стоит свежей версии (см. в Personal plugins) и что ты дёрнул **Disable → Enable** после обновления. |
 
 ---
 

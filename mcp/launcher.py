@@ -107,8 +107,41 @@ def ensure_dependencies() -> None:
     print("[launcher] Зависимости установлены.", file=sys.stderr, flush=True)
 
 
+def _diagnostic_banner() -> None:
+    """Одна строка в stderr при старте — попадает в логи Claude Desktop.
+
+    Если MCP «не цепляется», именно отсутствие этой строки в логах
+    показывает, что launcher.py вообще не запустился (типично для
+    Windows: command "python" указывает на Microsoft Store stub либо
+    Python вообще не в PATH). На macOS — что нужен "python3".
+    """
+    exe = sys.executable or "?"
+    is_store_stub = (
+        sys.platform == "win32"
+        and "WindowsApps" in exe
+        and "python" in exe.lower()
+    )
+    marker = " [Microsoft Store stub — поставь Python с python.org]" if is_store_stub else ""
+    print(
+        f"[zakupki-eis launcher] python={exe} platform={sys.platform}{marker}",
+        file=sys.stderr,
+        flush=True,
+    )
+    if is_store_stub:
+        # Stub завершится сам, лучше упасть с понятной ошибкой раньше.
+        print(
+            "[zakupki-eis launcher] python из WindowsApps — это заглушка, "
+            "которая ничего не запускает. Установи Python 3.10+ с python.org "
+            "(галочка «Add Python to PATH») и переустанови плагин.",
+            file=sys.stderr,
+            flush=True,
+        )
+        sys.exit(2)
+
+
 def main() -> None:
     _force_utf8_streams()
+    _diagnostic_banner()
 
     # На Windows: чтобы дочерние процессы (pip и его подпроцессы)
     # тоже работали в UTF-8 при чтении/печати путей.
