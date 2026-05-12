@@ -161,18 +161,22 @@ def main() -> None:
               file=sys.stderr, flush=True)
         sys.exit(1)
 
-    # На embedded Python (с python<NN>._pth) и при запуске через exec()
-    # директория скрипта не попадает в sys.path автоматически — добавляем
-    # её явно, иначе server.py не сможет импортировать соседние модули
-    # (zakupki_scraper и т.п.).
-    here_str = str(here)
-    if here_str not in sys.path:
-        sys.path.insert(0, here_str)
-
-    source = server.read_text(encoding="utf-8")
-    code = compile(source, str(server), "exec")
-    globs = {"__name__": "__main__", "__file__": str(server)}
-    exec(code, globs)
+    # Запускаем server.py отдельным процессом, а не через exec() в текущем.
+    # Это полностью изолирует sys.path / globals / state launcher'а от
+    # сервера. stdin/stdout/stderr наследуются от нас — MCP-протокол
+    # (JSON-RPC по stdio) идёт напрямую между Claude и server.py без
+    # промежуточных буферов.
+    #
+    # Embedded Python: чистый sys.path в новом процессе тоже не содержит
+    # script-dir, но server.py сам добавляет свою директорию в sys.path
+    # в первых строках — он самодостаточен.
+    try:
+        proc = subprocess.run([sys.executable, str(server)])
+    except FileNotFoundError as e:
+        print(f"[launcher] Не смог запустить {sys.executable}: {e}",
+              file=sys.stderr, flush=True)
+        sys.exit(127)
+    sys.exit(proc.returncode)
 
 
 if __name__ == "__main__":
