@@ -5,14 +5,14 @@
   },
   "metadata": {
     "description": "Маркетплейс плагинов Tender AI — инструменты для участия в госзакупках по 44-ФЗ.",
-    "version": "0.5.5"
+    "version": "0.5.7"
   },
   "plugins": [
     {
       "name": "tender-ai",
       "source": "./",
       "description": "Помощник по госзакупкам 44-ФЗ для слаботочки: разбор закупки, жалобы в УФАС, запросы разъяснений + MCP zakupki-eis.",
-      "version": "0.5.5",
+      "version": "0.5.7",
       "category": "russia-gov-procurement",
       "tags": ["44-fz", "zakupki", "fas", "slabotochka"]
     }

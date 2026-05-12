@@ -15,6 +15,16 @@ MCP-сервер для работы с закупками.
 Подключение: прописать в конфиг Claude Desktop (см. CLAUDE.md)
 """
 
+# Embedded Python (python<NN>._pth) и нестандартные запуски (python -c, -m,
+# из чужой cwd) не кладут директорию скрипта в sys.path — соседние модули
+# вроде zakupki_scraper становятся не импортируемыми. Делаем server.py
+# самодостаточным.
+import sys
+from pathlib import Path
+_here = str(Path(__file__).resolve().parent)
+if _here not in sys.path:
+    sys.path.insert(0, _here)
+
 from mcp.server.fastmcp import FastMCP
 import zakupki_scraper
 
