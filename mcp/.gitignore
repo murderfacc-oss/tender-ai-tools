@@ -10,8 +10,8 @@ __pycache__/
 *.pyc
 *.pyo
 
-# Тестовые скрипты
-test_*.py
+# Ad-hoc тестовые скрипты в корне mcp/ (не трогаем pytest-сьют в mcp/tests/)
+/test_*.py
 
 # Старые файлы DaMIA (больше не нужны)
 damia_api.py
