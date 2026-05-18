@@ -18,7 +18,8 @@ def test_download_tender_writes_files_and_meta(tmp_path, purchase_44, monkeypatc
 
 def test_download_tender_404_message(tmp_path, monkeypatch):
     def boom(fz, n):
-        raise server.client.GosplanNotFound("нет такой")
+        raise server.client.GosplanNotFound(
+            "не найдено в ГосПлан API: /fz44/purchases/BAD")
     monkeypatch.setattr(server.client, "get_purchase", boom)
     out = server.download_tender("BAD", str(tmp_path))
     assert "не найден" in out.lower()
