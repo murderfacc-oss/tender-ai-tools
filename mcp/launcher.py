@@ -22,10 +22,8 @@ import sys
 from pathlib import Path
 
 REQUIRED = [
-    ("mcp",          "mcp"),
-    ("requests",     "requests"),
-    ("bs4",          "beautifulsoup4"),
-    ("lxml",         "lxml"),
+    ("mcp",      "mcp"),
+    ("requests", "requests"),
 ]
 
 
