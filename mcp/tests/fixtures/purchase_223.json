@@ -1,0 +1,221 @@
+{
+  "submission_close_at": "2026-05-20T12:00:00",
+  "currency_code": "RUB",
+  "customer": "6163024930",
+  "delivery_places": [],
+  "doc_created_at": "2026-05-12T15:53:09.457000",
+  "doc_updated_at": "2026-05-12T15:53:09.457000",
+  "max_price": 1117978.06,
+  "object_info": "Закупка работ по монтажу и пуско-наладке оборудования системы видеонаблюдения в помещениях ГАУ РО \"ОКДЦ\" по адресу: ул. Пушкинская, 127, ул. М. Горького, 130",
+  "okpd2": [
+    "43.21.10.290"
+  ],
+  "placer": "6163024930",
+  "plan_numbers": [
+    "2250866412"
+  ],
+  "position_numbers": [
+    "1589"
+  ],
+  "published_at": "2026-05-12T16:03:42",
+  "purchase_number": "32615999002",
+  "purchase_type": "purchaseNotice",
+  "region": 61,
+  "stage": 1,
+  "updated_at": "2026-05-12T16:03:42",
+  "docs": [
+    {
+      "doc_type": "purchaseNotice",
+      "published_at": "2026-05-12T16:03:42",
+      "source": {
+        "guid": "7080000e-3b52-4061-86e3-6e9ea7f23bc4",
+        "createDateTime": "2026-05-12T16:00:46",
+        "urlEIS": "https://lk.zakupki.gov.ru/223/purchase/private/purchase/notice-info/details.html?noticeInfoId=19765645",
+        "urlVSRZ": "https://223.rts-tender.ru/supplier/auction/Trade/View.aspx?Id=3889389",
+        "registrationNumber": "32615999002",
+        "name": "Закупка работ по монтажу и пуско-наладке оборудования системы видеонаблюдения в помещениях ГАУ РО \"ОКДЦ\" по адресу: ул. Пушкинская, 127, ул. М. Горького, 130",
+        "customer": {
+          "mainInfo": {
+            "fullName": "ГОСУДАРСТВЕННОЕ АВТОНОМНОЕ УЧРЕЖДЕНИЕ РОСТОВСКОЙ ОБЛАСТИ \"ОБЛАСТНОЙ КОНСУЛЬТАТИВНО-ДИАГНОСТИЧЕСКИЙ ЦЕНТР\"",
+            "shortName": "ГАУ РО \"ОКДЦ\"",
+            "iko": "56163024930616301001",
+            "inn": "6163024930",
+            "kpp": "616301001",
+            "ogrn": "1026103172446",
+            "legalAddress": "344000, Г.. РОСТОВ-НА-ДОНУ, УЛ. ПУШКИНСКАЯ, Д. 127",
+            "postalAddress": "344000, обл. Ростовская, г. Ростов-на-Дону, ул. Пушкинская, д. 127, дом 127",
+            "email": "omldc@omldc-rnd.ru",
+            "okato": "60401368000",
+            "okopf": "75201",
+            "okopfName": "Государственные автономные учреждения субъектов Российской Федерации",
+            "okpo": "01941727",
+            "okfs": "13",
+            "okfsName": "Собственность субъектов Российской Федерации",
+            "timeZone": {
+              "offset": "0",
+              "name": "МСК (СГВ+3) Москва, Волгоград"
+            },
+            "region": "РОСТОВСКАЯ ОБЛАСТЬ"
+          }
+        },
+        "purchaseMethodCode": "62901",
+        "purchaseCodeName": "Запрос котировок в электронной форме",
+        "placer": {
+          "mainInfo": {
+            "fullName": "ГОСУДАРСТВЕННОЕ АВТОНОМНОЕ УЧРЕЖДЕНИЕ РОСТОВСКОЙ ОБЛАСТИ \"ОБЛАСТНОЙ КОНСУЛЬТАТИВНО-ДИАГНОСТИЧЕСКИЙ ЦЕНТР\"",
+            "shortName": "ГАУ РО \"ОКДЦ\"",
+            "iko": "56163024930616301001",
+            "inn": "6163024930",
+            "kpp": "616301001",
+            "ogrn": "1026103172446",
+            "legalAddress": "344000, Г.. РОСТОВ-НА-ДОНУ, УЛ. ПУШКИНСКАЯ, Д. 127",
+            "postalAddress": "344000, обл. Ростовская, г. Ростов-на-Дону, ул. Пушкинская, д. 127, дом 127",
+            "email": "omldc@omldc-rnd.ru",
+            "okato": "60401368000",
+            "okopf": "75201",
+            "okopfName": "Государственные автономные учреждения субъектов Российской Федерации",
+            "okpo": "01941727",
+            "okfs": "13",
+            "okfsName": "Собственность субъектов Российской Федерации",
+            "timeZone": {
+              "offset": "0",
+              "name": "МСК (СГВ+3) Москва, Волгоград"
+            },
+            "region": "РОСТОВСКАЯ ОБЛАСТЬ"
+          }
+        },
+        "contact": {
+          "firstName": "А.",
+          "middleName": "Я.",
+          "lastName": "Аматуни",
+          "phone": "78632557960",
+          "email": "omts@omldc-rnd.ru"
+        },
+        "publicationDateTime": "2026-05-12T16:03:42",
+        "documentationDelivery": {
+          "deliveryStartDateTime": "2026-05-12",
+          "deliveryEndDateTime": "2026-05-20",
+          "place": "Электронная площадка РТС-тендер (http://www.rts-tender.ru) и Официальный сайт (http://zakupki.gov.ru)",
+          "procedure": "В электронной форме на площадке РТС-тендер (http://www.rts-tender.ru) и Официальном сайте (http://zakupki.gov.ru)"
+        },
+        "status": "P",
+        "version": "1",
+        "notDishonest": "true",
+        "attachments": {
+          "totalDocumentsCount": "2",
+          "document": [
+            {
+              "guid": "0faf4d5b-ab19-489b-83d2-e9b7dade7262",
+              "createDateTime": "2026-05-12T16:00:29",
+              "fileName": "_ЗК_смета.xlsx",
+              "description": "_ЗК_смета.xlsx",
+              "url": "https://zakupki.gov.ru/223/purchase/public/download/download.html?id=110657156"
+            },
+            {
+              "guid": "db795049-f8b2-4cf2-a079-2e7b5b04b364",
+              "createDateTime": "2026-05-12T16:00:29",
+              "fileName": "_ЗК_монтаж_видеонабл.doc",
+              "description": "_ЗК_монтаж_видеонабл.doc",
+              "url": "https://zakupki.gov.ru/223/purchase/public/download/download.html?id=110657157"
+            }
+          ]
+        },
+        "modificationDate": "2026-05-12T16:03:42",
+        "saveUserId": "93049",
+        "deliveryPlaceIndication": "DIFFERENT_PLACE",
+        "emergency": "false",
+        "jointPurchase": "false",
+        "hidePurchase": "false",
+        "antimonopolyDecisionTaken": "false",
+        "applSubmisionPlace": "Электронная площадка РТС-тендер (http://www.rts-tender.ru)",
+        "applSubmisionStartDate": "2026-05-12",
+        "applSubmisionOrder": "В электронной форме",
+        "summingupOrder": "В соответствии с документацией о закупке",
+        "electronicPlaceInfo": {
+          "name": "РТС-тендер",
+          "url": "www.rts-tender.ru",
+          "electronicPlaceId": "1698"
+        },
+        "placingProcedure": {
+          "summingupDateTime": "2026-05-25T23:59:59",
+          "summingupPlace": "344000, Российская Федерация, Ростовская обл., г. Ростов-на-Дону, ул. Пушкинская, 127, ОКАТО: 60401000000"
+        },
+        "submissionCloseDateTime": "2026-05-20T12:00:00",
+        "isLotOriented": "false",
+        "lots": {
+          "lot": {
+            "guid": "a7be51a8-a6fa-467a-9604-ebc45df3f82c",
+            "ordinalNumber": "1",
+            "lotEditEnabled": "true",
+            "lotData": {
+              "subject": "Закупка работ по монтажу и пуско-наладке оборудования системы видеонаблюдения в помещениях ГАУ РО \"ОКДЦ\" по адресу: ул. Пушкинская, 127, ул. М. Горького, 130",
+              "currency": {
+                "code": "RUB",
+                "digitalCode": "643",
+                "name": "Российский рубль"
+              },
+              "initialSum": "1117978.06",
+              "deliveryPlace": {
+                "state": "Южный федеральный округ",
+                "region": "Ростовская   обл",
+                "regionOkato": "60000000000",
+                "address": "344000, Российская Федерация, Ростовская обл., г. Ростов-на-Дону, ул. Пушкинская, 127, ОКАТО: 60401000000"
+              },
+              "lotItems": {
+                "newCodes": "true",
+                "superiorityNationalRegime": "false",
+                "lotItem": {
+                  "guid": "d4fd2b91-6238-451d-b6d7-5ae6a6140347",
+                  "ordinalNumber": "1",
+                  "okpd2": {
+                    "code": "43.21.10.290",
+                    "name": "Работы электромонтажные прочие, не включенные в другие группировки"
+                  },
+                  "okved2": {
+                    "code": "41.20",
+                    "name": "Строительство жилых и нежилых зданий"
+                  },
+                  "okei": {
+                    "code": "876",
+                    "name": "Условная единица"
+                  },
+                  "qty": "1",
+                  "prohibitionNationalRegime": "false",
+                  "constraintNationalRegime": "false",
+                  "exceptionNationalRegime": "false"
+                }
+              },
+              "forSmallOrMiddle": "false",
+              "excludePurchaseFromPlan": "false",
+              "subcontractorsRequirement": "false",
+              "ignoredPurchase": "false",
+              "centralized": "false",
+              "completingSupplyNeeded": "true",
+              "completingSupplyInfo": {
+                "sum": "111797.80",
+                "currency": {
+                  "code": "RUB",
+                  "digitalCode": "643",
+                  "name": "Российский рубль"
+                },
+                "extra": "Безотзывная банковская или независимая гарантия или перечисление денежных средств, по выбору участника, согласно документации."
+              }
+            },
+            "deliveryPlaceIndication": "GL",
+            "jointLotData": {
+              "jointLot": "false"
+            },
+            "lotPlanInfo": {
+              "planRegistrationNumber": "2250866412",
+              "planGuid": "73dca2db-a022-4f09-bab9-f09aabc00068",
+              "positionNumber": "1589",
+              "lotPlanPosition": "COMMODITY",
+              "positionGuid": "b2f56444-0f68-4644-95e5-0a1b5a13ce23"
+            },
+            "cancelled": "false"
+          }
+        }
+      }
+    }
+  ]
+}
