@@ -4,6 +4,7 @@
 Инструменты (сигнатуры не менялись со времён скрап-версии):
   download_tender, download_contract, check_tender_updates, update_tender
 """
+import json
 import sys
 from pathlib import Path
 
@@ -78,7 +79,7 @@ def download_tender(reg_number: str, folder: str) -> str:
         return f"Ошибка: {e}"
 
     (base / "gosplan_meta.json").write_text(
-        __import__("json").dumps(detail, ensure_ascii=False, indent=2),
+        json.dumps(detail, ensure_ascii=False, indent=2),
         encoding="utf-8",
     )
 
@@ -140,20 +141,16 @@ def download_contract(contract_reestr_number: str, folder: str) -> str:
     except client.GosplanError as e:
         return f"Ошибка: {e}"
 
-    # procedures: 404 = нет этапов исполнения, не ошибка (вернёт [])
-    procedures = []
-    for f in _FZ_ORDER:
-        try:
-            procedures = client.get_contract_procedures(f, contract_reestr_number)
-            if procedures:
-                break
-        except client.GosplanError:
-            pass
+    # procedures: 404 = нет этапов исполнения, не ошибка (вернёт []).
+    # fz уже определён в _fetch_contract — не дёргаем чужой ФЗ зря.
+    try:
+        procedures = client.get_contract_procedures(fz, contract_reestr_number)
+    except client.GosplanError:
+        procedures = []
 
-    import json as _json
     (sub / ".contract_meta.json").write_text(
-        _json.dumps({"contract": detail, "procedures": procedures},
-                    ensure_ascii=False, indent=2),
+        json.dumps({"contract": detail, "procedures": procedures},
+                   ensure_ascii=False, indent=2),
         encoding="utf-8",
     )
 
