@@ -21,6 +21,7 @@ skills/*.zip
 # кэш при source=«./» и ломает marketplace-install в Claude Desktop.
 # Раздавать партнёрам через GitHub Releases.
 tender-ai-v*.zip
+tender-ai-test-v*.zip
 
 # Генерируемые выходные файлы
 *.docx

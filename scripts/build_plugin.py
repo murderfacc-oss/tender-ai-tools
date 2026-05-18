@@ -67,20 +67,39 @@ def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--output", "-o", type=Path, default=None,
                         help="имя выходного zip (по умолчанию tender-ai-v<версия>.zip)")
+    parser.add_argument("--test", action="store_true",
+                        help="тестовая сборка: name=tender-ai-test (ставится "
+                             "рядом с рабочим плагином, не конфликтует)")
     args = parser.parse_args()
 
     version = _read_version()
-    output = args.output or (ROOT / f"tender-ai-v{version}.zip")
+    if args.test:
+        output = args.output or (ROOT / f"tender-ai-test-v{version}.zip")
+    else:
+        output = args.output or (ROOT / f"tender-ai-v{version}.zip")
 
     added = 0
     with zipfile.ZipFile(output, "w", zipfile.ZIP_DEFLATED) as zf:
         for rel in INCLUDE_FILES:
             src = ROOT / rel
-            if src.is_file():
-                zf.write(src, rel)
+            if not src.is_file():
+                print(f"  ! пропущен (нет файла): {rel}")
+                continue
+            if args.test and rel == ".claude-plugin/plugin.json":
+                data = json.loads(src.read_text(encoding="utf-8"))
+                data["name"] = "tender-ai-test"
+                data["description"] = "[ТЕСТ] " + data.get("description", "")
+                zf.writestr(rel, json.dumps(data, ensure_ascii=False, indent=2))
+                added += 1
+            elif args.test and rel == ".claude-plugin/marketplace.json":
+                data = json.loads(src.read_text(encoding="utf-8"))
+                for p in data.get("plugins", []):
+                    p["name"] = "tender-ai-test"
+                zf.writestr(rel, json.dumps(data, ensure_ascii=False, indent=2))
                 added += 1
             else:
-                print(f"  ! пропущен (нет файла): {rel}")
+                zf.write(src, rel)
+                added += 1
 
         for d in INCLUDE_DIRS:
             base = ROOT / d
@@ -98,7 +117,7 @@ def main() -> int:
 
     size_kb = output.stat().st_size // 1024
     print(f"\nГотово: {output.name}  ({size_kb} KB, {added} файлов)")
-    print(f"Партнёр: Customize → Personal plugins → + → Create plugin → Upload plugin → {output.name}")
+    print(f"Partner: Customize -> Personal plugins -> + -> Create plugin -> Upload plugin -> {output.name}")
     return 0
 
 
