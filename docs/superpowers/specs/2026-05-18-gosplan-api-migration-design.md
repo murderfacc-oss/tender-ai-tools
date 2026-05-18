@@ -19,7 +19,7 @@ _Дата: 2026-05-18 • Статус: спецификация, ожидает
 | Вопрос | Решение |
 |---|---|
 | Дыра покрытия 223-ФЗ в ГосПлан | **Только ГосПлан, скрап убрать целиком.** Непокрытые 223-ФЗ закупки не скачиваются — это осознанный размен. Обязательно внятное сообщение об ошибке, не молчаливый сбой. |
-| Документы контракта (КС-2/КС-3/приёмка) | ГосПлан имеет эндпоинты `/fz44/contracts/{reg_num}`. Структура `docs[].source` параллельна закупкам. Делаем через API так же, как извещения. Конкретно вложения контрактов живым запросом не подтверждены — закладываем страховку (см. Риски). |
+| Документы контракта (КС-2/КС-3/приёмка) | **Подтверждено спайком 2026-05-18.** Сам договор — `/contracts/{reg_num}` (`scanDocuments.CPEPAttachment[]`); закрывающие (КС-2/КС-3/приёмка/платёжки/экспертиза) — `/contracts/{reg_num}/procedures`. Схема контрактов ОТЛИЧАЕТСЯ от закупок (не `attachmentsInfo`). На тесте: 3 файла договора + 11 файлов исполнения = как старый скрап. |
 | Подход к коду | **Чистая реализация с нуля** по `_gosplan_spike.md` + OpenAPI. Код из «Zakupki 3.0» НЕ переносим. |
 
 ## Ключевые факты об API (из `_gosplan_spike.md` + OpenAPI)
@@ -30,14 +30,25 @@ _Дата: 2026-05-18 • Статус: спецификация, ожидает
 - Только HTTP GET. Рекомендуется заголовок `User-Agent`.
 - Эндпоинты:
   - `GET /fz{44|223}/purchases/{purchase_number}` — карточка закупки.
-  - `GET /fz{44|223}/contracts/{reg_num}` — карточка контракта.
-- 44-ФЗ карточка: всё в `docs[0].source`:
+  - `GET /fz{44|223}/contracts/{reg_num}` — карточка контракта (сам договор).
+  - `GET /fz{44|223}/contracts/{reg_num}/procedures` — этапы исполнения (КС-2/КС-3/приёмка/платёжки/экспертиза).
+
+**Закупка (purchases) — всё в `docs[0].source`:**
   - `attachmentsInfo.attachmentInfo[]` → `{publishedContentId, fileName, fileSize, docKindInfo.{code,name}, url}`. `url` — прямая ссылка zakupki.gov.ru/filestore, качается без авторизации.
   - `notificationInfo.purchaseObjectsInfo.{notDrug|drug}PurchaseObjectsInfo.purchaseObject[]` — позиции с характеристиками.
   - `notificationInfo.{customerRequirementsInfo, preferensesInfo, procedureInfo, contractConditionsInfo}`, `commonInfo`, `purchaseResponsibleInfo`.
-- 223-ФЗ: схема параллельная, ключи плоские (`attachments.document[]`, `lots.lot.lotData.lotItems`).
-- `docKindInfo.code` → подпапка: `POD→1_ТЗ`, `CP→2_Контракт`, `MRJ→3_НМЦК`, `CAR→5_Документация`, `AD→7_Прочее`; незнакомые — эвристика по словам в `name`.
-- Пустые attachments у свежих закупок — нормальная ситуация, не ошибка.
+  - 223-ФЗ: схема параллельная, ключи плоские (`attachments.document[]`, `lots.lot.lotData.lotItems`).
+  - `docKindInfo.code` → подпапка: `POD→1_ТЗ`, `CP→2_Контракт`, `MRJ→3_НМЦК`, `CAR→5_Документация`, `AD→7_Прочее`; незнакомые — эвристика по словам в `name`.
+  - Пустые attachments у свежих закупок — нормальная ситуация, не ошибка.
+
+**Контракт (contracts) — схема ДРУГАЯ, чем у закупок** (установлено спайком 2026-05-18, см. Риски):
+  - `GET /contracts/{reg_num}` → `docs[0].source.scanDocuments.CPEPAttachment[]` — сам договор: проект контракта `.doc`, печатная форма `.html`, электронный контракт `.xml`. Плюс `docs[0].source.printForm.url`. Поля `docKindInfo` НЕТ.
+  - `GET /contracts/{reg_num}/procedures` → **JSON-массив**, элементы `doc_type: "contractProcedure"`. Закрывающие документы в каждом элементе `[i].source`:
+    - `executions.execution.docAcceptance.receiptDocuments.attachment[]` → КС-2, КС-3, УПД, документы о приёмке.
+    - `paymentDocuments.attachment[]` → счёт, платёжные поручения.
+    - `examinationResultsDocuments.attachment[]` → акт экспертизы.
+  - `attachment` бывает **и объектом, и массивом** — нормализовать к списку. Ключи вложения: `fileName`, `url`, `publishedContentId`, `docDescription`, `docRegNumber`. Типа документа (`docKindInfo`) нет — тип определяется родительским узлом (receipt/payment/examination).
+  - Контракт раскладывается **плоско в подпапку `Контракт/`** (без под-подпапок — `docKindInfo` отсутствует; совпадает с прежним поведением скрапа).
 
 ## Архитектура
 
@@ -46,9 +57,9 @@ _Дата: 2026-05-18 • Статус: спецификация, ожидает
 
 | Модуль | Ответственность | Зависимости |
 |---|---|---|
-| `gosplan_client.py` | Только HTTP к API: `get_purchase(fz, number)`, `get_contract(fz, reg_num)`, `download_file(url, dest)`. База URL, User-Agent, API-ключ из env, ретраи 429, классификация ошибок. | `requests` |
+| `gosplan_client.py` | Только HTTP к API: `get_purchase(fz, number)`, `get_contract(fz, reg_num)`, `get_contract_procedures(fz, reg_num)`, `download_file(url, dest)`. База URL, User-Agent, API-ключ из env, ретраи 429, классификация ошибок. | `requests` |
 | `doc_kind_map.py` | Чистая функция `folder_for(code, name) -> str`: `docKindInfo` → подпапка + эвристика по словам в `name`. | — |
-| `gosplan_extract.py` | Из JSON-карточки: список вложений + текстовая сводка `print_form.txt`. Инкапсулирует различие схем 44-ФЗ vs 223-ФЗ. **Единственное место, где зашиты пути `docs[].source.*`.** | — |
+| `gosplan_extract.py` | Из JSON: `iter_attachments` (закупки, 44 vs 223) + текстовая сводка `print_form.txt` + `iter_contract_attachments` (договор из `scanDocuments.CPEPAttachment[]` + закрывающие из procedures-массива). **Единственное место, где зашиты пути `docs[].source.*`.** | — |
 | `gosplan_store.py` | Раскладка по папкам, санитайз имён (Windows, длина >180 → обрезка с сохранением расширения), `gosplan_meta.json`, `.tender_meta.json`, diff обновлений. | — |
 | `server.py` | FastMCP, 4 инструмента — тонкий оркестратор. | модули выше |
 
@@ -77,8 +88,10 @@ _Дата: 2026-05-18 • Статус: спецификация, ожидает
 подсказка «контракт подписан? → `download_contract(номер)`».
 
 ### `download_contract(contract_reestr_number, folder)`
-`get_contract(fz, reg_num)` → `docs[].source.attachmentsInfo` (параллельно
-закупкам). Файлы → подпапка `Контракт/`. Метаданные → `Контракт/.contract_meta.json`.
+1. `get_contract(fz, reg_num)` → сам договор из `docs[0].source.scanDocuments.CPEPAttachment[]` (+ `printForm.url`).
+2. `get_contract_procedures(fz, reg_num)` → массив этапов; из каждого `[i].source` забрать закрывающие: `executions.execution.docAcceptance.receiptDocuments.attachment[]` (КС-2/КС-3/приёмка), `paymentDocuments.attachment[]` (платёжки), `examinationResultsDocuments.attachment[]` (экспертиза). `attachment` нормализуется obj→[obj].
+3. Все файлы — **плоско в `Контракт/`** (без под-подпапок, у контрактов нет `docKindInfo`). Сырые ответы (контракт + procedures) → `Контракт/.contract_meta.json`.
+4. Если `/procedures` пуст или нет узлов исполнения — не ошибка (контракт без актов / ещё в исполнении): качаем только сам договор, в выводе помечаем «закрывающих документов в API пока нет».
 
 ### `check_tender_updates(folder)`
 Без скачивания: читаем `.tender_meta.json`, повторный `get_purchase`,
@@ -99,7 +112,7 @@ _Дата: 2026-05-18 • Статус: спецификация, ожидает
 
 ## Риски
 
-1. **Вложения контрактов не подтверждены живым запросом.** В OpenAPI `docs[].source` для контрактов = «зависит от типа документа». Страховка: если у ответа контракта нет `attachmentsInfo` — `download_contract` не падает молча, а возвращает «контракт найден, но вложения в ответе API отсутствуют (структура: `<что пришло>`); сырой ответ в `.contract_meta.json`». Первый реальный контракт сразу покажет, верна ли гипотеза. **Снимается проверочным шагом (см. Тестирование) ДО завязки всего кода на гипотезу.**
+1. **[СНЯТ 2026-05-18 спайком]** Реальный закрытый контракт `3366503536925000015` подтвердил схему: договор — `docs[0].source.scanDocuments.CPEPAttachment[]`; закрывающие (КС-2/КС-3/приёмка/платёжки/экспертиза) — `/contracts/{reg_num}/procedures` (узлы `receiptDocuments`/`paymentDocuments`/`examinationResultsDocuments`). 3+11 файлов = как старый скрап. Схема ОТЛИЧАЕТСЯ от закупок (не `attachmentsInfo`) — учтено в архитектуре и поведении. Остаточная страховка: если `/procedures` без узлов исполнения — `download_contract` не падает, качает сам договор и помечает отсутствие закрывающих.
 2. **Дрейф схемы ГосПлан.** API внешний. Защита: все пути `docs[].source.*` собраны в одном модуле `gosplan_extract.py` — при изменении схемы правится одно место.
 3. **223-ФЗ вне покрытия.** Принято пользователем. Митигация — внятное сообщение 404, а не тихий пропуск.
 

@@ -16,18 +16,20 @@
 - До 2026-07-01 без ключа. Forward-compat: если задан env `GOSPLAN_API_KEY` — слать заголовком `X-API-Key` (предполагаемая схема, меняется одной константой когда ключи введут).
 - `429` → пауза 60 сек, retry ≤3.
 - `GET /fz{44|223}/purchases/{number}` — карточка закупки.
-- `GET /fz{44|223}/contracts/{reg_num}` — карточка контракта.
-- Вложения 44-ФЗ: `detail["docs"][0]["source"]["attachmentsInfo"]["attachmentInfo"]` — список `{publishedContentId, fileName, fileSize, docKindInfo:{code,name}, url}`. `url` качается без авторизации.
-- Вложения 223-ФЗ: `detail["docs"][0]["source"]["attachments"]["document"]` — список `{guid, fileName, description, url}`.
-- Коды подпапок: `POD→1_ТЗ`, `CP→2_Контракт`, `MRJ→3_НМЦК`, `CAR→5_Документация`, `AD→7_Прочее`. Незнакомые — эвристика по словам в `name`.
+- `GET /fz{44|223}/contracts/{reg_num}` — карточка контракта (сам договор).
+- `GET /fz{44|223}/contracts/{reg_num}/procedures` — этапы исполнения (закрывающие).
+- Вложения закупки 44-ФЗ: `detail["docs"][0]["source"]["attachmentsInfo"]["attachmentInfo"]` — список `{publishedContentId, fileName, fileSize, docKindInfo:{code,name}, url}`. `url` качается без авторизации.
+- Вложения закупки 223-ФЗ: `detail["docs"][0]["source"]["attachments"]["document"]` — список `{guid, fileName, description, url}`.
+- **Контракт — схема ИНАЯ (не attachmentsInfo!):** договор — `detail["docs"][0]["source"]["scanDocuments"]["CPEPAttachment"][]`; закрывающие — из массива `/procedures`, в каждом `[i]["source"]`: `executions.execution.docAcceptance.receiptDocuments.attachment[]` (КС-2/КС-3/приёмка), `paymentDocuments.attachment[]` (платёжки), `examinationResultsDocuments.attachment[]` (экспертиза). `attachment` бывает obj и list. `docKindInfo` у контрактов НЕТ.
+- Коды подпапок (только закупки): `POD→1_ТЗ`, `CP→2_Контракт`, `MRJ→3_НМЦК`, `CAR→5_Документация`, `AD→7_Прочее`. Незнакомые — эвристика по словам в `name`. Контракт раскладывается плоско в `Контракт/`.
 
 ## File Structure
 
 | Файл | Ответственность | Действие |
 |---|---|---|
-| `mcp/gosplan_client.py` | HTTP-клиент: `get_purchase`, `get_contract`, `download_file`, `GosplanError`/`GosplanNotFound` | Create |
-| `mcp/doc_kind_map.py` | `folder_for(code, name) -> str` | Create |
-| `mcp/gosplan_extract.py` | `iter_attachments`, `build_print_form_text` | Create |
+| `mcp/gosplan_client.py` | HTTP: `get_purchase`, `get_contract`, `get_contract_procedures`, `download_file`, `GosplanError`/`GosplanNotFound` | Create |
+| `mcp/doc_kind_map.py` | `folder_for(code, name) -> str` (только закупки) | Create |
+| `mcp/gosplan_extract.py` | `iter_attachments`, `build_print_form_text`, `iter_contract_attachments` | Create |
 | `mcp/gosplan_store.py` | `sanitize_filename`, мета I/O, `diff_meta` | Create |
 | `mcp/server.py` | FastMCP, 4 инструмента | Rewrite |
 | `mcp/zakupki_scraper.py` | — | Delete |
@@ -41,40 +43,65 @@
 
 ---
 
-## Task 1: Проверочный спайк контрактов (ручной, сеть) — снять риск №1
+## Task 1: Фикстуры контракта (decision-gate ПРОЙДЕН спайком 2026-05-18)
 
-Цель: до написания кода убедиться, что `/fz44/contracts/{reg_num}` отдаёт `attachmentsInfo` с реальными документами (КС-2/КС-3/приёмка). Это decision-gate из спека.
+Decision-gate уже разрешён двумя спайками. Установленная схема контрактов
+(см. обновлённый спек): договор — `docs[0].source.scanDocuments.CPEPAttachment[]`;
+закрывающие (КС-2/КС-3/приёмка/платёжки/экспертиза) — эндпоинт
+`/fz44/contracts/{reg_num}/procedures`, JSON-массив, узлы в `[i].source`:
+`executions.execution.docAcceptance.receiptDocuments.attachment[]`,
+`paymentDocuments.attachment[]`, `examinationResultsDocuments.attachment[]`.
+`attachment` бывает obj и list. На контракте `3366503536925000015` — 3 файла
+договора + 11 файлов исполнения. Эта задача — только зафиксировать две
+фикстуры для юнит-тестов Task 4/5.
 
-**Files:** Create: `mcp/tests/fixtures/.gitkeep`
+**Files:** Create: `mcp/tests/fixtures/.gitkeep`, `mcp/tests/fixtures/contract_44.json`, `mcp/tests/fixtures/contract_44_procedures.json`
 
-- [ ] **Step 1: Снять живой ответ контракта**
+- [ ] **Step 1: Создать маркер и снять карточку контракта**
 
-Взять реальный реестровый номер прошлого контракта Артёма (из истории — `3366503536925000015`, Воронеж).
-
-Run:
 ```bash
-python -c "import requests,json,sys; r=requests.get('https://v2.gosplan.info/fz44/contracts/3366503536925000015', headers={'User-Agent':'tender-ai-tools/0.7'}, timeout=60); open('mcp/tests/fixtures/contract_44.json','w',encoding='utf-8').write(json.dumps(r.json(),ensure_ascii=False,indent=2)); print('HTTP', r.status_code)"
+python -c "import os,requests,json; os.makedirs('mcp/tests/fixtures',exist_ok=True); open('mcp/tests/fixtures/.gitkeep','w').close(); r=requests.get('https://v2.gosplan.info/fz44/contracts/3366503536925000015', headers={'User-Agent':'tender-ai-tools/0.7'}, timeout=60); open('mcp/tests/fixtures/contract_44.json','w',encoding='utf-8').write(json.dumps(r.json(),ensure_ascii=False,indent=2)); print('contract HTTP', r.status_code)"
 ```
-Expected: `HTTP 200` и создан файл `mcp/tests/fixtures/contract_44.json`.
+Expected: `contract HTTP 200`, файл `mcp/tests/fixtures/contract_44.json`.
 
-- [ ] **Step 2: Проверить наличие вложений**
+- [ ] **Step 2: Снять procedures (закрывающие документы)**
 
-Run:
 ```bash
-python -c "import json; d=json.load(open('mcp/tests/fixtures/contract_44.json',encoding='utf-8')); src=(d.get('docs') or [{}])[0].get('source',{}); ai=src.get('attachmentsInfo',{}).get('attachmentInfo',[]); print('attachments:', len(ai)); [print(' -', a.get('fileName'), a.get('docKindInfo',{}).get('code')) for a in ai[:10]]"
+python -c "import requests,json; r=requests.get('https://v2.gosplan.info/fz44/contracts/3366503536925000015/procedures', headers={'User-Agent':'tender-ai-tools/0.7'}, timeout=60); open('mcp/tests/fixtures/contract_44_procedures.json','w',encoding='utf-8').write(json.dumps(r.json(),ensure_ascii=False,indent=2)); print('procedures HTTP', r.status_code, 'elements', len(r.json()))"
 ```
-Expected: `attachments: N` где N≥1, в списке видны документы (договор/КС/приёмка).
+Expected: `procedures HTTP 200 elements N` где N≥1.
 
-- [ ] **Step 3: Decision gate**
+- [ ] **Step 3: Sanity-проверка схемы**
 
-- Если вложения есть → продолжаем план как есть.
-- Если `attachments: 0` или иная структура → **ОСТАНОВИТЬСЯ**, сообщить пользователю фактическую структуру, вернуться к решению по `download_contract` (спек, секция «Риски» — вариант возврата к скрапу для контрактов). Не продолжать вслепую.
+Создать `mcp/tests/_sanity_procedures.py`:
+```python
+import json
+
+ps = json.load(open("mcp/tests/fixtures/contract_44_procedures.json", encoding="utf-8"))
+PATHS = [
+    ("executions", "execution", "docAcceptance", "receiptDocuments", "attachment"),
+    ("paymentDocuments", "attachment"),
+    ("examinationResultsDocuments", "attachment"),
+]
+cnt = 0
+for p in ps:
+    s = p.get("source", {})
+    for path in PATHS:
+        cur = s
+        for k in path:
+            cur = cur.get(k) if isinstance(cur, dict) else None
+        if cur:
+            cnt += len(cur) if isinstance(cur, list) else 1
+print("закрывающих вложений:", cnt)
+```
+Run: `python mcp/tests/_sanity_procedures.py` затем `git rm -f --cached mcp/tests/_sanity_procedures.py 2>/dev/null; rm mcp/tests/_sanity_procedures.py`
+Expected: `закрывающих вложений: N` где N≥1 (на тестовом контракте ≈11). Если 0 — структура изменилась, **остановиться и эскалировать** (спайк делался на этом же контракте 2026-05-18, расхождение = дрейф API). Файл проверки удалить, не коммитить.
 
 - [ ] **Step 4: Commit**
 
 ```bash
-git add mcp/tests/fixtures/.gitkeep mcp/tests/fixtures/contract_44.json
-git commit -m "test(mcp): зафиксирована фикстура контракта 44-ФЗ из ГосПлан API"
+git add mcp/tests/fixtures/.gitkeep mcp/tests/fixtures/contract_44.json mcp/tests/fixtures/contract_44_procedures.json
+git commit -m "test(mcp): фикстуры контракта 44-ФЗ (карточка + procedures) из ГосПлан API"
 ```
 
 ---
@@ -145,7 +172,14 @@ def purchase_223() -> dict:
 @pytest.fixture
 def contract_44() -> dict:
     return _load("contract_44.json")
+
+
+@pytest.fixture
+def contract_44_procedures() -> list:
+    return _load("contract_44_procedures.json")
 ```
+
+(`_load` уже возвращает `json.loads(...)` — для procedures это будет список, что корректно.)
 
 - [ ] **Step 5: Проверить, что pytest видит пакет**
 
@@ -296,6 +330,41 @@ def test_build_print_form_text(purchase_44):
     text = build_print_form_text(purchase_44, fz=44)
     assert isinstance(text, str) and len(text) > 50
     assert "Закупка" in text or "Объект" in text
+
+
+def test_iter_contract_attachments(contract_44, contract_44_procedures):
+    from gosplan_extract import iter_contract_attachments
+
+    atts = list(iter_contract_attachments(contract_44, contract_44_procedures))
+    assert atts, "ожидаются вложения контракта (договор + закрывающие)"
+    groups = {a["group"] for a in atts}
+    # сам договор всегда есть; закрывающие — на тестовом контракте есть
+    assert "contract" in groups
+    a = atts[0]
+    assert a["url"] and a["file_name"]
+
+
+def test_iter_contract_attachments_normalizes_single_obj():
+    from gosplan_extract import iter_contract_attachments
+
+    detail = {"docs": [{"source": {"scanDocuments": {"CPEPAttachment": [
+        {"fileName": "Контракт.doc", "url": "http://x/1", "publishedContentId": "c1"}
+    ]}}}]}
+    procedures = [{"source": {"paymentDocuments": {"attachment": {
+        "fileName": "Платёжка.pdf", "url": "http://x/2", "publishedContentId": "p1"}}}}]
+    atts = list(iter_contract_attachments(detail, procedures))
+    names = {a["file_name"] for a in atts}
+    assert names == {"Контракт.doc", "Платёжка.pdf"}
+
+
+def test_iter_contract_attachments_empty_procedures_ok():
+    from gosplan_extract import iter_contract_attachments
+
+    detail = {"docs": [{"source": {"scanDocuments": {"CPEPAttachment": [
+        {"fileName": "Контракт.doc", "url": "http://x/1", "publishedContentId": "c1"}
+    ]}}}]}
+    atts = list(iter_contract_attachments(detail, []))
+    assert [a["file_name"] for a in atts] == ["Контракт.doc"]
 ```
 
 - [ ] **Step 2: Запустить — убедиться, что падает**
@@ -452,12 +521,58 @@ def _dump_kv(node, indent: int = 2) -> str:
 
     walk(node, 1)
     return "\n".join(out) if out else pad + "—"
+
+
+def _as_list(node):
+    """attachment бывает объектом ИЛИ массивом — нормализуем к списку."""
+    if node is None:
+        return []
+    return node if isinstance(node, list) else [node]
+
+
+def _att(a: dict, group: str) -> dict:
+    return {
+        "url": a.get("url"),
+        "file_name": a.get("fileName") or a.get("publishedContentId") or "file.bin",
+        "content_id": a.get("publishedContentId"),
+        "group": group,
+    }
+
+
+# Пути к закрывающим документам внутри элемента procedures[i].source.
+# Установлены спайком 2026-05-18 (см. спек). Единственное место привязки.
+_PROC_PATHS = [
+    (("executions", "execution", "docAcceptance", "receiptDocuments", "attachment"), "receipt"),
+    (("paymentDocuments", "attachment"), "payment"),
+    (("examinationResultsDocuments", "attachment"), "examination"),
+]
+
+
+def iter_contract_attachments(contract_detail: dict, procedures: list):
+    """Все вложения контракта: сам договор (docs[0].source.scanDocuments
+    .CPEPAttachment[]) + закрывающие из массива procedures. Схема контрактов
+    ОТЛИЧАЕТСЯ от закупок (не attachmentsInfo). Пустой procedures — валидно."""
+    docs = contract_detail.get("docs") or []
+    src = docs[0].get("source", {}) if docs else {}
+    for a in _as_list((src.get("scanDocuments") or {}).get("CPEPAttachment")):
+        if a.get("url"):
+            yield _att(a, "contract")
+
+    for proc in procedures or []:
+        psrc = proc.get("source", {}) or {}
+        for path, group in _PROC_PATHS:
+            cur = psrc
+            for k in path:
+                cur = cur.get(k) if isinstance(cur, dict) else None
+            for a in _as_list(cur):
+                if isinstance(a, dict) and a.get("url"):
+                    yield _att(a, group)
 ```
 
 - [ ] **Step 4: Запустить — убедиться, что проходит**
 
 Run: `python -m pytest mcp/tests/test_gosplan_extract.py -q`
-Expected: PASS (5 passed). Если `test_iter_attachments_44` падает на пустых вложениях — фикстура `purchase_44.json` снята со свежей закупки без файлов; пересними Task 2 Step 3 с другим номером (закупка с опубликованными документами).
+Expected: PASS (8 passed). Если `test_iter_attachments_44` падает на пустых вложениях — фикстура `purchase_44.json` снята со свежей закупки без файлов; пересними Task 2 Step 3 с другим номером (закупка с опубликованными документами).
 
 - [ ] **Step 5: Commit**
 
@@ -531,6 +646,25 @@ def test_api_key_header(monkeypatch):
     monkeypatch.setattr(gc.requests, "get", fake_get)
     gc.get_purchase(44, "X")
     assert seen.get(gc.API_KEY_HEADER) == "secret123"
+
+
+def test_get_contract_procedures_url(monkeypatch):
+    seen = {}
+
+    def fake_get(url, headers=None, timeout=None, stream=False):
+        seen["url"] = url
+        return FakeResp(200, [{"doc_type": "contractProcedure"}])
+
+    monkeypatch.setattr(gc.requests, "get", fake_get)
+    out = gc.get_contract_procedures(44, "REG1")
+    assert out == [{"doc_type": "contractProcedure"}]
+    assert seen["url"].endswith("/fz44/contracts/REG1/procedures")
+
+
+def test_get_contract_procedures_404_returns_empty(monkeypatch):
+    monkeypatch.setattr(gc.requests, "get", lambda *a, **k: FakeResp(404))
+    # нет этапов исполнения — это валидно (контракт без актов), не ошибка
+    assert gc.get_contract_procedures(44, "REG1") == []
 ```
 
 - [ ] **Step 2: Запустить — убедиться, что падает**
@@ -608,6 +742,17 @@ def get_contract(fz: int, reg_num: str) -> dict:
     return _get_json(f"/fz{fz}/contracts/{reg_num}")
 
 
+def get_contract_procedures(fz: int, reg_num: str) -> list:
+    """Этапы исполнения контракта (КС-2/КС-3/приёмка/платёжки/экспертиза).
+    Возвращает список. 404 = у контракта нет этапов исполнения — это
+    валидно (контракт ещё не исполнялся), отдаём []."""
+    try:
+        data = _get_json(f"/fz{fz}/contracts/{reg_num}/procedures")
+    except GosplanNotFound:
+        return []
+    return data if isinstance(data, list) else []
+
+
 def download_file(url: str, dest: Path) -> int:
     """Качает файл во временный .part рядом, переименовывает при успехе.
     Возвращает размер в байтах. Битых частичных файлов не оставляет."""
@@ -635,7 +780,7 @@ def download_file(url: str, dest: Path) -> int:
 - [ ] **Step 4: Запустить — убедиться, что проходит**
 
 Run: `python -m pytest mcp/tests/test_gosplan_client.py -q`
-Expected: PASS (4 passed)
+Expected: PASS (6 passed)
 
 - [ ] **Step 5: Commit**
 
@@ -805,6 +950,34 @@ def test_fz_autodetect_falls_back_to_223(tmp_path, purchase_223, monkeypatch):
     monkeypatch.setattr(server.client, "download_file", lambda url, dest: 1)
     out = server.download_tender("32615999002", str(tmp_path))
     assert "ФЗ-223" in out or "223" in out
+
+
+def test_download_contract_pulls_doc_and_closing(
+    tmp_path, contract_44, contract_44_procedures, monkeypatch
+):
+    monkeypatch.setattr(server.client, "get_contract",
+                        lambda fz, n: contract_44)
+    monkeypatch.setattr(server.client, "get_contract_procedures",
+                        lambda fz, n: contract_44_procedures)
+    pulled = []
+    monkeypatch.setattr(server.client, "download_file",
+                        lambda url, dest: (pulled.append(url), 5)[1])
+    out = server.download_contract("3366503536925000015", str(tmp_path))
+    assert (tmp_path / "Контракт" / ".contract_meta.json").is_file()
+    assert pulled, "ожидались скачанные файлы контракта"
+    assert "Контракт" in out
+
+
+def test_download_contract_no_procedures_marks_missing(tmp_path, monkeypatch):
+    detail = {"docs": [{"source": {"scanDocuments": {"CPEPAttachment": [
+        {"fileName": "Контракт.doc", "url": "http://x/1", "publishedContentId": "c1"}
+    ]}}}]}
+    monkeypatch.setattr(server.client, "get_contract", lambda fz, n: detail)
+    monkeypatch.setattr(server.client, "get_contract_procedures",
+                        lambda fz, n: [])
+    monkeypatch.setattr(server.client, "download_file", lambda url, dest: 3)
+    out = server.download_contract("REG", str(tmp_path))
+    assert "Закрывающих документов" in out
 ```
 
 - [ ] **Step 2: Запустить — убедиться, что падает**
@@ -958,17 +1131,24 @@ def download_contract(contract_reestr_number: str, folder: str) -> str:
     except client.GosplanError as e:
         return f"Ошибка: {e}"
 
+    # procedures: 404 = нет этапов исполнения, не ошибка (вернёт [])
+    procedures = []
+    for f in _FZ_ORDER:
+        try:
+            procedures = client.get_contract_procedures(f, contract_reestr_number)
+            if procedures:
+                break
+        except client.GosplanError:
+            pass
+
+    import json as _json
     (sub / ".contract_meta.json").write_text(
-        __import__("json").dumps(detail, ensure_ascii=False, indent=2),
+        _json.dumps({"contract": detail, "procedures": procedures},
+                    ensure_ascii=False, indent=2),
         encoding="utf-8",
     )
-    try:
-        atts = list(extract.iter_attachments(detail, fz))
-    except KeyError as e:
-        return (f"Контракт найден, но вложения в ответе API отсутствуют "
-                f"({e}). Сырой ответ в Контракт/.contract_meta.json — "
-                f"проверь структуру, возможно нужен возврат к скрапу для "
-                f"контрактов (см. спек, раздел «Риски»).")
+
+    atts = list(extract.iter_contract_attachments(detail, procedures))
     if not atts:
         return ("Контракт найден, но вложений в ответе API нет. Сырой "
                 "ответ в Контракт/.contract_meta.json.")
@@ -978,15 +1158,20 @@ def download_contract(contract_reestr_number: str, folder: str) -> str:
         fn = store.sanitize_filename(a["file_name"])
         try:
             size = client.download_file(a["url"], sub / fn)
-            ok.append((fn, size))
+            ok.append((fn, size, a["group"]))
         except client.GosplanError as e:
             errors.append((fn, str(e)))
 
+    has_closing = any(g != "contract" for _, _, g in ok)
     lines = [f"Контракт {contract_reestr_number} (ФЗ-{fz}) — {len(ok)} файл(ов) → {sub}"]
-    for fn, size in ok:
-        lines.append(f"  • {fn} ({size // 1024} КБ)")
+    for fn, size, g in ok:
+        lines.append(f"  • [{g}] {fn} ({size // 1024} КБ)")
     for fn, err in errors:
         lines.append(f"  ! {fn}: {err}")
+    if not has_closing:
+        lines.append("ℹ Закрывающих документов (КС-2/КС-3/приёмка) в API "
+                      "пока нет — контракт ещё в исполнении или акты не "
+                      "опубликованы.")
     return "\n".join(lines)
 
 
@@ -1306,8 +1491,8 @@ Expected: «без изменений» (только что скачали).
 - .tender_meta.json + diff → Task 6, Task 7 ✓
 - Ошибки 404/429/таймаут/пустые/битый JSON → Task 5 (`GosplanNotFound`, retry), Task 7 (KeyError-ветки, `_no_attachments.txt`) ✓
 - GOSPLAN_API_KEY forward-compat → Task 5 `_headers`/`API_KEY_HEADER` ✓
-- Риск контрактов снят первым шагом → Task 1 decision-gate ✓
-- Тесты на фикстурах → Tasks 2–7 ✓
+- Риск контрактов СНЯТ спайками 2026-05-18; реальная схема (договор `scanDocuments.CPEPAttachment[]` + закрывающие `/procedures`) учтена в Task 1 (фикстуры), Task 4 (`iter_contract_attachments`), Task 5 (`get_contract_procedures`), Task 7 (`download_contract`) ✓
+- Тесты на фикстурах (закупки + контракт + procedures) → Tasks 2–7 ✓
 - launcher/requirements чистка → Task 8 ✓
 - build --test (tender-ai-test) → Task 9 ✓
 - Версия 0.7.0 + доки → Task 10 ✓
@@ -1315,4 +1500,4 @@ Expected: «без изменений» (только что скачали).
 
 **2. Плейсхолдеры:** код приведён полностью в каждом шаге; «<рег. № контракта>» в docstring инструмента — рантайм-значение для пользователя, не пробел плана. Замечаний нет.
 
-**3. Согласованность типов:** `iter_attachments(detail, fz)` отдаёт `{url, file_name, file_size, doc_code, doc_name, content_id}` — те же ключи используются в `server._download_attachments`, `download_contract`, `check/update`. `folder_for(code, name)` — сигнатура едина в Task 3 и вызовах Task 7. `GosplanNotFound`/`GosplanError` определены в Task 5, используются в Task 7. `save_meta/load_meta/diff_meta/META_NAME` — Task 6 ↔ Task 7. `client.get_purchase/get_contract/download_file` — Task 5 ↔ Task 7. Расхождений нет.
+**3. Согласованность типов:** `iter_attachments(detail, fz)` (закупки) отдаёт `{url, file_name, file_size, doc_code, doc_name, content_id}` — используется в `server._download_attachments`, `check/update`. `iter_contract_attachments(detail, procedures)` (контракты) отдаёт `{url, file_name, content_id, group}` — используется в `download_contract` (распаковка `fn, size, g`). Две функции намеренно разные: схемы закупок и контрактов различны. `folder_for(code, name)` — только закупки (Task 3 ↔ Task 7 `_download_attachments`); к контрактам не применяется. `GosplanNotFound`/`GosplanError` (Task 5) ↔ Task 7. `get_contract_procedures` возвращает list, `download_contract` это учитывает. `save_meta/load_meta/diff_meta/META_NAME` (Task 6) ↔ Task 7. Расхождений нет.
