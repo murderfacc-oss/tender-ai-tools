@@ -8,6 +8,16 @@ from __future__ import annotations
 from typing import Iterator
 
 
+def _as_list(node):
+    """EIS-JSON схлопывает одноэлементный массив в одиночный объект.
+    Нормализуем к списку. None → []. Применяется и к закупкам
+    (attachmentInfo / document / purchaseObject), и к контрактам
+    (attachment)."""
+    if node is None:
+        return []
+    return node if isinstance(node, list) else [node]
+
+
 def _source(detail: dict) -> dict:
     """docs[0].source или KeyError, если структура не распознана."""
     docs = detail.get("docs")
@@ -25,7 +35,7 @@ def iter_attachments(detail: dict, fz: int) -> Iterator[dict]:
     извещение), не ошибка."""
     src = _source(detail)
     if fz == 223:
-        docs = (src.get("attachments") or {}).get("document") or []
+        docs = _as_list((src.get("attachments") or {}).get("document"))
         for d in docs:
             url = d.get("url")
             if not url:
@@ -39,7 +49,7 @@ def iter_attachments(detail: dict, fz: int) -> Iterator[dict]:
                 "content_id": d.get("guid"),
             }
         return
-    ai = (src.get("attachmentsInfo") or {}).get("attachmentInfo") or []
+    ai = _as_list((src.get("attachmentsInfo") or {}).get("attachmentInfo"))
     for a in ai:
         url = a.get("url")
         if not url:
@@ -107,9 +117,8 @@ def build_print_form_text(detail: dict, fz: int) -> str:
         lines.append("\nПреференции / нацрежим (preferensesInfo):")
         lines.append(_dump_kv(pref))
 
-    objects = (
+    objects = _as_list(
         _g(ni, "purchaseObjectsInfo", "notDrugPurchaseObjectsInfo", "purchaseObject")
-        or []
     )
     if objects:
         lines.append(f"\nПозиции ({len(objects)}):")
@@ -143,13 +152,6 @@ def _dump_kv(node, indent: int = 2) -> str:
 
     walk(node, 1)
     return "\n".join(out) if out else pad + "—"
-
-
-def _as_list(node):
-    """attachment бывает объектом ИЛИ массивом — нормализуем к списку."""
-    if node is None:
-        return []
-    return node if isinstance(node, list) else [node]
 
 
 def _att(a: dict, group: str) -> dict:

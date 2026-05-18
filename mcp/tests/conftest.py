@@ -26,6 +26,15 @@ def purchase_223() -> dict:
 
 
 @pytest.fixture
+def purchase_44_single() -> dict:
+    """Реальная закупка 0318300008826000165 — ровно 1 позиция,
+    purchaseObject приходит одиночным dict (EIS схлопывает
+    одноэлементный массив). Регрессия бага 'str' object has no
+    attribute 'get'."""
+    return _load("purchase_44_single.json")
+
+
+@pytest.fixture
 def contract_44() -> dict:
     return _load("contract_44.json")
 

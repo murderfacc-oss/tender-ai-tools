@@ -88,7 +88,7 @@ def download_tender(reg_number: str, folder: str) -> str:
             detail, fz, base,
             lambda a: folder_for(a["doc_code"], a["doc_name"]),
         )
-    except KeyError as e:
+    except (KeyError, AttributeError, TypeError) as e:
         return (f"Закупка найдена, но структура ответа API не распознана "
                 f"({e}). Сырой ответ сохранён в gosplan_meta.json — можно "
                 f"разобрать вручную.")
@@ -96,7 +96,7 @@ def download_tender(reg_number: str, folder: str) -> str:
     try:
         pf = extract.build_print_form_text(detail, fz)
         (base / "print_form.txt").write_text(pf, encoding="utf-8")
-    except KeyError:
+    except (KeyError, AttributeError, TypeError):
         pf = None
 
     content_ids = [a["content_id"] for a in ok if a["content_id"]]
@@ -195,7 +195,7 @@ def check_tender_updates(folder: str) -> str:
     try:
         ids = [a["content_id"] for a in extract.iter_attachments(detail, meta["fz"])
                if a["content_id"]]
-    except KeyError as e:
+    except (KeyError, AttributeError, TypeError) as e:
         return f"Ошибка: структура ответа не распознана ({e})"
     upd = detail.get("updated_at") or detail.get("doc_updated_at")
     d = store.diff_meta(meta, ids, upd)
@@ -226,7 +226,7 @@ def update_tender(folder: str) -> str:
             detail, fz, base,
             lambda a: folder_for(a["doc_code"], a["doc_name"]),
         )
-    except KeyError as e:
+    except (KeyError, AttributeError, TypeError) as e:
         return f"Ошибка: структура ответа не распознана ({e})"
     ids = [a["content_id"] for a in ok if a["content_id"]]
     upd = detail.get("updated_at") or detail.get("doc_updated_at")

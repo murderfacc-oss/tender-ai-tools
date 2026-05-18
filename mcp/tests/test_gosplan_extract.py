@@ -65,3 +65,40 @@ def test_iter_contract_attachments_empty_procedures_ok():
     ]}}}]}
     atts = list(iter_contract_attachments(detail, []))
     assert [a["file_name"] for a in atts] == ["Контракт.doc"]
+
+
+# --- Регрессия: EIS схлопывает одноэлементные массивы в одиночный объект ---
+
+def test_build_print_form_text_single_position_real(purchase_44_single):
+    """Реальная закупка с 1 позицией: purchaseObject — dict, не список.
+    Раньше падало 'str' object has no attribute 'get' (gosplan_extract:117)."""
+    text = build_print_form_text(purchase_44_single, fz=44)
+    assert isinstance(text, str) and len(text) > 50
+    assert "Позиции (1)" in text
+
+
+def test_iter_attachments_single_attachment_collapse():
+    """Одно вложение → attachmentInfo приходит dict, не списком."""
+    detail = {"docs": [{"source": {"attachmentsInfo": {"attachmentInfo": {
+        "publishedContentId": "P1", "fileName": "ТЗ.docx",
+        "url": "http://x/1", "docKindInfo": {"code": "POD", "name": "ТЗ"},
+    }}}}]}
+    atts = list(iter_attachments(detail, fz=44))
+    assert len(atts) == 1
+    assert atts[0]["file_name"] == "ТЗ.docx" and atts[0]["url"] == "http://x/1"
+
+
+def test_iter_attachments_223_single_document_collapse():
+    detail = {"docs": [{"source": {"attachments": {"document": {
+        "guid": "G1", "fileName": "Извещение.pdf", "url": "http://x/2",
+    }}}}]}
+    atts = list(iter_attachments(detail, fz=223))
+    assert [a["file_name"] for a in atts] == ["Извещение.pdf"]
+
+
+def test_build_print_form_text_single_position_synthetic():
+    detail = {"docs": [{"source": {"notificationInfo": {
+        "purchaseObjectsInfo": {"notDrugPurchaseObjectsInfo": {
+            "purchaseObject": {"name": "Камера", "quantity": "5"}}}}}}]}
+    text = build_print_form_text(detail, fz=44)
+    assert "Позиции (1)" in text and "Камера" in text
