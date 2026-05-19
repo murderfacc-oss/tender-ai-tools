@@ -1,0 +1,390 @@
+{
+  "collecting_finished_at": "2026-05-19T05:00:00",
+  "contract_guarantee_amount": null,
+  "contract_guarantee_part": 10.0,
+  "currency_code": "RUB",
+  "customers": [
+    "2352030667"
+  ],
+  "delivery_places": [],
+  "delivery_places_kladr": [],
+  "doc_created_at": "2026-05-08T12:42:56.199000",
+  "doc_updated_at": "2026-05-08T12:42:56.199000",
+  "ikzs": [
+    "263235203066723520100100220014321244"
+  ],
+  "ktru": [],
+  "max_price": 594740.0,
+  "object_info": "Текущий ремонт системы видеонаблюдения в МБОУ СОШ №16, по адресу: Краснодарский край, Темрюкский район, п.Таманский, ул.Краснодарская, 11",
+  "okpd2": [
+    "43.21.10.290"
+  ],
+  "owners": [
+    "2352030667"
+  ],
+  "plan_numbers": [
+    "202603183001203001"
+  ],
+  "position_numbers": [
+    "202603183001203001000015"
+  ],
+  "published_at": "2026-05-08T10:02:28.308000",
+  "purchase_number": "0318300008826000165",
+  "purchase_type": "epNotificationEZK2020",
+  "region": 23,
+  "responsible": "2352044966",
+  "stage": 1,
+  "updated_at": "2026-05-08T10:02:28.308000",
+  "docs": [
+    {
+      "doc_type": "epNotificationEZK2020",
+      "published_at": "2026-05-08T10:02:28.308000",
+      "source": {
+        "id": "42909482",
+        "externalId": "krista.23042900.13913413759",
+        "versionNumber": "1",
+        "commonInfo": {
+          "purchaseNumber": "0318300008826000165",
+          "docNumber": "№0318300008826000165",
+          "directDT": "2026-05-08T12:08:11.417+03:00",
+          "plannedPublishDate": "2026-05-08+03:00",
+          "publishDTInEIS": "2026-05-08T13:02:28.308+03:00",
+          "href": "https://zakupki.gov.ru/epz/order/notice/zk20/view/common-info.html?regNumber=0318300008826000165",
+          "notPublishedOnEIS": "true",
+          "placingWay": {
+            "code": "ZKP20",
+            "name": "Запрос котировок в электронной форме"
+          },
+          "ETP": {
+            "code": "ETP_RTS",
+            "name": "РТС-тендер",
+            "url": "http://www.rts-tender.ru"
+          },
+          "contractConclusionOnSt83Ch2": "true",
+          "purchaseObjectInfo": "Текущий ремонт системы видеонаблюдения в МБОУ СОШ №16, по адресу: Краснодарский край, Темрюкский район, п.Таманский, ул.Краснодарская, 11"
+        },
+        "purchaseResponsibleInfo": {
+          "responsibleOrgInfo": {
+            "regNum": "03183000088",
+            "consRegistryNum": "03303819",
+            "fullName": "МУНИЦИПАЛЬНОЕ КАЗЕННОЕ УЧРЕЖДЕНИЕ \"МУНИЦИПАЛЬНЫЙ ЗАКАЗ\" МУНИЦИПАЛЬНОГО ОБРАЗОВАНИЯ ТЕМРЮКСКИЙ РАЙОН",
+            "shortName": "МКУ \"МУНИЦИПАЛЬНЫЙ ЗАКАЗ\"",
+            "postAddress": "353500, КРАСНОДАРСКИЙ КРАЙ, ТЕМРЮКСКИЙ Р-Н, Г ТЕМРЮК, УЛ ЛЕНИНА, 65",
+            "factAddress": "353500, КРАСНОДАРСКИЙ КРАЙ, ТЕМРЮКСКИЙ Р-Н, Г ТЕМРЮК, УЛ ЛЕНИНА, 65",
+            "INN": "2352044966",
+            "KPP": "235201001"
+          },
+          "responsibleRole": "RA",
+          "responsibleInfo": {
+            "orgPostAddress": "353500, КРАСНОДАРСКИЙ КРАЙ, ТЕМРЮКСКИЙ Р-Н, Г ТЕМРЮК, УЛ ЛЕНИНА, 65",
+            "orgFactAddress": "353500, КРАСНОДАРСКИЙ КРАЙ, ТЕМРЮКСКИЙ Р-Н, Г ТЕМРЮК, УЛ ЛЕНИНА, 65",
+            "contactPersonInfo": {
+              "lastName": "Тютюник",
+              "firstName": "Татьяна",
+              "middleName": "Александровна"
+            },
+            "contactEMail": "torgitemryuk@yandex.ru",
+            "contactPhone": "8-86148-54878",
+            "addInfo": "Заказчик: Муниципальное бюджетное общеобразовательное учреждение средняя общеобразовательная школа №16 муниципального образования Темрюкский район \nИНН: 2352030667 Почтовый адрес (с индексом): 353546, Краснодарский край, Темрюкский район, пос. Таманский, ул. Краснодарская, 11 Должность руководителя: Директор МБОУ СОШ №16 Фамилия, имя, отчество руководителя, уполномоченного на утверждение заявки (исполняющий обязанности): Клименко Надежда Николаевна Телефон руководителя 8(861)483-67-44 Должность ответственного исполнителя: Директор МБОУ СОШ №16 Фамилия, имя, отчество ответственного исполнителя : Клименко Надежда Николаевна Телефон ответственного исполнителя (с кодом), факс ответственного исполнителя (с кодом):   8(861)483-67-44  Адрес электронной почты заказчика: school16@tem.kubannet.ru\nВнимание! За нарушение требований антимонопольного законодательства Российской Федерации о запрете участия в ограничивающих конкуренцию соглашениях, осуществления ограничивающих конкуренцию согласованных действий предусмотрена ответственность в соответствии со ст. 14.32 КоАП РФ и ст. 178 УК РФ"
+          }
+        },
+        "printFormInfo": {
+          "url": "https://zakupki.gov.ru/epz/order/notice/printForm/view.html?regNumber=0318300008826000165"
+        },
+        "attachmentsInfo": {
+          "attachmentInfo": [
+            {
+              "publishedContentId": "79AD122DAC1D4CD0A4E975E0FFA44FFF",
+              "fileName": "Обоснование НМЦК.zip",
+              "fileSize": "148485",
+              "docDescription": "Обоснование НМЦК.zip",
+              "docDate": "2026-05-08T12:04:20+03:00",
+              "url": "https://zakupki.gov.ru/44fz/filestore/public/1.0/download/priz/file.html?uid=79AD122DAC1D4CD0A4E975E0FFA44FFF",
+              "docKindInfo": {
+                "code": "MRJ",
+                "name": "Обоснование начальной (максимальной) цены контракта"
+              }
+            },
+            {
+              "publishedContentId": "D5BB2C1537254CF18F307E4289F08B0E",
+              "fileName": "Проект контракта.zip",
+              "fileSize": "130693",
+              "docDescription": "Проект контракта.zip",
+              "docDate": "2026-05-08T12:04:20+03:00",
+              "url": "https://zakupki.gov.ru/44fz/filestore/public/1.0/download/priz/file.html?uid=D5BB2C1537254CF18F307E4289F08B0E",
+              "docKindInfo": {
+                "code": "CP",
+                "name": "Проект контракта"
+              }
+            },
+            {
+              "publishedContentId": "EAE8BE0E449B49C194D590AA521412A5",
+              "fileName": "Описание объекта закупки.zip",
+              "fileSize": "44651",
+              "docDescription": "Описание объекта закупки.zip",
+              "docDate": "2026-05-08T12:04:20+03:00",
+              "url": "https://zakupki.gov.ru/44fz/filestore/public/1.0/download/priz/file.html?uid=EAE8BE0E449B49C194D590AA521412A5",
+              "docKindInfo": {
+                "code": "POD",
+                "name": "Описание объекта закупки"
+              }
+            },
+            {
+              "publishedContentId": "9ECFE3E0DAB3418386B28E79F03E5B0D",
+              "fileName": "Требования к содержанию, составу заявки на участие в закупке и инструкция по ее заполнению.docx",
+              "fileSize": "74171",
+              "docDescription": "Требования к содержанию, составу заявки на участие в закупке и инструкция по ее заполнению.docx",
+              "docDate": "2026-05-08T12:04:20+03:00",
+              "url": "https://zakupki.gov.ru/44fz/filestore/public/1.0/download/priz/file.html?uid=9ECFE3E0DAB3418386B28E79F03E5B0D",
+              "docKindInfo": {
+                "code": "CAR",
+                "name": "Требование к содержанию, составу заявки на участие в закупке"
+              }
+            }
+          ]
+        },
+        "serviceSigns": {
+          "isIncludeKOKS": "false",
+          "isControlP1Ch5St99": "true"
+        },
+        "notificationInfo": {
+          "procedureInfo": {
+            "collectingInfo": {
+              "startDT": "2026-05-08T13:02:28+03:00",
+              "endDT": "2026-05-19T08:00:00+03:00"
+            },
+            "summarizingDate": "2026-05-20+03:00"
+          },
+          "contractConditionsInfo": {
+            "maxPriceInfo": {
+              "maxPrice": "594740",
+              "currency": {
+                "code": "RUB",
+                "name": "РОССИЙСКИЙ РУБЛЬ"
+              }
+            }
+          },
+          "customerRequirementsInfo": {
+            "customerRequirementInfo": {
+              "customer": {
+                "regNum": "03183001203",
+                "consRegistryNum": "033D0397",
+                "fullName": "МУНИЦИПАЛЬНОЕ БЮДЖЕТНОЕ ОБЩЕОБРАЗОВАТЕЛЬНОЕ УЧРЕЖДЕНИЕ СРЕДНЯЯ ОБЩЕОБРАЗОВАТЕЛЬНАЯ ШКОЛА № 16 МУНИЦИПАЛЬНОГО ОБРАЗОВАНИЯ ТЕМРЮКСКИЙ РАЙОН"
+              },
+              "contractGuarantee": {
+                "account": {
+                  "bik": "012202102",
+                  "settlementAccount": "03234643036510003200",
+                  "personalAccount": "803D0397000",
+                  "receiptCode": {
+                    "code": "ОБ",
+                    "name": "Средства, поступившие в рамках обеспечения заявок, исполнения контракта (договора), гарантийных обязательства"
+                  },
+                  "creditOrgName": "ОКЦ № 1 ВВГУ Банка России//УФК по Нижегородской области, г Нижний Новгород",
+                  "corrAccountNumber": "40102810745370000024"
+                },
+                "procedureInfo": "Контракт заключается после предоставления участником закупки, с которым заключается контракт, обеспечения исполнения контракта в соответствии с требованиями статьи 96 Федерального закона от 05.04.2013 № 44- ФЗ «О контрактной системе в сфере закупок товаров, работ, услуг для обеспечения государственных и муниципальных нужд». Исполнение контракта обеспечивается предоставлением независимой гарантии, соответствующей требованиям статьи 45 Федерального закона от 05.04.2013 № 44-ФЗ «О контрактной системе в сфере закупок товаров, работ, услуг для обеспечения государственных и муниципальных нужд», или внесением денежных средств на указанный заказчиком счет с указанием назначения платежа «Обеспечение исполнения контракта, № закупки или ИКЗ». Способ обеспечения исполнения контракта определяется участником закупки, с которым заключается контракт, самостоятельно.",
+                "part": "10.0"
+              },
+              "contractConditionsInfo": {
+                "maxPriceInfo": {
+                  "maxPrice": "594740"
+                },
+                "IKZInfo": {
+                  "purchaseCode": "263235203066723520100100220014321244",
+                  "publishYear": "2026",
+                  "OKPD2Info": {
+                    "OKPD2": {
+                      "OKPDCode": "43.21",
+                      "OKPDName": "Работы электромонтажные"
+                    }
+                  },
+                  "KVRInfo": {
+                    "KVR": {
+                      "code": "244",
+                      "name": "Прочая закупка товаров, работ и услуг"
+                    }
+                  },
+                  "customerCode": "32352030667235201001",
+                  "purchaseNumber": "0022",
+                  "purchaseOrderNumber": "001"
+                },
+                "tenderPlan2020Info": {
+                  "plan2020Number": "202603183001203001",
+                  "position2020Number": "202603183001203001000015"
+                },
+                "contractExecutionPaymentPlan": {
+                  "contractExecutionTermsInfo": {
+                    "notRelativeTermsInfo": {
+                      "isFromConclusionDate": "true",
+                      "endDate": "2026-07-10+03:00"
+                    }
+                  },
+                  "financingSourcesInfo": {
+                    "nonbudgetFinancingsInfo": {
+                      "selfFunds": "true"
+                    },
+                    "currentYear": "2026",
+                    "financeInfo": {
+                      "total": "594740",
+                      "currentYear": "594740",
+                      "firstYear": "0",
+                      "secondYear": "0",
+                      "subsecYears": "0"
+                    }
+                  },
+                  "stagesInfo": {
+                    "stageInfo": {
+                      "sid": "20376000",
+                      "externalSid": "13913252095",
+                      "termsInfo": {
+                        "notRelativeTermsInfo": {
+                          "isFromConclusionDate": "true",
+                          "endDate": "2026-07-10+03:00"
+                        }
+                      },
+                      "nonbudgetFinancingInfo": {
+                        "paymentYearInfo": {
+                          "total": "594740",
+                          "currentYear": "594740",
+                          "firstYear": "0",
+                          "secondYear": "0",
+                          "subsecYears": "0"
+                        },
+                        "KVRsInfo": {
+                          "currentYear": "2026",
+                          "KVRInfo": {
+                            "KVR": {
+                              "code": "244",
+                              "name": "Прочая закупка товаров, работ и услуг"
+                            },
+                            "receiptCode": {
+                              "code": "ЦС",
+                              "name": "Субсидии на иные цели и на осуществление капитальных вложений в объекты капитального строительства государственной (муниципальной) собственности или приобретение объектов недвижимого имущества в государственную (муниципальную) собственность"
+                            },
+                            "KVRYearsInfo": {
+                              "total": "594740",
+                              "currentYear": "594740",
+                              "firstYear": "0",
+                              "secondYear": "0",
+                              "subsecYears": "0"
+                            }
+                          },
+                          "totalSum": "594740"
+                        }
+                      }
+                    }
+                  }
+                },
+                "deliveryPlacesInfo": {
+                  "byGARInfo": {
+                    "sid": "59790407",
+                    "externalSid": "13913266240",
+                    "countryInfo": {
+                      "countryCode": "643",
+                      "countryFullName": "Российская Федерация"
+                    },
+                    "GARInfo": {
+                      "GARGuid": "c94341f7-38e1-4b54-979e-3a5eccd6c2b8",
+                      "GARAddress": "край Краснодарский, м.р-н Темрюкский, с.п. Новотаманское, п Таманский, ул Краснодарская, д. 11"
+                    },
+                    "deliveryPlace": "Краснодарский край, Темрюкский район, пос. Таманский, ул. Краснодарская, 11"
+                  }
+                },
+                "isOneSideRejectionSt95": "true",
+                "isExecutionStagesTerms": "false"
+              },
+              "warrantyInfo": {
+                "warrantyServiceRequirement": "В соответствии с электронным документом «Проект контракта»",
+                "manufacturersWarrantyRequirement": "В соответствии с электронным документом «Проект контракта»",
+                "warrantyTerm": "В соответствии с электронным документом «Проект контракта»"
+              },
+              "provisionWarranty": {
+                "amount": "5947.4",
+                "part": "1.0",
+                "procedureInfo": "В соответствии с электронным документом «Проект контракта»",
+                "account": {
+                  "bik": "012202102",
+                  "settlementAccount": "03234643036510003200",
+                  "personalAccount": "803D0397000",
+                  "receiptCode": {
+                    "code": "ОБ",
+                    "name": "Средства, поступившие в рамках обеспечения заявок, исполнения контракта (договора), гарантийных обязательства"
+                  },
+                  "creditOrgName": "ОКЦ № 1 ВВГУ Банка России//УФК по Нижегородской области, г Нижний Новгород",
+                  "corrAccountNumber": "40102810745370000024"
+                }
+              }
+            }
+          },
+          "purchaseObjectsInfo": {
+            "notDrugPurchaseObjectsInfo": {
+              "purchaseObject": {
+                "sid": "213984110",
+                "externalSid": "13913591160",
+                "OKPD2": {
+                  "OKPDCode": "43.21.10.290",
+                  "OKPDName": "Работы электромонтажные прочие, не включенные в другие группировки"
+                },
+                "name": "Текущий ремонт системы видеонаблюдения в МБОУ СОШ №16, по адресу: Краснодарский край, Темрюкский район, п.Таманский, ул.Краснодарская, 11",
+                "OKEI": {
+                  "code": "876",
+                  "nationalCode": "УСЛ ЕД",
+                  "name": "Условная единица"
+                },
+                "customerQuantities": {
+                  "customerQuantity": {
+                    "customer": {
+                      "regNum": "03183001203",
+                      "consRegistryNum": "033D0397",
+                      "fullName": "МУНИЦИПАЛЬНОЕ БЮДЖЕТНОЕ ОБЩЕОБРАЗОВАТЕЛЬНОЕ УЧРЕЖДЕНИЕ СРЕДНЯЯ ОБЩЕОБРАЗОВАТЕЛЬНАЯ ШКОЛА № 16 МУНИЦИПАЛЬНОГО ОБРАЗОВАНИЯ ТЕМРЮКСКИЙ РАЙОН"
+                    },
+                    "quantity": "1"
+                  }
+                },
+                "price": "594740",
+                "volumeSpecifyingMethod": "QF",
+                "quantity": {
+                  "value": "1"
+                },
+                "sum": "594740",
+                "type": "WORK",
+                "hierarchyType": "ND"
+              },
+              "totalSum": "594740",
+              "quantityUndefined": "false"
+            }
+          },
+          "preferensesInfo": {
+            "preferenseInfo": {
+              "preferenseRequirementInfo": {
+                "shortName": "PVS33044",
+                "name": "Преимущество в соответствии с ч. 3 ст. 30 Закона № 44-ФЗ"
+              }
+            }
+          },
+          "requirementsInfo": {
+            "requirementInfo": [
+              {
+                "preferenseRequirementInfo": {
+                  "shortName": "ET44",
+                  "name": "Единые требования к участникам закупок в соответствии с ч. 1 ст. 31 Закона № 44-ФЗ"
+                }
+              },
+              {
+                "preferenseRequirementInfo": {
+                  "shortName": "TR442",
+                  "name": "Требования к участникам закупок в соответствии с ч. 1.1 ст. 31 Закона № 44-ФЗ"
+                }
+              }
+            ]
+          }
+        },
+        "printFormFieldsInfo": {
+          "is449Features": "false"
+        },
+        "@schemeVersion": "16.1"
+      }
+    }
+  ]
+}

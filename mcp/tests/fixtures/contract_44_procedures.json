@@ -1,0 +1,1009 @@
+[
+  {
+    "doc_type": "contractProcedure",
+    "published_at": "2025-10-21T09:51:52.889000",
+    "source": {
+      "id": "388588081",
+      "sid": "388588081",
+      "regNum": "3366503536925000015",
+      "publishDate": "2025-10-21T12:51:52.889+03:00",
+      "versionNumber": "0",
+      "executions": {
+        "stage": {
+          "sid": "121660336",
+          "startDate": "2025-08-26",
+          "endDate": "2025-11-28"
+        },
+        "ordinalNumber": "1",
+        "finalStageExecution": "false",
+        "execution": {
+          "docAcceptance": {
+            "sid": "717880096",
+            "code": "38",
+            "name": "Документ о приемке поставленных товаров, выполненных работ (их результатов, в том числе этапов), оказанных услуг в электронной форме",
+            "documentDate": "2025-10-20",
+            "documentNum": "2",
+            "deliveryAcceptDate": "2025-10-21",
+            "deliveryAcceptDateEDI": "2025-10-21T12:47:34",
+            "fulfilmentSum": "3862828.93",
+            "totalPaymentAmount": "3862828.93",
+            "supplierAccountsDetailContractInfo": {
+              "sid": "48500581",
+              "guid": "82FDDDCCDE4C4F29B85B355DA1130805",
+              "supplierAccountDetailsInfo": {
+                "accountType": "03",
+                "creditOrgName": "АО \"ТБанк\", г. Москва",
+                "bankAccountNumber": "40802810800008249561",
+                "bik": "044525974",
+                "corrAccountNumber": "30101810145250000974",
+                "counterpartyName": "КАРАБИЦКИЙ НИКОЛАЙ ВЛАДИМИРОВИЧ (ИП)"
+              }
+            },
+            "receiptDocuments": {
+              "attachment": [
+                {
+                  "publishedContentId": "2BDB67B58BB3433CA05664BCE9964268",
+                  "fileName": "BGScan_11062386_1.pdf",
+                  "docDescription": "BGScan_11062386_1.pdf",
+                  "docRegNumber": "33665035369250000150008",
+                  "url": "https://zakupki.gov.ru/44fz/filestore/public/1.0/download/rgk2/file.html?uid=2BDB67B58BB3433CA05664BCE9964268"
+                },
+                {
+                  "publishedContentId": "D1E65C1344F84B8DB0EFDA8E443ADDB1",
+                  "fileName": "UPD_20251021_3366503536925000015.zip",
+                  "docDescription": "Документ о приемке № 2 от 20.10.2025",
+                  "docRegNumber": "33665035369250000150007",
+                  "url": "https://zakupki.gov.ru/44fz/filestore/public/1.0/download/rgk2/file.html?uid=D1E65C1344F84B8DB0EFDA8E443ADDB1"
+                },
+                {
+                  "publishedContentId": "3B1AD080611445EBB8A9FDEB2D1C35F0",
+                  "fileName": "КС-2_compressed.pdf",
+                  "docDescription": "КС-2_compressed.pdf",
+                  "docRegNumber": "33665035369250000150010",
+                  "url": "https://zakupki.gov.ru/44fz/filestore/public/1.0/download/rgk2/file.html?uid=3B1AD080611445EBB8A9FDEB2D1C35F0"
+                },
+                {
+                  "publishedContentId": "07ECE89A71C54FA4AE90031B24F28C06",
+                  "fileName": "КС-3.pdf",
+                  "docDescription": "КС-3.pdf",
+                  "docRegNumber": "33665035369250000150009",
+                  "url": "https://zakupki.gov.ru/44fz/filestore/public/1.0/download/rgk2/file.html?uid=07ECE89A71C54FA4AE90031B24F28C06"
+                }
+              ]
+            }
+          },
+          "currency": {
+            "code": "RUB",
+            "name": "РОССИЙСКИЙ РУБЛЬ"
+          },
+          "paid": "0.00",
+          "paidVATRUR": "0.00",
+          "improperExecutionText": "Отсутствует",
+          "product": "Услуги по монтажу электронного и оптического оборудования (33.20.4):  ;Камера видеонаблюдения. Товарный знак: отсутствует (26.40.33.111): 51,00 ;Батарея аккумуляторная свинцово-кислотная стационарная. Товарный знак: отсутствует (27.20.22.000): 1,00 ;Видеосервер. Товарный знак: отсутствует (26.40.33.114): 1,00 ;Шкаф телекоммуникационный. Товарный знак: отсутствует (26.30.30.190): 1,00 ;Клавиатура и мышь беспроводная. Товарный знак: отсутствует (26.20.16.190): 1,00 ;Камера видеонаблюдения. Товарный знак: отсутствует (26.40.33.111): 13,00 ;Шкаф телекоммуникационный. Товарный знак: отсутствует (26.30.30.190): 3,00 ;Накопитель данных внутренний. Товарный знак: отсутствует (26.20.22.120): 14,00 ;Камера видеонаблюдения. Товарный знак: отсутствует (26.40.33.111): 1,00 ;Шкаф телекоммуникационный. Товарный знак: отсутствует (26.30.30.190): 1,00 ;Системный блок. Товарный знак: отсутствует (26.20.15.120): 1,00 ;Коммутатор. Товарный знак: отсутствует (26.30.11.122): 1,00 ;Услуги по монтажу электронного и оптического оборудования (33.20.4): 1,00 ;Коммутатор. Товарный знак: отсутствует (26.30.11.122): 1,00 ;Источник бесперебойного питания. Товарный знак: отсутствует (26.20.40.111): 1,00 ;Камера видеонаблюдения. Товарный знак: отсутствует (26.40.33.111): 8,00 ;Коммутатор. Товарный знак: отсутствует (26.30.11.122): 7,00 ;Камера видеонаблюдения. Товарный знак: отсутствует (26.40.33.111): 1,00 ;Монитор, подключаемый к компьютеру. Товарный знак: отсутствует (26.20.17.110): 3,00 ;",
+          "quantityContractSubjects": {
+            "quantityContractSubject": [
+              {
+                "sid": "753964686",
+                "indexNum": "1.7",
+                "product": {
+                  "KTRU": {
+                    "code": "26.70.13.000-00000008",
+                    "name": "Камера видеонаблюдения",
+                    "versionId": "182622",
+                    "versionNumber": "12"
+                  },
+                  "OKEI": {
+                    "code": "796",
+                    "nationalCode": "ШТ",
+                    "trueNationalCode": "ШТ",
+                    "fullName": "Штука",
+                    "nationalName": "ШТ"
+                  },
+                  "previouslySuppliedQuantity": "0",
+                  "hierarchyType": "CH",
+                  "type": "PRODUCT",
+                  "VATRateInfo": {
+                    "VATCode": "RN",
+                    "VATName": "Без НДС"
+                  },
+                  "improvedProductReplacement": "false"
+                },
+                "quantity": "51",
+                "nomenclature": "26.70.13.000-00000008 Камера видеонаблюдения. Товарный знак: отсутствует",
+                "originCountry": {
+                  "countryCode": "643",
+                  "countryFullName": "Российская Федерация"
+                },
+                "fulfilledCost": "579518.65",
+                "unitPrice": "11363.11078431373",
+                "parentContractSubject": {
+                  "sid": "753964668"
+                }
+              },
+              {
+                "sid": "753964681",
+                "indexNum": "1.2",
+                "product": {
+                  "KTRU": {
+                    "code": "27.20.22.000-00000001",
+                    "name": "Батарея аккумуляторная свинцово-кислотная стационарная",
+                    "versionId": "169650",
+                    "versionNumber": "6"
+                  },
+                  "OKEI": {
+                    "code": "796",
+                    "nationalCode": "ШТ",
+                    "trueNationalCode": "ШТ",
+                    "fullName": "Штука",
+                    "nationalName": "ШТ"
+                  },
+                  "previouslySuppliedQuantity": "0",
+                  "hierarchyType": "CH",
+                  "type": "PRODUCT",
+                  "VATRateInfo": {
+                    "VATCode": "RN",
+                    "VATName": "Без НДС"
+                  },
+                  "improvedProductReplacement": "false"
+                },
+                "quantity": "1",
+                "nomenclature": "27.20.22.000-00000001 Батарея аккумуляторная свинцово-кислотная стационарная. Товарный знак: отсутствует",
+                "originCountry": {
+                  "countryCode": "643",
+                  "countryFullName": "Российская Федерация"
+                },
+                "fulfilledCost": "55760.44",
+                "unitPrice": "55760.44000000000",
+                "parentContractSubject": {
+                  "sid": "753964668"
+                }
+              },
+              {
+                "sid": "753964670",
+                "indexNum": "1.18",
+                "product": {
+                  "OKPD2": {
+                    "code": "26.40.33.114",
+                    "name": "Видеорегистраторы"
+                  },
+                  "OKEI": {
+                    "code": "796",
+                    "nationalCode": "ШТ",
+                    "trueNationalCode": "ШТ",
+                    "fullName": "Штука",
+                    "nationalName": "ШТ"
+                  },
+                  "previouslySuppliedQuantity": "0",
+                  "hierarchyType": "CH",
+                  "type": "PRODUCT",
+                  "VATRateInfo": {
+                    "VATCode": "RN",
+                    "VATName": "Без НДС"
+                  },
+                  "improvedProductReplacement": "false"
+                },
+                "quantity": "1",
+                "nomenclature": "26.40.33.114 Видеосервер. Товарный знак: отсутствует",
+                "originCountry": {
+                  "countryCode": "643",
+                  "countryFullName": "Российская Федерация"
+                },
+                "fulfilledCost": "474873.59",
+                "unitPrice": "474873.59000000000",
+                "parentContractSubject": {
+                  "sid": "753964668"
+                }
+              },
+              {
+                "sid": "753964675",
+                "indexNum": "1.10",
+                "product": {
+                  "KTRU": {
+                    "code": "26.30.30.000-00000011",
+                    "name": "Шкаф телекоммуникационный",
+                    "versionId": "170388",
+                    "versionNumber": "6"
+                  },
+                  "OKEI": {
+                    "code": "796",
+                    "nationalCode": "ШТ",
+                    "trueNationalCode": "ШТ",
+                    "fullName": "Штука",
+                    "nationalName": "ШТ"
+                  },
+                  "previouslySuppliedQuantity": "0",
+                  "hierarchyType": "CH",
+                  "type": "PRODUCT",
+                  "VATRateInfo": {
+                    "VATCode": "RN",
+                    "VATName": "Без НДС"
+                  },
+                  "improvedProductReplacement": "false"
+                },
+                "quantity": "1",
+                "nomenclature": "26.30.30.000-00000011 Шкаф телекоммуникационный. Товарный знак: отсутствует",
+                "originCountry": {
+                  "countryCode": "156",
+                  "countryFullName": "Китайская Народная Республика"
+                },
+                "fulfilledCost": "6103.93",
+                "unitPrice": "6103.93000000000",
+                "parentContractSubject": {
+                  "sid": "753964668"
+                }
+              },
+              {
+                "sid": "753964682",
+                "indexNum": "1.15",
+                "product": {
+                  "OKPD2": {
+                    "code": "26.20.16.190",
+                    "name": "Устройства ввода/вывода данных прочие"
+                  },
+                  "OKEI": {
+                    "code": "796",
+                    "nationalCode": "ШТ",
+                    "trueNationalCode": "ШТ",
+                    "fullName": "Штука",
+                    "nationalName": "ШТ"
+                  },
+                  "previouslySuppliedQuantity": "0",
+                  "hierarchyType": "CH",
+                  "type": "PRODUCT",
+                  "VATRateInfo": {
+                    "VATCode": "RN",
+                    "VATName": "Без НДС"
+                  },
+                  "improvedProductReplacement": "false"
+                },
+                "quantity": "1",
+                "nomenclature": "26.20.16.190 Клавиатура и мышь беспроводная. Товарный знак: отсутствует",
+                "originCountry": {
+                  "countryCode": "156",
+                  "countryFullName": "Китайская Народная Республика"
+                },
+                "fulfilledCost": "433.01",
+                "unitPrice": "433.01000000000",
+                "parentContractSubject": {
+                  "sid": "753964668"
+                }
+              },
+              {
+                "sid": "753964687",
+                "indexNum": "1.11",
+                "product": {
+                  "KTRU": {
+                    "code": "26.70.13.000-00000008",
+                    "name": "Камера видеонаблюдения",
+                    "versionId": "182622",
+                    "versionNumber": "12"
+                  },
+                  "OKEI": {
+                    "code": "796",
+                    "nationalCode": "ШТ",
+                    "trueNationalCode": "ШТ",
+                    "fullName": "Штука",
+                    "nationalName": "ШТ"
+                  },
+                  "previouslySuppliedQuantity": "0",
+                  "hierarchyType": "CH",
+                  "type": "PRODUCT",
+                  "VATRateInfo": {
+                    "VATCode": "RN",
+                    "VATName": "Без НДС"
+                  },
+                  "improvedProductReplacement": "false"
+                },
+                "quantity": "13",
+                "nomenclature": "26.70.13.000-00000008 Камера видеонаблюдения. Товарный знак: отсутствует",
+                "originCountry": {
+                  "countryCode": "643",
+                  "countryFullName": "Российская Федерация"
+                },
+                "fulfilledCost": "145847.60",
+                "unitPrice": "11219.04615384615",
+                "parentContractSubject": {
+                  "sid": "753964668"
+                }
+              },
+              {
+                "sid": "753964679",
+                "indexNum": "1.1",
+                "product": {
+                  "KTRU": {
+                    "code": "26.30.30.000-00000011",
+                    "name": "Шкаф телекоммуникационный",
+                    "versionId": "170388",
+                    "versionNumber": "6"
+                  },
+                  "OKEI": {
+                    "code": "796",
+                    "nationalCode": "ШТ",
+                    "trueNationalCode": "ШТ",
+                    "fullName": "Штука",
+                    "nationalName": "ШТ"
+                  },
+                  "previouslySuppliedQuantity": "0",
+                  "hierarchyType": "CH",
+                  "type": "PRODUCT",
+                  "VATRateInfo": {
+                    "VATCode": "RN",
+                    "VATName": "Без НДС"
+                  },
+                  "improvedProductReplacement": "false"
+                },
+                "quantity": "3",
+                "nomenclature": "26.30.30.000-00000011 Шкаф телекоммуникационный. Товарный знак: отсутствует",
+                "originCountry": {
+                  "countryCode": "156",
+                  "countryFullName": "Китайская Народная Республика"
+                },
+                "fulfilledCost": "16985.73",
+                "unitPrice": "5661.91000000000",
+                "parentContractSubject": {
+                  "sid": "753964668"
+                }
+              },
+              {
+                "sid": "753964680",
+                "indexNum": "1.17",
+                "product": {
+                  "KTRU": {
+                    "code": "26.20.21.110-00000003",
+                    "name": "Накопитель данных внутренний",
+                    "versionId": "170280",
+                    "versionNumber": "14"
+                  },
+                  "OKEI": {
+                    "code": "796",
+                    "nationalCode": "ШТ",
+                    "trueNationalCode": "ШТ",
+                    "fullName": "Штука",
+                    "nationalName": "ШТ"
+                  },
+                  "previouslySuppliedQuantity": "0",
+                  "hierarchyType": "CH",
+                  "type": "PRODUCT",
+                  "VATRateInfo": {
+                    "VATCode": "RN",
+                    "VATName": "Без НДС"
+                  },
+                  "improvedProductReplacement": "false"
+                },
+                "quantity": "14",
+                "nomenclature": "26.20.21.110-00000003 Накопитель данных внутренний. Товарный знак: отсутствует",
+                "originCountry": {
+                  "countryCode": "764",
+                  "countryFullName": "Королевство Таиланд"
+                },
+                "fulfilledCost": "418278.93",
+                "unitPrice": "29877.06642857143",
+                "parentContractSubject": {
+                  "sid": "753964668"
+                }
+              },
+              {
+                "sid": "753964669",
+                "indexNum": "1.8",
+                "product": {
+                  "KTRU": {
+                    "code": "26.70.13.000-00000008",
+                    "name": "Камера видеонаблюдения",
+                    "versionId": "182622",
+                    "versionNumber": "12"
+                  },
+                  "OKEI": {
+                    "code": "796",
+                    "nationalCode": "ШТ",
+                    "trueNationalCode": "ШТ",
+                    "fullName": "Штука",
+                    "nationalName": "ШТ"
+                  },
+                  "previouslySuppliedQuantity": "0",
+                  "hierarchyType": "CH",
+                  "type": "PRODUCT",
+                  "VATRateInfo": {
+                    "VATCode": "RN",
+                    "VATName": "Без НДС"
+                  },
+                  "improvedProductReplacement": "false"
+                },
+                "quantity": "1",
+                "nomenclature": "26.70.13.000-00000008 Камера видеонаблюдения. Товарный знак: отсутствует",
+                "originCountry": {
+                  "countryCode": "156",
+                  "countryFullName": "Китайская Народная Республика"
+                },
+                "fulfilledCost": "20286.13",
+                "unitPrice": "20286.13000000000",
+                "parentContractSubject": {
+                  "sid": "753964668"
+                }
+              },
+              {
+                "sid": "753964674",
+                "indexNum": "1.13",
+                "product": {
+                  "KTRU": {
+                    "code": "26.30.30.000-00000010",
+                    "name": "Шкаф телекоммуникационный",
+                    "versionId": "189917",
+                    "versionNumber": "6"
+                  },
+                  "OKEI": {
+                    "code": "796",
+                    "nationalCode": "ШТ",
+                    "trueNationalCode": "ШТ",
+                    "fullName": "Штука",
+                    "nationalName": "ШТ"
+                  },
+                  "previouslySuppliedQuantity": "0",
+                  "hierarchyType": "CH",
+                  "type": "PRODUCT",
+                  "VATRateInfo": {
+                    "VATCode": "RN",
+                    "VATName": "Без НДС"
+                  },
+                  "improvedProductReplacement": "false"
+                },
+                "quantity": "1",
+                "nomenclature": "26.30.30.000-00000010 Шкаф телекоммуникационный. Товарный знак: отсутствует",
+                "originCountry": {
+                  "countryCode": "156",
+                  "countryFullName": "Китайская Народная Республика"
+                },
+                "fulfilledCost": "40324.23",
+                "unitPrice": "40324.23000000000",
+                "parentContractSubject": {
+                  "sid": "753964668"
+                }
+              },
+              {
+                "sid": "753964672",
+                "indexNum": "1.3",
+                "product": {
+                  "KTRU": {
+                    "code": "26.20.15.000-00000026",
+                    "name": "Системный блок",
+                    "versionId": "173727",
+                    "versionNumber": "24"
+                  },
+                  "OKEI": {
+                    "code": "796",
+                    "nationalCode": "ШТ",
+                    "trueNationalCode": "ШТ",
+                    "fullName": "Штука",
+                    "nationalName": "ШТ"
+                  },
+                  "previouslySuppliedQuantity": "0",
+                  "hierarchyType": "CH",
+                  "type": "PRODUCT",
+                  "VATRateInfo": {
+                    "VATCode": "RN",
+                    "VATName": "Без НДС"
+                  },
+                  "improvedProductReplacement": "false"
+                },
+                "quantity": "1",
+                "nomenclature": "26.20.15.000-00000026 Системный блок. Товарный знак: отсутствует",
+                "originCountry": {
+                  "countryCode": "156",
+                  "countryFullName": "Китайская Народная Республика"
+                },
+                "fulfilledCost": "165547.48",
+                "unitPrice": "165547.48000000000",
+                "parentContractSubject": {
+                  "sid": "753964668"
+                }
+              },
+              {
+                "sid": "753964673",
+                "indexNum": "1.4",
+                "product": {
+                  "KTRU": {
+                    "code": "26.30.11.110-00000053",
+                    "name": "Коммутатор",
+                    "versionId": "185044",
+                    "versionNumber": "19"
+                  },
+                  "OKEI": {
+                    "code": "796",
+                    "nationalCode": "ШТ",
+                    "trueNationalCode": "ШТ",
+                    "fullName": "Штука",
+                    "nationalName": "ШТ"
+                  },
+                  "previouslySuppliedQuantity": "0",
+                  "hierarchyType": "CH",
+                  "type": "PRODUCT",
+                  "VATRateInfo": {
+                    "VATCode": "RN",
+                    "VATName": "Без НДС"
+                  },
+                  "improvedProductReplacement": "false"
+                },
+                "quantity": "1",
+                "nomenclature": "26.30.11.110-00000053 Коммутатор. Товарный знак: отсутствует",
+                "originCountry": {
+                  "countryCode": "156",
+                  "countryFullName": "Китайская Народная Республика"
+                },
+                "fulfilledCost": "12470.60",
+                "unitPrice": "12470.60000000000",
+                "parentContractSubject": {
+                  "sid": "753964668"
+                }
+              },
+              {
+                "sid": "753964688",
+                "indexNum": "1.12",
+                "product": {
+                  "KTRU": {
+                    "code": "33.20.40.000-00000002",
+                    "name": "Услуги по монтажу электронного и оптического оборудования",
+                    "versionId": "180630",
+                    "versionNumber": "8"
+                  },
+                  "OKEI": {
+                    "code": "876",
+                    "nationalCode": "усл. ед",
+                    "trueNationalCode": "УСЛ ЕД",
+                    "fullName": "Условная единица",
+                    "nationalName": "усл. ед"
+                  },
+                  "previouslySuppliedQuantity": "0",
+                  "hierarchyType": "CH",
+                  "type": "WORK",
+                  "VATRateInfo": {
+                    "VATCode": "RN",
+                    "VATName": "Без НДС"
+                  },
+                  "improvedProductReplacement": "false"
+                },
+                "quantity": "1",
+                "nomenclature": "33.20.40.000-00000002 Услуги по монтажу электронного и оптического оборудования",
+                "fulfilledCost": "1337115.47",
+                "unitPrice": "1337115.47000000000",
+                "parentContractSubject": {
+                  "sid": "753964668"
+                }
+              },
+              {
+                "sid": "753964671",
+                "indexNum": "1.19",
+                "product": {
+                  "KTRU": {
+                    "code": "26.30.11.110-00000041",
+                    "name": "Коммутатор",
+                    "versionId": "185045",
+                    "versionNumber": "24"
+                  },
+                  "OKEI": {
+                    "code": "796",
+                    "nationalCode": "ШТ",
+                    "trueNationalCode": "ШТ",
+                    "fullName": "Штука",
+                    "nationalName": "ШТ"
+                  },
+                  "previouslySuppliedQuantity": "0",
+                  "hierarchyType": "CH",
+                  "type": "PRODUCT",
+                  "VATRateInfo": {
+                    "VATCode": "RN",
+                    "VATName": "Без НДС"
+                  },
+                  "improvedProductReplacement": "false"
+                },
+                "quantity": "1",
+                "nomenclature": "26.30.11.110-00000041 Коммутатор. Товарный знак: отсутствует",
+                "originCountry": {
+                  "countryCode": "158",
+                  "countryFullName": "ТАЙВАНЬ (КИТАЙ)"
+                },
+                "fulfilledCost": "17910.69",
+                "unitPrice": "17910.69000000000",
+                "parentContractSubject": {
+                  "sid": "753964668"
+                }
+              },
+              {
+                "sid": "753964678",
+                "indexNum": "1.9",
+                "product": {
+                  "KTRU": {
+                    "code": "26.20.40.110-00000001",
+                    "name": "Источник бесперебойного питания",
+                    "versionId": "174303",
+                    "versionNumber": "14"
+                  },
+                  "OKEI": {
+                    "code": "796",
+                    "nationalCode": "ШТ",
+                    "trueNationalCode": "ШТ",
+                    "fullName": "Штука",
+                    "nationalName": "ШТ"
+                  },
+                  "previouslySuppliedQuantity": "0",
+                  "hierarchyType": "CH",
+                  "type": "PRODUCT",
+                  "VATRateInfo": {
+                    "VATCode": "RN",
+                    "VATName": "Без НДС"
+                  },
+                  "improvedProductReplacement": "false"
+                },
+                "quantity": "1",
+                "nomenclature": "26.20.40.110-00000001 Источник бесперебойного питания. Товарный знак: отсутствует",
+                "originCountry": {
+                  "countryCode": "643",
+                  "countryFullName": "Российская Федерация"
+                },
+                "fulfilledCost": "56489.77",
+                "unitPrice": "56489.77000000000",
+                "parentContractSubject": {
+                  "sid": "753964668"
+                }
+              },
+              {
+                "sid": "753964685",
+                "indexNum": "1.5",
+                "product": {
+                  "KTRU": {
+                    "code": "26.70.13.000-00000008",
+                    "name": "Камера видеонаблюдения",
+                    "versionId": "182622",
+                    "versionNumber": "12"
+                  },
+                  "OKEI": {
+                    "code": "796",
+                    "nationalCode": "ШТ",
+                    "trueNationalCode": "ШТ",
+                    "fullName": "Штука",
+                    "nationalName": "ШТ"
+                  },
+                  "previouslySuppliedQuantity": "0",
+                  "hierarchyType": "CH",
+                  "type": "PRODUCT",
+                  "VATRateInfo": {
+                    "VATCode": "RN",
+                    "VATName": "Без НДС"
+                  },
+                  "improvedProductReplacement": "false"
+                },
+                "quantity": "8",
+                "nomenclature": "26.70.13.000-00000008 Камера видеонаблюдения. Товарный знак: отсутствует",
+                "originCountry": {
+                  "countryCode": "643",
+                  "countryFullName": "Российская Федерация"
+                },
+                "fulfilledCost": "153212.97",
+                "unitPrice": "19151.62125000000",
+                "parentContractSubject": {
+                  "sid": "753964668"
+                }
+              },
+              {
+                "sid": "753964683",
+                "indexNum": "1.16",
+                "product": {
+                  "KTRU": {
+                    "code": "26.30.11.110-00000041",
+                    "name": "Коммутатор",
+                    "versionId": "185045",
+                    "versionNumber": "24"
+                  },
+                  "OKEI": {
+                    "code": "796",
+                    "nationalCode": "ШТ",
+                    "trueNationalCode": "ШТ",
+                    "fullName": "Штука",
+                    "nationalName": "ШТ"
+                  },
+                  "previouslySuppliedQuantity": "0",
+                  "hierarchyType": "CH",
+                  "type": "PRODUCT",
+                  "VATRateInfo": {
+                    "VATCode": "RN",
+                    "VATName": "Без НДС"
+                  },
+                  "improvedProductReplacement": "false"
+                },
+                "quantity": "7",
+                "nomenclature": "26.30.11.110-00000041 Коммутатор. Товарный знак: отсутствует",
+                "originCountry": {
+                  "countryCode": "156",
+                  "countryFullName": "Китайская Народная Республика"
+                },
+                "fulfilledCost": "226838.97",
+                "unitPrice": "32405.56714285714",
+                "parentContractSubject": {
+                  "sid": "753964668"
+                }
+              },
+              {
+                "sid": "753964677",
+                "indexNum": "1.14",
+                "product": {
+                  "KTRU": {
+                    "code": "26.70.13.000-00000008",
+                    "name": "Камера видеонаблюдения",
+                    "versionId": "182622",
+                    "versionNumber": "12"
+                  },
+                  "OKEI": {
+                    "code": "796",
+                    "nationalCode": "ШТ",
+                    "trueNationalCode": "ШТ",
+                    "fullName": "Штука",
+                    "nationalName": "ШТ"
+                  },
+                  "previouslySuppliedQuantity": "0",
+                  "hierarchyType": "CH",
+                  "type": "PRODUCT",
+                  "VATRateInfo": {
+                    "VATCode": "RN",
+                    "VATName": "Без НДС"
+                  },
+                  "improvedProductReplacement": "false"
+                },
+                "quantity": "1",
+                "nomenclature": "26.70.13.000-00000008 Камера видеонаблюдения. Товарный знак: отсутствует",
+                "originCountry": {
+                  "countryCode": "643",
+                  "countryFullName": "Российская Федерация"
+                },
+                "fulfilledCost": "18494.32",
+                "unitPrice": "18494.32000000000",
+                "parentContractSubject": {
+                  "sid": "753964668"
+                }
+              },
+              {
+                "sid": "753964684",
+                "indexNum": "1.6",
+                "product": {
+                  "KTRU": {
+                    "code": "26.20.17.110-00000007",
+                    "name": "Монитор, подключаемый к компьютеру",
+                    "versionId": "146133",
+                    "versionNumber": "12"
+                  },
+                  "OKEI": {
+                    "code": "796",
+                    "nationalCode": "ШТ",
+                    "trueNationalCode": "ШТ",
+                    "fullName": "Штука",
+                    "nationalName": "ШТ"
+                  },
+                  "previouslySuppliedQuantity": "0",
+                  "hierarchyType": "CH",
+                  "type": "PRODUCT",
+                  "VATRateInfo": {
+                    "VATCode": "RN",
+                    "VATName": "Без НДС"
+                  },
+                  "improvedProductReplacement": "false"
+                },
+                "quantity": "3",
+                "nomenclature": "26.20.17.110-00000007 Монитор, подключаемый к компьютеру. Товарный знак: отсутствует",
+                "originCountry": {
+                  "countryCode": "156",
+                  "countryFullName": "Китайская Народная Республика"
+                },
+                "fulfilledCost": "116336.42",
+                "unitPrice": "38778.80666666667",
+                "parentContractSubject": {
+                  "sid": "753964668"
+                }
+              }
+            ]
+          },
+          "quantityContractParentSubjects": {
+            "quantityContractParentSubject": {
+              "sid": "753964668",
+              "indexNum": "1",
+              "product": {
+                "name": "Услуги по монтажу электронного и оптического оборудования",
+                "KTRU": {
+                  "code": "33.20.40.000-00000002",
+                  "name": "Услуги по монтажу электронного и оптического оборудования",
+                  "versionId": "180630",
+                  "versionNumber": "8"
+                },
+                "previouslySuppliedQuantity": "0",
+                "hierarchyType": "P",
+                "type": "WORK"
+              },
+              "fulfilledCost": "3862828.93"
+            }
+          },
+          "guidEDI": "0199F139-C6A4-7759-8A16-06E9902FD401"
+        }
+      },
+      "printForm": {
+        "url": "https://zakupki.gov.ru/epz/contract/printForm/view.html?contractProcedureId=388588081",
+        "docRegNumber": "33665035369250000150005"
+      },
+      "paymentDocuments": {
+        "attachment": {
+          "publishedContentId": "17D6FF40AAB74ED0A99FBC0E65E699A1",
+          "fileName": "Счет.pdf",
+          "docDescription": "Счет.pdf",
+          "docRegNumber": "33665035369250000150006",
+          "url": "https://zakupki.gov.ru/44fz/filestore/public/1.0/download/rgk2/file.html?uid=17D6FF40AAB74ED0A99FBC0E65E699A1"
+        }
+      },
+      "examinationResultsDocuments": {
+        "attachment": {
+          "publishedContentId": "458F8A2CB8D34F8FA862218894DB296E",
+          "fileName": "экспертиза акт.pdf",
+          "docDescription": "экспертиза акт.pdf",
+          "docRegNumber": "33665035369250000150011",
+          "url": "https://zakupki.gov.ru/44fz/filestore/public/1.0/download/rgk2/file.html?uid=458F8A2CB8D34F8FA862218894DB296E"
+        }
+      },
+      "currentContractStage": "E",
+      "okpd2okved2": "false",
+      "isEDIBased": "true",
+      "isPURorASFKBased": "false",
+      "isUnilateralRefusalAuto": "false",
+      "isIncludeKOKS": "false",
+      "@schemeVersion": "15.3"
+    }
+  },
+  {
+    "doc_type": "contractProcedure",
+    "published_at": "2025-10-31T14:05:50.979000",
+    "source": {
+      "id": "390810007",
+      "sid": "390810007",
+      "regNum": "3366503536925000015",
+      "publishDate": "2025-10-31T17:05:50.979+03:00",
+      "versionNumber": "0",
+      "executions": {
+        "stage": {
+          "sid": "121660336",
+          "startDate": "2025-08-26",
+          "endDate": "2025-11-28"
+        },
+        "ordinalNumber": "2",
+        "finalStageExecution": "false",
+        "execution": {
+          "payDoc": {
+            "sid": "720156064",
+            "documentName": "Платежное поручение",
+            "documentDate": "2025-10-23",
+            "documentNum": "677809",
+            "payDocTypeInfo": {
+              "docAcceptancePayDoc": {
+                "isDocAcceptancePayDoc": "true",
+                "payDocToDocAcceptanceCompliances": {
+                  "docAcceptance": {
+                    "sid": "717880096",
+                    "name": "Документ о приемке поставленных товаров, выполненных работ (их результатов, в том числе этапов), оказанных услуг в электронной форме",
+                    "documentDate": "2025-10-20+03:00",
+                    "documentNum": "2"
+                  }
+                }
+              }
+            }
+          },
+          "currency": {
+            "code": "RUB",
+            "name": "РОССИЙСКИЙ РУБЛЬ"
+          },
+          "paid": "3862828.93",
+          "paidRUR": "3862828.93",
+          "paidVATRUR": "0.00"
+        }
+      },
+      "printForm": {
+        "url": "https://zakupki.gov.ru/epz/contract/printForm/view.html?contractProcedureId=390810007",
+        "docRegNumber": "33665035369250000150012"
+      },
+      "paymentDocuments": {
+        "attachment": [
+          {
+            "publishedContentId": "8CD41E4C65C24F53BF81F2DBEE139449",
+            "fileName": "Платёжное поручение (получено автоматически из электронного бюджета).xml",
+            "docDescription": "Платёжное поручение (получено автоматически из электронного бюджета).xml",
+            "docRegNumber": "33665035369250000150013",
+            "url": "https://zakupki.gov.ru/44fz/filestore/public/1.0/download/rgk2/file.html?uid=8CD41E4C65C24F53BF81F2DBEE139449"
+          },
+          {
+            "publishedContentId": "F5FD32D548AB4555864586009998D59A",
+            "fileName": "Платёжное поручение.html",
+            "docDescription": "Платёжное поручение.html",
+            "docRegNumber": "33665035369250000150014",
+            "url": "https://zakupki.gov.ru/44fz/filestore/public/1.0/download/rgk2/file.html?uid=F5FD32D548AB4555864586009998D59A"
+          }
+        ]
+      },
+      "currentContractStage": "E",
+      "okpd2okved2": "false",
+      "isEDIBased": "false",
+      "isPURorASFKBased": "true",
+      "isUnilateralRefusalAuto": "false",
+      "isIncludeKOKS": "false",
+      "@schemeVersion": "15.3"
+    }
+  },
+  {
+    "doc_type": "contractProcedure",
+    "published_at": "2025-11-01T06:55:48.556000",
+    "source": {
+      "id": "390913327",
+      "sid": "390810007",
+      "regNum": "3366503536925000015",
+      "publishDate": "2025-11-01T09:55:48.556+03:00",
+      "versionNumber": "1",
+      "executions": {
+        "stage": {
+          "sid": "121660336",
+          "startDate": "2025-08-26",
+          "endDate": "2025-11-28"
+        },
+        "ordinalNumber": "2",
+        "finalStageExecution": "true",
+        "execution": {
+          "payDoc": {
+            "sid": "720156064",
+            "documentName": "Платежное поручение",
+            "documentDate": "2025-10-23",
+            "documentNum": "677809",
+            "payDocTypeInfo": {
+              "docAcceptancePayDoc": {
+                "isDocAcceptancePayDoc": "true",
+                "payDocToDocAcceptanceCompliances": {
+                  "docAcceptance": {
+                    "sid": "717880096",
+                    "name": "Документ о приемке поставленных товаров, выполненных работ (их результатов, в том числе этапов), оказанных услуг в электронной форме",
+                    "documentDate": "2025-10-20+03:00",
+                    "documentNum": "2"
+                  }
+                }
+              }
+            }
+          },
+          "currency": {
+            "code": "RUB",
+            "name": "РОССИЙСКИЙ РУБЛЬ"
+          },
+          "paid": "3862828.93",
+          "paidRUR": "3862828.93",
+          "paidVATRUR": "0.00"
+        }
+      },
+      "printForm": {
+        "url": "https://zakupki.gov.ru/epz/contract/printForm/view.html?contractProcedureId=390913327",
+        "docRegNumber": "33665035369250000150015"
+      },
+      "paymentDocuments": {
+        "attachment": [
+          {
+            "publishedContentId": "8CD41E4C65C24F53BF81F2DBEE139449",
+            "fileName": "Платёжное поручение (получено автоматически из электронного бюджета).xml",
+            "docDescription": "Платёжное поручение (получено автоматически из электронного бюджета).xml",
+            "docRegNumber": "33665035369250000150016",
+            "url": "https://zakupki.gov.ru/44fz/filestore/public/1.0/download/rgk2/file.html?uid=8CD41E4C65C24F53BF81F2DBEE139449"
+          },
+          {
+            "publishedContentId": "F5FD32D548AB4555864586009998D59A",
+            "fileName": "Платёжное поручение.html",
+            "docDescription": "Платёжное поручение.html",
+            "docRegNumber": "33665035369250000150017",
+            "url": "https://zakupki.gov.ru/44fz/filestore/public/1.0/download/rgk2/file.html?uid=F5FD32D548AB4555864586009998D59A"
+          }
+        ]
+      },
+      "modificationReason": "Завершение исполнения по этапу/контракту",
+      "currentContractStage": "EC",
+      "okpd2okved2": "false",
+      "isEDIBased": "false",
+      "isPURorASFKBased": "true",
+      "isUnilateralRefusalAuto": "false",
+      "isIncludeKOKS": "false",
+      "@schemeVersion": "15.3"
+    }
+  }
+]

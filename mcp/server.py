@@ -1,269 +1,245 @@
+"""MCP-сервер «Закупки ЕИС» — данные через ГосПлан API v2.
+
+Источник: docs/superpowers/specs/2026-05-18-gosplan-api-migration-design.md
+Инструменты (сигнатуры не менялись со времён скрап-версии):
+  download_tender, download_contract, check_tender_updates, update_tender
 """
-MCP-сервер для работы с закупками.
-Данные берутся напрямую с zakupki.gov.ru — бесплатно, без API-ключей.
-
-Инструменты:
-  1. download_tender      — скачать все документы извещения + (если есть) подписанный
-                            контракт по номеру извещения
-  2. download_contract    — скачать только документы контракта по реестровому номеру
-                            контракта (когда контракт уже известен или нужно обновить)
-  3. check_tender_updates — проверить обновились ли документы извещения на сайте
-  4. update_tender        — скачать обновления документов извещения и показать что
-                            изменилось
-
-Запуск для теста: python server.py
-Подключение: прописать в конфиг Claude Desktop (см. CLAUDE.md)
-"""
-
-# Embedded Python (python<NN>._pth) и нестандартные запуски (python -c, -m,
-# из чужой cwd) не кладут директорию скрипта в sys.path — соседние модули
-# вроде zakupki_scraper становятся не импортируемыми. Делаем server.py
-# самодостаточным.
+import json
 import sys
 from pathlib import Path
+
 _here = str(Path(__file__).resolve().parent)
 if _here not in sys.path:
     sys.path.insert(0, _here)
 
 from mcp.server.fastmcp import FastMCP
-import zakupki_scraper
 
-# Создаём MCP-сервер
+import gosplan_client as client
+import gosplan_extract as extract
+import gosplan_store as store
+from doc_kind_map import folder_for
+
 mcp = FastMCP("Закупки ЕИС")
+
+_FZ_ORDER = (44, 223)
+
+
+def _fetch_purchase(number: str):
+    """Пробуем 44-ФЗ, затем 223-ФЗ. Возвращает (fz, detail)."""
+    last = None
+    for fz in _FZ_ORDER:
+        try:
+            return fz, client.get_purchase(fz, number)
+        except client.GosplanNotFound as e:
+            last = e
+    raise last
+
+
+def _fetch_contract(reg_num: str):
+    last = None
+    for fz in _FZ_ORDER:
+        try:
+            return fz, client.get_contract(fz, reg_num)
+        except client.GosplanNotFound as e:
+            last = e
+    raise last
+
+
+def _download_attachments(detail, fz, base: Path, subfolder_fn) -> tuple[list, list]:
+    ok, errors = [], []
+    for att in extract.iter_attachments(detail, fz):
+        sub = subfolder_fn(att)
+        fn = store.sanitize_filename(att["file_name"])
+        dest = base / sub / fn
+        try:
+            size = client.download_file(att["url"], dest)
+            ok.append({"file": f"{sub}/{fn}", "size": size,
+                       "content_id": att["content_id"]})
+        except client.GosplanError as e:
+            errors.append({"name": fn, "error": str(e)})
+    return ok, errors
 
 
 @mcp.tool()
 def download_tender(reg_number: str, folder: str) -> str:
-    """
-    Скачать все документы закупки с zakupki.gov.ru в указанную папку.
-    Работает бесплатно — напрямую с сайта ЕИС, без API-ключей.
+    """Скачать документы извещения закупки через ГосПлан API v2.
 
-    Что скачивается:
-    1. Все приложения извещения — раскладываются по подпапкам:
-       1_ТЗ, 2_Контракт, 3_НМЦК, 4_Смета, 5_Документация, 6_Протоколы, 7_Прочее
-    2. **Печатная форма извещения** — сводная страница ЕИС со всей
-       информацией (заказчик, объект закупки, требования, график,
-       финансовые условия). Сохраняется в корень папки как
-       print_form.html (оригинал) и print_form.txt (чистый текст для анализа).
-    3. Если контракт уже подписан — документы из реестра контрактов в
-       подпапку Контракт/.
-
-    Когда использовать:
-    - Пользователь говорит "скачай документы закупки НОМЕР"
-    - Пользователь говорит "загрузи файлы по закупке НОМЕР в папку ПУТЬ"
+    Качает только документы ИЗВЕЩЕНИЯ. Для документов подписанного
+    контракта (КС-2/КС-3/приёмка) используй download_contract.
 
     Параметры:
-    - reg_number: номер извещения закупки (например 0373200082122000012)
-    - folder: путь к папке куда сохранять файлы.
-      Если папка не существует — будет создана автоматически.
-      Примеры: ".", "./docs", "C:/zakupki/0373200082122000012"
-
-    После скачивания в папке появится .tender_meta.json — служебный файл
-    для отслеживания обновлений. Не удаляй его.
+    - reg_number: номер закупки (44-ФЗ или 223-ФЗ — определяется автоматически)
+    - folder: папка назначения (создаётся при необходимости)
     """
-    result = zakupki_scraper.download_tender(reg_number, folder)
+    base = Path(folder).resolve()
+    base.mkdir(parents=True, exist_ok=True)
+    try:
+        fz, detail = _fetch_purchase(reg_number)
+    except client.GosplanError as e:
+        return f"Ошибка: {e}"
 
-    if not result.get("ok"):
-        return f"Ошибка: {result.get('error', 'Неизвестная ошибка')}"
+    (base / "gosplan_meta.json").write_text(
+        json.dumps(detail, ensure_ascii=False, indent=2),
+        encoding="utf-8",
+    )
 
-    lines = [
-        f"Закупка {reg_number} — документы скачаны в папку: {result['folder']}",
-        f"Скачано файлов: {result['downloaded']}",
-        "",
-    ]
+    try:
+        ok, errors = _download_attachments(
+            detail, fz, base,
+            lambda a: folder_for(a["doc_code"], a["doc_name"]),
+        )
+    except (KeyError, AttributeError, TypeError) as e:
+        return (f"Закупка найдена, но структура ответа API не распознана "
+                f"({e}). Сырой ответ сохранён в gosplan_meta.json — можно "
+                f"разобрать вручную.")
 
-    # Группируем по категориям для наглядного вывода
-    by_cat = {}
-    for f in result["files"]:
-        cat = f.get("category", "7_Прочее")
-        by_cat.setdefault(cat, []).append(f)
+    try:
+        pf = extract.build_print_form_text(detail, fz)
+        (base / "print_form.txt").write_text(pf, encoding="utf-8")
+    except (KeyError, AttributeError, TypeError):
+        pf = None
 
-    for cat in sorted(by_cat):
-        lines.append(f"📁 {cat}/")
-        for f in by_cat[cat]:
-            size_kb = f["size_bytes"] // 1024
-            lines.append(f"   • {f['filename']} ({size_kb} КБ)")
+    content_ids = [a["content_id"] for a in ok if a["content_id"]]
+    store.save_meta(base, {
+        "fz": fz, "number": reg_number,
+        "updated_at": detail.get("updated_at") or detail.get("doc_updated_at"),
+        "content_ids": content_ids,
+    })
 
-    if result["errors"] > 0:
-        lines.append(f"\nНе удалось скачать: {result['errors']} файл(ов)")
-        for e in result["error_list"]:
+    lines = [f"Закупка {reg_number} (ФЗ-{fz}) — скачано в {base}",
+             f"Файлов: {len(ok)}"]
+    for a in ok:
+        lines.append(f"  • {a['file']} ({a['size'] // 1024} КБ)")
+    if not ok:
+        (base / "_no_attachments.txt").write_text(
+            "Извещение есть в ГосПлан, но файлы ещё не опубликованы в ЕИС. "
+            "Повторите позже.\n", encoding="utf-8")
+        lines.append("  (вложений нет — извещение свежее, повторите позже)")
+    if errors:
+        lines.append(f"Не скачано: {len(errors)}")
+        for e in errors:
             lines.append(f"  ! {e['name']}: {e['error']}")
-
-    # Печатная форма извещения (сводка с ЕИС)
-    print_form = result.get("print_form")
-    if print_form and not print_form.get("error"):
-        text_kb = print_form["text_size"] // 1024
-        lines.append("")
-        lines.append(f"📄 Печатная форма извещения сохранена:")
-        lines.append(f"   • print_form.html  (оригинал)")
-        lines.append(f"   • print_form.txt   (чистый текст, {text_kb} КБ — для анализа)")
-    elif print_form and print_form.get("error"):
-        lines.append(f"\n⚠ Печатная форма: {print_form['error']}")
-    else:
-        lines.append(f"\nℹ Печатная форма не найдена на сайте")
-
-    # Если по результатам поиска нашёлся подписанный контракт — выводим его тоже
-    contract = result.get("contract")
-    if contract:
-        if contract.get("ok"):
-            lines.append("")
-            lines.append(f"📑 Дополнительно: подписанный контракт найден в реестре")
-            lines.append(f"   Реестровый номер контракта: {contract['contract_reestr_number']}")
-            lines.append(f"   Скачано документов: {contract['downloaded']} → {contract['folder']}")
-            for f in contract["files"]:
-                size_kb = f["size_bytes"] // 1024
-                lines.append(f"     • {f['filename']} ({size_kb} КБ)")
-            if contract["errors"] > 0:
-                lines.append(f"   Не удалось скачать: {contract['errors']} файл(ов)")
-        else:
-            lines.append(f"\n⚠ Контракт найден, но скачать не удалось: {contract.get('error')}")
-    else:
-        lines.append(f"\nℹ Подписанный контракт в реестре не найден (возможно, торги ещё не завершились или контракт не размещён в ЕИС)")
-
-    lines.append(f"\nДля проверки обновлений: check_tender_updates('{folder}')")
+    if pf:
+        lines.append("Сводка: print_form.txt")
+    lines.append("Контракт подписан? → download_contract(<рег. № контракта>)")
     return "\n".join(lines)
 
 
 @mcp.tool()
 def download_contract(contract_reestr_number: str, folder: str) -> str:
-    """
-    Скачать документы подписанного контракта из реестра контрактов в подпапку
-    "Контракт/" внутри указанной папки закупки.
-
-    Когда использовать:
-    - Пользователь говорит "скачай контракт НОМЕР", "загрузи документы контракта"
-    - Контракт подписан позже чем выполнялся download_tender, и нужно дополнить
-    - Документы контракта обновились (доп. соглашение, документ о приёмке и т.п.)
-
-    На странице контракта обычно есть несколько групп документов:
-      - Информация о контракте (подписанный контракт, печатная форма, электронный)
-      - Исполнение контракта — Этапы 1, 2, 3, ... (КС-2, КС-3, документы о приёмке,
-        платёжные поручения, акты экспертизы)
-
-    Все файлы складываются плоско в подпапку "Контракт/".
+    """Скачать документы подписанного контракта в подпапку Контракт/.
 
     Параметры:
-    - contract_reestr_number: реестровый номер КОНТРАКТА (не извещения!), например
-      3366503536925000015. Виден в URL карточки контракта или в результатах
-      определения поставщика на странице извещения.
-    - folder: путь к папке закупки (та же что использовалась в download_tender).
-      Подпапка "Контракт/" будет создана автоматически.
+    - contract_reestr_number: реестровый номер КОНТРАКТА (не извещения)
+    - folder: папка закупки (подпапка Контракт/ создаётся автоматически)
     """
-    result = zakupki_scraper.download_contract(contract_reestr_number, folder)
+    base = Path(folder).resolve()
+    sub = base / "Контракт"
+    sub.mkdir(parents=True, exist_ok=True)
+    try:
+        fz, detail = _fetch_contract(contract_reestr_number)
+    except client.GosplanError as e:
+        return f"Ошибка: {e}"
 
-    if not result.get("ok"):
-        return f"Ошибка: {result.get('error', 'Неизвестная ошибка')}"
+    # procedures: 404 = нет этапов исполнения, не ошибка (вернёт []).
+    # fz уже определён в _fetch_contract — не дёргаем чужой ФЗ зря.
+    try:
+        procedures = client.get_contract_procedures(fz, contract_reestr_number)
+    except client.GosplanError:
+        procedures = []
 
-    lines = [
-        f"Контракт {contract_reestr_number} — документы скачаны.",
-        f"Скачано файлов: {result['downloaded']} → {result['folder']}",
-        "",
-    ]
+    (sub / ".contract_meta.json").write_text(
+        json.dumps({"contract": detail, "procedures": procedures},
+                   ensure_ascii=False, indent=2),
+        encoding="utf-8",
+    )
 
-    for f in result["files"]:
-        size_kb = f["size_bytes"] // 1024
-        lines.append(f"   • {f['filename']} ({size_kb} КБ)")
+    atts = list(extract.iter_contract_attachments(detail, procedures))
+    if not atts:
+        return ("Контракт найден, но вложений в ответе API нет. Сырой "
+                "ответ в Контракт/.contract_meta.json.")
 
-    if result["errors"] > 0:
-        lines.append(f"\nНе удалось скачать: {result['errors']} файл(ов)")
-        for e in result["error_list"]:
-            lines.append(f"  ! {e['name']}: {e['error']}")
+    ok, errors = [], []
+    for a in atts:
+        fn = store.sanitize_filename(a["file_name"])
+        try:
+            size = client.download_file(a["url"], sub / fn)
+            ok.append((fn, size, a["group"]))
+        except client.GosplanError as e:
+            errors.append((fn, str(e)))
 
+    has_closing = any(g != "contract" for _, _, g in ok)
+    lines = [f"Контракт {contract_reestr_number} (ФЗ-{fz}) — {len(ok)} файл(ов) → {sub}"]
+    for fn, size, g in ok:
+        lines.append(f"  • [{g}] {fn} ({size // 1024} КБ)")
+    for fn, err in errors:
+        lines.append(f"  ! {fn}: {err}")
+    if not has_closing:
+        lines.append("ℹ Закрывающих документов (КС-2/КС-3/приёмка) в API "
+                      "пока нет — контракт ещё в исполнении или акты не "
+                      "опубликованы.")
     return "\n".join(lines)
 
 
 @mcp.tool()
 def check_tender_updates(folder: str) -> str:
-    """
-    Проверить, обновились ли документы закупки на zakupki.gov.ru.
-    Файлы НЕ скачиваются — только сравнение с текущим состоянием сайта.
-
-    Когда использовать:
-    - Пользователь говорит "проверь актуальность документов"
-    - Пользователь говорит "есть ли обновления по закупке"
-    - Перед началом работы с документами (убедиться что они свежие)
-
-    Параметры:
-    - folder: путь к папке закупки (та же что использовалась в download_tender)
-      В папке должен быть .tender_meta.json
-
-    Если есть обновления — предложи пользователю выполнить update_tender.
-    """
-    result = zakupki_scraper.check_updates(folder)
-
-    if not result.get("ok"):
-        return f"Ошибка: {result.get('error', 'Неизвестная ошибка')}"
-
-    if not result["has_updates"]:
-        return (
-            f"Закупка {result['reg_number']}: документы актуальны.\n"
-            f"Без изменений: {result['unchanged_count']} файл(ов).\n"
-            f"Проверено: {result['checked_at']}"
-        )
-
-    lines = [
-        f"Закупка {result['reg_number']}: НАЙДЕНЫ ИЗМЕНЕНИЯ!",
-        f"Проверено: {result['checked_at']}",
-        "",
-    ]
-
-    if result["new"]:
-        lines.append(f"Новые документы ({len(result['new'])}):")
-        for d in result["new"]:
-            lines.append(f"  + {d['name']}")
-
-    if result["removed"]:
-        lines.append(f"\nУбраны с сайта ({len(result['removed'])}):")
-        for d in result["removed"]:
-            lines.append(f"  - {d['filename']}")
-
-    lines.append(f"\nБез изменений: {result['unchanged_count']} файл(ов)")
-    lines.append(f"\nДля загрузки обновлений: update_tender('{folder}')")
+    """Проверить, обновились ли документы закупки (без скачивания)."""
+    base = Path(folder).resolve()
+    meta = store.load_meta(base)
+    if not meta:
+        return f"Ошибка: нет {store.META_NAME} в {base} — сначала download_tender"
+    try:
+        detail = client.get_purchase(meta["fz"], meta["number"])
+    except client.GosplanError as e:
+        return f"Ошибка: {e}"
+    try:
+        ids = [a["content_id"] for a in extract.iter_attachments(detail, meta["fz"])
+               if a["content_id"]]
+    except (KeyError, AttributeError, TypeError) as e:
+        return f"Ошибка: структура ответа не распознана ({e})"
+    upd = detail.get("updated_at") or detail.get("doc_updated_at")
+    d = store.diff_meta(meta, ids, upd)
+    if not d["changed"]:
+        return f"Закупка {meta['number']}: без изменений."
+    lines = [f"Закупка {meta['number']}: ЕСТЬ ИЗМЕНЕНИЯ"]
+    if d["new"]:
+        lines.append(f"Новых документов: {len(d['new'])}")
+    if d["removed"]:
+        lines.append(f"Убрано с сайта: {len(d['removed'])}")
+    lines.append(f"Для загрузки: update_tender('{folder}')")
     return "\n".join(lines)
 
 
 @mcp.tool()
 def update_tender(folder: str) -> str:
-    """
-    Скачать обновлённые документы закупки и создать лог изменений.
-
-    Когда использовать:
-    - После check_tender_updates сообщил что есть изменения
-    - Пользователь говорит "обнови документы", "скачай новые версии"
-
-    Параметры:
-    - folder: путь к папке закупки (та же что использовалась в download_tender)
-
-    После выполнения в папке появится файл _changes.md с описанием что изменилось.
-    Старые версии файлов НЕ удаляются — остаются рядом для сравнения.
-    """
-    result = zakupki_scraper.update_tender(folder)
-
-    if not result.get("ok"):
-        return f"Ошибка: {result.get('error', 'Неизвестная ошибка')}"
-
-    if "message" in result:
-        return result["message"]
-
-    lines = [
-        f"Закупка {result['reg_number']} — обновление выполнено.",
-        f"Скачано новых файлов: {result['new_downloaded']}",
-    ]
-
-    for f in result["files"]:
-        size_kb = f["size_bytes"] // 1024
-        lines.append(f"  + {f['filename']} ({size_kb} КБ)")
-
-    if result["removed_on_site"] > 0:
-        lines.append(f"Убрано с сайта: {result['removed_on_site']} файл(ов) (локальные копии сохранены)")
-
-    if result["errors"] > 0:
-        lines.append(f"Ошибок при скачивании: {result['errors']}")
-
-    lines.append(f"\nЛог изменений: {result['changes_file']}")
-    return "\n".join(lines)
+    """Скачать обновлённые документы и записать _changes.md."""
+    base = Path(folder).resolve()
+    meta = store.load_meta(base)
+    if not meta:
+        return f"Ошибка: нет {store.META_NAME} в {base} — сначала download_tender"
+    try:
+        fz, detail = meta["fz"], client.get_purchase(meta["fz"], meta["number"])
+    except client.GosplanError as e:
+        return f"Ошибка: {e}"
+    try:
+        ok, errors = _download_attachments(
+            detail, fz, base,
+            lambda a: folder_for(a["doc_code"], a["doc_name"]),
+        )
+    except (KeyError, AttributeError, TypeError) as e:
+        return f"Ошибка: структура ответа не распознана ({e})"
+    ids = [a["content_id"] for a in ok if a["content_id"]]
+    upd = detail.get("updated_at") or detail.get("doc_updated_at")
+    d = store.diff_meta(meta, ids, upd)
+    store.save_meta(base, {**meta, "updated_at": upd, "content_ids": ids})
+    (base / "_changes.md").write_text(
+        f"# Изменения {meta['number']}\n\n"
+        f"Новые: {d['new']}\nУбраны: {d['removed']}\n",
+        encoding="utf-8",
+    )
+    return (f"Закупка {meta['number']} обновлена. Новых: {len(d['new'])}, "
+            f"убрано: {len(d['removed'])}. Лог: _changes.md")
 
 
 if __name__ == "__main__":
-    # Запуск сервера в режиме stdio (для Claude Desktop)
     mcp.run(transport="stdio")
