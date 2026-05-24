@@ -1,0 +1,20 @@
+{
+  "name": "tender-ai-marketplace",
+  "interface": {
+    "displayName": "Tender AI"
+  },
+  "plugins": [
+    {
+      "name": "tender-ai",
+      "source": {
+        "source": "local",
+        "path": "./"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}
