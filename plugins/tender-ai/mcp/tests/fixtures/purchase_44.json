@@ -1,0 +1,910 @@
+{
+  "collecting_finished_at": "2026-05-26T05:00:00",
+  "contract_guarantee_amount": null,
+  "contract_guarantee_part": 10.0,
+  "currency_code": "RUB",
+  "customers": [
+    "6669012431"
+  ],
+  "delivery_places": [],
+  "delivery_places_kladr": [],
+  "doc_created_at": "2026-05-18T12:44:43.479000",
+  "doc_updated_at": "2026-05-18T12:44:43.479000",
+  "ikzs": [
+    "261666901243166230100100410010000242"
+  ],
+  "ktru": [
+    "26.70.13.000-00000008"
+  ],
+  "max_price": 637735.68,
+  "object_info": "Оборудование для системы видеонаблюдения и охранной сигнализации",
+  "okpd2": [
+    "26.40.51.000",
+    "27.32.13.159"
+  ],
+  "owners": [
+    "6669012431"
+  ],
+  "plan_numbers": [
+    "202603621000095001"
+  ],
+  "position_numbers": [
+    "202603621000095001000050"
+  ],
+  "published_at": "2026-05-18T10:54:47.411000",
+  "purchase_number": "0362100009526000023",
+  "purchase_type": "epNotificationEF2020",
+  "region": 66,
+  "responsible": "6669012431",
+  "stage": 1,
+  "updated_at": "2026-05-18T10:54:47.411000",
+  "docs": [
+    {
+      "doc_type": "epNotificationEF2020",
+      "published_at": "2026-05-18T10:54:47.411000",
+      "source": {
+        "id": "42971473",
+        "versionNumber": "1",
+        "commonInfo": {
+          "purchaseNumber": "0362100009526000023",
+          "docNumber": "№0362100009526000023",
+          "directDT": "2026-05-18T13:13:25.382+05:00",
+          "plannedPublishDate": "2026-05-18+05:00",
+          "publishDTInEIS": "2026-05-18T15:54:47.411+05:00",
+          "href": "https://zakupki.gov.ru/epz/order/notice/ea20/view/common-info.html?regNumber=0362100009526000023",
+          "notPublishedOnEIS": "true",
+          "placingWay": {
+            "code": "EAP20",
+            "name": "Электронный аукцион"
+          },
+          "ETP": {
+            "code": "ETP_RTS",
+            "name": "РТС-тендер",
+            "url": "http://www.rts-tender.ru"
+          },
+          "contractConclusionOnSt83Ch2": "true",
+          "purchaseObjectInfo": "Оборудование для системы видеонаблюдения и охранной сигнализации"
+        },
+        "purchaseResponsibleInfo": {
+          "responsibleOrgInfo": {
+            "regNum": "03621000095",
+            "consRegistryNum": "00149498",
+            "fullName": "ФЕДЕРАЛЬНОЕ КАЗЕННОЕ УЧРЕЖДЕНИЕ \"ИСПРАВИТЕЛЬНАЯ КОЛОНИЯ № 13 ГЛАВНОГО УПРАВЛЕНИЯ ФЕДЕРАЛЬНОЙ СЛУЖБЫ ИСПОЛНЕНИЯ НАКАЗАНИЙ ПО СВЕРДЛОВСКОЙ ОБЛАСТИ\"",
+            "shortName": "ФКУ ИК-13 ГУФСИН РОССИИ ПО СВЕРДЛОВСКОЙ ОБЛАСТИ",
+            "postAddress": "Российская Федерация, 622058, Свердловская обл, Нижний Тагил г, УЛ. КУЛИБИНА, Д.61",
+            "factAddress": "Российская Федерация, 622013, Свердловская обл, Нижний Тагил г, Кулибина ул, Д.61",
+            "INN": "6669012431",
+            "KPP": "662301001"
+          },
+          "responsibleRole": "CU",
+          "responsibleInfo": {
+            "orgPostAddress": "Российская Федерация, 622058, Свердловская обл, Нижний Тагил г, УЛ. КУЛИБИНА, Д.61",
+            "orgFactAddress": "Российская Федерация, 622013, Свердловская обл, Нижний Тагил г, Кулибина ул, Д.61",
+            "contactPersonInfo": {
+              "lastName": "Кастюнин",
+              "firstName": "Андрей",
+              "middleName": "Николаевич"
+            },
+            "contactEMail": "ik13.omto@66.fsin.gov.ru",
+            "contactPhone": "7-3435-478124-200",
+            "addInfo": "Максименко М.А., доб. 200"
+          }
+        },
+        "printFormInfo": {
+          "url": "https://zakupki.gov.ru/epz/order/notice/printForm/view.html?regNumber=0362100009526000023"
+        },
+        "attachmentsInfo": {
+          "attachmentInfo": [
+            {
+              "publishedContentId": "941638A97DB040F580E106EE2364FEB3",
+              "fileName": "НМЦК.pdf",
+              "fileSize": "1096604",
+              "docDescription": "НМЦК",
+              "docDate": "2026-05-18T09:58:15+03:00",
+              "url": "https://zakupki.gov.ru/44fz/filestore/public/1.0/download/priz/file.html?uid=941638A97DB040F580E106EE2364FEB3",
+              "docKindInfo": {
+                "code": "MRJ",
+                "name": "Обоснование начальной (максимальной) цены контракта"
+              }
+            },
+            {
+              "publishedContentId": "285345B5C5544D38A421AFBE4986B095",
+              "fileName": "проект контракта.doc",
+              "fileSize": "171520",
+              "docDescription": "проект контракта",
+              "docDate": "2026-05-18T09:58:22+03:00",
+              "url": "https://zakupki.gov.ru/44fz/filestore/public/1.0/download/priz/file.html?uid=285345B5C5544D38A421AFBE4986B095",
+              "docKindInfo": {
+                "code": "CP",
+                "name": "Проект контракта"
+              }
+            },
+            {
+              "publishedContentId": "D87F7956483C4D6FBEF4C2BEA0879401",
+              "fileName": "Описание объекта закупки.docx",
+              "fileSize": "33644",
+              "docDescription": "Описание объекта закупки",
+              "docDate": "2026-05-18T09:58:33+03:00",
+              "url": "https://zakupki.gov.ru/44fz/filestore/public/1.0/download/priz/file.html?uid=D87F7956483C4D6FBEF4C2BEA0879401",
+              "docKindInfo": {
+                "code": "POD",
+                "name": "Описание объекта закупки"
+              }
+            },
+            {
+              "publishedContentId": "C5BC02C198754FBEBD02D6A04572852A",
+              "fileName": "Требования к содержанию и составу заявки на участие в аукционе.docx",
+              "fileSize": "23229",
+              "docDescription": "Требования к содержанию и составу заявки на участие в аукционе",
+              "docDate": "2026-05-18T09:58:41+03:00",
+              "url": "https://zakupki.gov.ru/44fz/filestore/public/1.0/download/priz/file.html?uid=C5BC02C198754FBEBD02D6A04572852A",
+              "docKindInfo": {
+                "code": "CAR",
+                "name": "Требование к содержанию, составу заявки на участие в закупке"
+              }
+            }
+          ]
+        },
+        "serviceSigns": {
+          "isControlP1Ch5St99": "true"
+        },
+        "notificationInfo": {
+          "procedureInfo": {
+            "collectingInfo": {
+              "startDT": "2026-05-18T15:54:47+05:00",
+              "endDT": "2026-05-26T10:00:00+05:00"
+            },
+            "biddingDate": "2026-05-26+05:00",
+            "summarizingDate": "2026-05-28+05:00"
+          },
+          "contractConditionsInfo": {
+            "maxPriceInfo": {
+              "maxPrice": "637735.68",
+              "currency": {
+                "code": "RUB",
+                "name": "РОССИЙСКИЙ РУБЛЬ"
+              }
+            }
+          },
+          "customerRequirementsInfo": {
+            "customerRequirementInfo": {
+              "customer": {
+                "regNum": "03621000095",
+                "consRegistryNum": "00149498",
+                "fullName": "ФЕДЕРАЛЬНОЕ КАЗЕННОЕ УЧРЕЖДЕНИЕ \"ИСПРАВИТЕЛЬНАЯ КОЛОНИЯ № 13 ГЛАВНОГО УПРАВЛЕНИЯ ФЕДЕРАЛЬНОЙ СЛУЖБЫ ИСПОЛНЕНИЯ НАКАЗАНИЙ ПО СВЕРДЛОВСКОЙ ОБЛАСТИ\""
+              },
+              "contractGuarantee": {
+                "account": {
+                  "bik": "016577551",
+                  "settlementAccount": "03212643000000016200",
+                  "personalAccount": "05621494980",
+                  "creditOrgName": "ОКЦ № 1 УГУ Банка России//УФК по Свердловской области, г Екатеринбург",
+                  "corrAccountNumber": "40102810645370000054"
+                },
+                "procedureInfo": "Обеспечение исполнения контракта может обеспечиваться предоставлением независимой гарантии, соответствующей требованиям статьи 45 44-ФЗ, или внесением денежных средств на указанный заказчиком счет, на котором в соответствии с законодательством Российской Федерации учитываются операции со средствами, поступающими заказчику. Способ обеспечения исполнения контракта определяется участником закупки, с которым заключается контракт, самостоятельно. При этом срок действия независимой гарантии должен превышать предусмотренный контрактом срок исполнения обязательств, которые должны быть обеспечены такой независимой гарантией, не менее чем на один месяц",
+                "part": "10.0"
+              },
+              "contractConditionsInfo": {
+                "maxPriceInfo": {
+                  "maxPrice": "637735.68"
+                },
+                "mustPublicDiscussion": "false",
+                "IKZInfo": {
+                  "purchaseCode": "261666901243166230100100410010000242",
+                  "publishYear": "2026",
+                  "OKPD2Info": {
+                    "undefined": "0000"
+                  },
+                  "KVRInfo": {
+                    "KVR": {
+                      "code": "242",
+                      "name": "Закупка товаров, работ и услуг в сфере информационно-коммуникационных технологий"
+                    }
+                  },
+                  "customerCode": "16669012431662301001",
+                  "purchaseNumber": "0041",
+                  "purchaseOrderNumber": "001"
+                },
+                "tenderPlan2020Info": {
+                  "plan2020Number": "202603621000095001",
+                  "position2020Number": "202603621000095001000050"
+                },
+                "contractExecutionPaymentPlan": {
+                  "contractExecutionTermsInfo": {
+                    "notRelativeTermsInfo": {
+                      "isFromConclusionDate": "true",
+                      "endDate": "2026-12-31+03:00"
+                    }
+                  },
+                  "financingSourcesInfo": {
+                    "budgetFinancingsInfo": {
+                      "budgetInfo": {
+                        "code": "99010001",
+                        "name": "Федеральный бюджет"
+                      },
+                      "budgetLevelInfo": {
+                        "code": "10",
+                        "name": "федеральный бюджет"
+                      },
+                      "OKTMOInfo": {
+                        "code": "00000001",
+                        "name": "Раздел 1. Муниципальные образования субъектов Российской Федерации / Федеральный бюджет"
+                      }
+                    },
+                    "currentYear": "2026",
+                    "financeInfo": {
+                      "total": "637735.68",
+                      "currentYear": "637735.68",
+                      "firstYear": "0",
+                      "secondYear": "0",
+                      "subsecYears": "0"
+                    }
+                  },
+                  "stagesInfo": {
+                    "stageInfo": {
+                      "sid": "20461378",
+                      "termsInfo": {
+                        "notRelativeTermsInfo": {
+                          "isFromConclusionDate": "true",
+                          "endDate": "2026-12-31+03:00"
+                        }
+                      },
+                      "budgetFinancingsInfo": {
+                        "budgetFinancingInfo": {
+                          "KBK": "32003054240690048242",
+                          "paymentYearInfo": {
+                            "total": "637735.68",
+                            "currentYear": "637735.68",
+                            "firstYear": "0",
+                            "secondYear": "0",
+                            "subsecYears": "0"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "BOInfo": {
+                  "BONumber": "0014949826000000291",
+                  "BODate": "2026-05-18T00:00:00+03:00",
+                  "inputBOFlag": "auto"
+                },
+                "deliveryPlacesInfo": {
+                  "byGARInfo": {
+                    "sid": "59897808",
+                    "countryInfo": {
+                      "countryCode": "643",
+                      "countryFullName": "Российская Федерация"
+                    },
+                    "GARInfo": {
+                      "GARGuid": "5adfa674-85d8-4e5c-b761-828d11e11305",
+                      "GARAddress": "обл Свердловская, м.о. город Нижний Тагил, г Нижний Тагил, ул Кулибина, стр. 61"
+                    }
+                  }
+                },
+                "isOneSideRejectionSt95": "true",
+                "isExecutionStagesTerms": "false"
+              },
+              "warrantyInfo": {
+                "warrantyTerm": "Гарантийный срок на Товар составляет не менее 12 месяцев со дня подписания документа о приемке Товара в единой информационной системе."
+              },
+              "provisionWarranty": {
+                "amount": "63773.57",
+                "part": "10.0",
+                "procedureInfo": "Срок предоставления обеспечения гарантийных обязательств: с момента размещения итогового протокола по электронному аукциону до подписания Государственным заказчиком документа о приемке товара по контракту. Гарантийные обязательства могут обеспечиваться предоставлением независимой гарантии, или внесением денежных средств на указанный Государственным заказчиком счет, на котором в соответствии с законодательством Российской Федерации учитываются операции со средствами, поступающими Государственному заказчику. Способ и срок действия независимой гарантии определяется Поставщиком самостоятельно.",
+                "account": {
+                  "bik": "016577551",
+                  "settlementAccount": "03212643000000016200",
+                  "personalAccount": "05621494980",
+                  "creditOrgName": "ОКЦ № 1 УГУ Банка России//УФК по Свердловской области, г Екатеринбург",
+                  "corrAccountNumber": "40102810645370000054"
+                }
+              }
+            }
+          },
+          "purchaseObjectsInfo": {
+            "notDrugPurchaseObjectsInfo": {
+              "purchaseObject": [
+                {
+                  "sid": "214502042",
+                  "KTRU": {
+                    "code": "26.70.13.000-00000008",
+                    "name": "Камера видеонаблюдения",
+                    "versionId": "354481",
+                    "versionNumber": "21",
+                    "characteristics": {
+                      "characteristicsUsingReferenceInfo": [
+                        {
+                          "sid": "301336029",
+                          "code": "08c237a8-a",
+                          "name": "Дальность подсветки",
+                          "type": "2",
+                          "kind": "2",
+                          "values": {
+                            "value": {
+                              "sid": "387875384",
+                              "OKEI": {
+                                "code": "006",
+                                "nationalCode": "м",
+                                "name": "Метр"
+                              },
+                              "valueFormat": "N",
+                              "rangeSet": {
+                                "valueRange": {
+                                  "minMathNotation": "greaterOrEqual",
+                                  "min": "30"
+                                }
+                              }
+                            }
+                          },
+                          "characteristicsFillingInstruction": {
+                            "code": "2",
+                            "name": "Участник закупки указывает в заявке конкретное значение характеристики"
+                          }
+                        },
+                        {
+                          "sid": "301336030",
+                          "code": "031b3a21-7",
+                          "name": "Количество независимых видеопотоков",
+                          "type": "2",
+                          "kind": "2",
+                          "values": {
+                            "value": {
+                              "sid": "387875385",
+                              "OKEI": {
+                                "code": "796",
+                                "nationalCode": "шт",
+                                "name": "Штука"
+                              },
+                              "valueFormat": "N",
+                              "rangeSet": {
+                                "valueRange": {
+                                  "minMathNotation": "greater",
+                                  "min": "2"
+                                }
+                              }
+                            }
+                          },
+                          "characteristicsFillingInstruction": {
+                            "code": "2",
+                            "name": "Участник закупки указывает в заявке конкретное значение характеристики"
+                          }
+                        },
+                        {
+                          "sid": "301336031",
+                          "code": "c63c55ae-9",
+                          "name": "Поддержка PoE",
+                          "type": "1",
+                          "kind": "2",
+                          "values": {
+                            "value": {
+                              "sid": "387875386",
+                              "qualityDescription": "IEEE 802.3af (PoE)"
+                            }
+                          },
+                          "characteristicsFillingInstruction": {
+                            "code": "6",
+                            "name": "Значение характеристики не может изменяться участником закупки"
+                          }
+                        },
+                        {
+                          "sid": "301336032",
+                          "code": "9bcc6b5c-6",
+                          "name": "Рабочее напряжение",
+                          "type": "2",
+                          "kind": "2",
+                          "values": {
+                            "value": {
+                              "sid": "387875387",
+                              "OKEI": {
+                                "code": "222",
+                                "nationalCode": "В",
+                                "name": "Вольт"
+                              },
+                              "valueFormat": "N",
+                              "valueSet": {
+                                "concreteValue": "12"
+                              }
+                            }
+                          },
+                          "characteristicsFillingInstruction": {
+                            "code": "6",
+                            "name": "Значение характеристики не может изменяться участником закупки"
+                          }
+                        },
+                        {
+                          "sid": "301336033",
+                          "code": "25591ea0-3",
+                          "name": "Разрешение основного видеопотока",
+                          "type": "1",
+                          "kind": "2",
+                          "values": {
+                            "value": {
+                              "sid": "387875388",
+                              "qualityDescription": "2560×1920 (5 Мп)"
+                            }
+                          },
+                          "characteristicsFillingInstruction": {
+                            "code": "6",
+                            "name": "Значение характеристики не может изменяться участником закупки"
+                          }
+                        },
+                        {
+                          "sid": "301336034",
+                          "code": "8c058519-1",
+                          "name": "Тип камеры",
+                          "type": "1",
+                          "kind": "1",
+                          "values": {
+                            "value": {
+                              "sid": "387875389",
+                              "qualityDescription": "Цифровая"
+                            }
+                          },
+                          "characteristicsFillingInstruction": {
+                            "code": "6",
+                            "name": "Значение характеристики не может изменяться участником закупки"
+                          }
+                        },
+                        {
+                          "sid": "301336035",
+                          "code": "21fb20f8-a",
+                          "name": "Тип объектива",
+                          "type": "1",
+                          "kind": "2",
+                          "values": {
+                            "value": {
+                              "sid": "387875390",
+                              "qualityDescription": "Фиксированный (монофокальный)"
+                            }
+                          },
+                          "characteristicsFillingInstruction": {
+                            "code": "6",
+                            "name": "Значение характеристики не может изменяться участником закупки"
+                          }
+                        },
+                        {
+                          "sid": "301336036",
+                          "code": "0293cc9f-f",
+                          "name": "Частота кадров (кадр/сек)",
+                          "type": "2",
+                          "kind": "2",
+                          "values": {
+                            "value": {
+                              "sid": "387875391",
+                              "valueFormat": "N",
+                              "valueSet": {
+                                "concreteValue": "25"
+                              }
+                            }
+                          },
+                          "characteristicsFillingInstruction": {
+                            "code": "6",
+                            "name": "Значение характеристики не может изменяться участником закупки"
+                          }
+                        },
+                        {
+                          "sid": "301336037",
+                          "code": "44e51e66-b",
+                          "name": "Число мегапикселей матрицы",
+                          "type": "2",
+                          "kind": "2",
+                          "values": {
+                            "value": {
+                              "sid": "387875392",
+                              "valueFormat": "N",
+                              "rangeSet": {
+                                "valueRange": {
+                                  "minMathNotation": "greaterOrEqual",
+                                  "min": "4",
+                                  "maxMathNotation": "less",
+                                  "max": "8"
+                                }
+                              }
+                            }
+                          },
+                          "characteristicsFillingInstruction": {
+                            "code": "2",
+                            "name": "Участник закупки указывает в заявке конкретное значение характеристики"
+                          }
+                        },
+                        {
+                          "sid": "301348656",
+                          "code": "f601c281-a",
+                          "name": "Светочувствительность",
+                          "type": "2",
+                          "kind": "2",
+                          "values": {
+                            "value": {
+                              "sid": "387875393",
+                              "OKEI": {
+                                "code": "283",
+                                "nationalCode": "лк",
+                                "name": "Люкс"
+                              },
+                              "valueFormat": "N",
+                              "rangeSet": {
+                                "valueRange": {
+                                  "minMathNotation": "greaterOrEqual",
+                                  "min": "0",
+                                  "maxMathNotation": "less",
+                                  "max": "1"
+                                }
+                              }
+                            }
+                          },
+                          "characteristicsFillingInstruction": {
+                            "code": "2",
+                            "name": "Участник закупки указывает в заявке конкретное значение характеристики"
+                          }
+                        }
+                      ]
+                    },
+                    "OKPD2": {
+                      "OKPDCode": "26.70.13.000",
+                      "OKPDName": "Видеокамеры цифровые"
+                    }
+                  },
+                  "name": "Камера видеонаблюдения",
+                  "OKEI": {
+                    "code": "796",
+                    "nationalCode": "шт",
+                    "name": "Штука"
+                  },
+                  "price": "9931.08",
+                  "trademarkInfo": {
+                    "trademark": "АЙТЕКПРО Сокол-DvpF",
+                    "isEquivalentDeliveryAllowed": "true"
+                  },
+                  "quantity": {
+                    "value": "36"
+                  },
+                  "sum": "357518.88",
+                  "type": "PRODUCT",
+                  "hierarchyType": "ND",
+                  "restrictionsInfo": {
+                    "isProhibitionForeignPurchaseObjects": "false",
+                    "isRestrictForeignPurchaseObjects": "true",
+                    "isPreferenseRFPurchaseObjects": "false",
+                    "isImposibilityProhibition": "false"
+                  }
+                },
+                {
+                  "sid": "214508618",
+                  "OKPD2": {
+                    "OKPDCode": "27.32.13.159",
+                    "OKPDName": "Кабели, провода и шнуры связи прочие, не включенные в другие группировки",
+                    "characteristics": {
+                      "characteristicsUsingTextForm": [
+                        {
+                          "sid": "301355463",
+                          "name": "Категория",
+                          "type": "1",
+                          "characteristicsFillingInstruction": {
+                            "code": "6",
+                            "name": "Значение характеристики не может изменяться участником закупки"
+                          },
+                          "values": {
+                            "value": {
+                              "sid": "387887532",
+                              "qualityDescription": "5e"
+                            }
+                          }
+                        },
+                        {
+                          "sid": "301355464",
+                          "name": "Экран",
+                          "type": "1",
+                          "characteristicsFillingInstruction": {
+                            "code": "6",
+                            "name": "Значение характеристики не может изменяться участником закупки"
+                          },
+                          "values": {
+                            "value": {
+                              "sid": "387887533",
+                              "qualityDescription": "Отсутствует (UTP)"
+                            }
+                          }
+                        },
+                        {
+                          "sid": "301355465",
+                          "name": "Количество пар",
+                          "type": "1",
+                          "characteristicsFillingInstruction": {
+                            "code": "6",
+                            "name": "Значение характеристики не может изменяться участником закупки"
+                          },
+                          "values": {
+                            "value": {
+                              "sid": "387887534",
+                              "qualityDescription": "4"
+                            }
+                          }
+                        },
+                        {
+                          "sid": "301355466",
+                          "name": "Диаметр жилы",
+                          "type": "2",
+                          "characteristicsFillingInstruction": {
+                            "code": "6",
+                            "name": "Значение характеристики не может изменяться участником закупки"
+                          },
+                          "values": {
+                            "value": {
+                              "sid": "387887535",
+                              "OKEI": {
+                                "code": "003",
+                                "nationalCode": "мм",
+                                "name": "Миллиметр"
+                              },
+                              "valueSet": {
+                                "concreteValue": "0.51"
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "sid": "301355467",
+                          "name": "Материал проводника",
+                          "type": "1",
+                          "characteristicsFillingInstruction": {
+                            "code": "6",
+                            "name": "Значение характеристики не может изменяться участником закупки"
+                          },
+                          "values": {
+                            "value": {
+                              "sid": "387887536",
+                              "qualityDescription": "Медь"
+                            }
+                          }
+                        },
+                        {
+                          "sid": "301355468",
+                          "name": "Материал изоляции",
+                          "type": "1",
+                          "characteristicsFillingInstruction": {
+                            "code": "6",
+                            "name": "Значение характеристики не может изменяться участником закупки"
+                          },
+                          "values": {
+                            "value": {
+                              "sid": "387887537",
+                              "qualityDescription": "Сплошной полиэтилен (ПЭ)"
+                            }
+                          }
+                        },
+                        {
+                          "sid": "301355469",
+                          "name": "Материал оболочки",
+                          "type": "1",
+                          "characteristicsFillingInstruction": {
+                            "code": "6",
+                            "name": "Значение характеристики не может изменяться участником закупки"
+                          },
+                          "values": {
+                            "value": {
+                              "sid": "387887539",
+                              "qualityDescription": "ПВХ (PVC)"
+                            }
+                          }
+                        },
+                        {
+                          "sid": "301355470",
+                          "name": "Длина бухты",
+                          "type": "2",
+                          "characteristicsFillingInstruction": {
+                            "code": "6",
+                            "name": "Значение характеристики не может изменяться участником закупки"
+                          },
+                          "values": {
+                            "value": {
+                              "sid": "387887542",
+                              "OKEI": {
+                                "code": "006",
+                                "nationalCode": "м",
+                                "name": "Метр"
+                              },
+                              "valueSet": {
+                                "concreteValue": "305"
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "sid": "301355472",
+                          "name": "Конструкция проводника",
+                          "type": "1",
+                          "characteristicsFillingInstruction": {
+                            "code": "6",
+                            "name": "Значение характеристики не может изменяться участником закупки"
+                          },
+                          "values": {
+                            "value": {
+                              "sid": "387887544",
+                              "qualityDescription": "Одножильный (solid)"
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  "name": "Кабель UTP",
+                  "OKEI": {
+                    "code": "006",
+                    "nationalCode": "м",
+                    "name": "Метр"
+                  },
+                  "price": "39.33",
+                  "quantity": {
+                    "value": "2440"
+                  },
+                  "sum": "95965.2",
+                  "type": "PRODUCT",
+                  "hierarchyType": "ND",
+                  "restrictionsInfo": {
+                    "isProhibitionForeignPurchaseObjects": "false",
+                    "isRestrictForeignPurchaseObjects": "true",
+                    "isPreferenseRFPurchaseObjects": "false",
+                    "isImposibilityProhibition": "false"
+                  },
+                  "isSoftware": "false"
+                },
+                {
+                  "sid": "214513465",
+                  "OKPD2": {
+                    "OKPDCode": "26.40.51.000",
+                    "OKPDName": "Части и принадлежности звукового и видеооборудования",
+                    "characteristics": {
+                      "characteristicsUsingTextForm": [
+                        {
+                          "sid": "301360451",
+                          "name": "Диаметр крепежных отверстий",
+                          "type": "1",
+                          "characteristicsFillingInstruction": {
+                            "code": "6",
+                            "name": "Значение характеристики не может изменяться участником закупки"
+                          },
+                          "values": {
+                            "value": {
+                              "sid": "387893994",
+                              "qualityDescription": "Резьба М4"
+                            }
+                          }
+                        },
+                        {
+                          "sid": "301360452",
+                          "name": "Совместимые модели",
+                          "type": "1",
+                          "characteristicsFillingInstruction": {
+                            "code": "6",
+                            "name": "Значение характеристики не может изменяться участником закупки"
+                          },
+                          "values": {
+                            "value": {
+                              "sid": "387893995",
+                              "qualityDescription": "Камеры IPr-OF, IPr-DvpF, IPr-OZ, IPr-OPZ СОКОЛ- OF"
+                            }
+                          }
+                        },
+                        {
+                          "sid": "301360453",
+                          "name": "Диаметр крепления",
+                          "type": "1",
+                          "characteristicsFillingInstruction": {
+                            "code": "6",
+                            "name": "Значение характеристики не может изменяться участником закупки"
+                          },
+                          "values": {
+                            "value": {
+                              "sid": "387893996",
+                              "qualityDescription": "от 54,2 до 76 ММ"
+                            }
+                          }
+                        },
+                        {
+                          "sid": "301360454",
+                          "name": "Материал",
+                          "type": "1",
+                          "characteristicsFillingInstruction": {
+                            "code": "6",
+                            "name": "Значение характеристики не может изменяться участником закупки"
+                          },
+                          "values": {
+                            "value": {
+                              "sid": "387893997",
+                              "qualityDescription": "Алюминий"
+                            }
+                          }
+                        },
+                        {
+                          "sid": "301360455",
+                          "name": "Защита корпуса",
+                          "type": "1",
+                          "characteristicsFillingInstruction": {
+                            "code": "6",
+                            "name": "Значение характеристики не может изменяться участником закупки"
+                          },
+                          "values": {
+                            "value": {
+                              "sid": "387893998",
+                              "qualityDescription": "IP66"
+                            }
+                          }
+                        },
+                        {
+                          "sid": "301360456",
+                          "name": "Габариты",
+                          "type": "1",
+                          "characteristicsFillingInstruction": {
+                            "code": "6",
+                            "name": "Значение характеристики не может изменяться участником закупки"
+                          },
+                          "values": {
+                            "value": {
+                              "sid": "387893999",
+                              "qualityDescription": "100x56 мм"
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  "name": "Коробка монтажная",
+                  "OKEI": {
+                    "code": "796",
+                    "nationalCode": "шт",
+                    "name": "Штука"
+                  },
+                  "price": "2559.05",
+                  "quantity": {
+                    "value": "72"
+                  },
+                  "sum": "184251.6",
+                  "type": "PRODUCT",
+                  "hierarchyType": "ND",
+                  "restrictionsInfo": {
+                    "isProhibitionForeignPurchaseObjects": "false",
+                    "isRestrictForeignPurchaseObjects": "true",
+                    "isPreferenseRFPurchaseObjects": "false",
+                    "isImposibilityProhibition": "false"
+                  },
+                  "isSoftware": "false"
+                }
+              ],
+              "totalSum": "637735.68",
+              "quantityUndefined": "false"
+            }
+          },
+          "preferensesInfo": {
+            "preferenseInfo": {
+              "preferenseRequirementInfo": {
+                "shortName": "PVS33044",
+                "name": "Преимущество в соответствии с ч. 3 ст. 30 Закона № 44-ФЗ"
+              }
+            }
+          },
+          "requirementsInfo": {
+            "requirementInfo": [
+              {
+                "preferenseRequirementInfo": {
+                  "shortName": "ET44",
+                  "name": "Единые требования к участникам закупок в соответствии с ч. 1 ст. 31 Закона № 44-ФЗ"
+                }
+              },
+              {
+                "preferenseRequirementInfo": {
+                  "shortName": "TR442",
+                  "name": "Требования к участникам закупок в соответствии с ч. 1.1 ст. 31 Закона № 44-ФЗ"
+                }
+              }
+            ]
+          },
+          "flags": {
+            "purchaseObjectsCh9St37": "false"
+          }
+        },
+        "@schemeVersion": "16.1"
+      }
+    }
+  ]
+}

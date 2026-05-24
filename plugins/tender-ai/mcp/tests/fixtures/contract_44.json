@@ -1,0 +1,2315 @@
+{
+  "currency_code": "RUB",
+  "customer": "3665035369",
+  "delivery_places": [],
+  "doc_created_at": "2026-02-25T16:39:46.089000",
+  "doc_updated_at": "2026-02-25T16:40:04.235000",
+  "elact_at": null,
+  "exe_start": "2025-08-26",
+  "exe_end": "2025-11-28",
+  "ktru": [
+    "26.20.15.000-00000026",
+    "26.20.17.110-00000007",
+    "26.20.21.110-00000003",
+    "26.20.40.110-00000001",
+    "26.30.11.110-00000041",
+    "26.30.11.110-00000053",
+    "26.30.30.000-00000010",
+    "26.30.30.000-00000011",
+    "26.70.13.000-00000008",
+    "27.20.22.000-00000001",
+    "33.20.40.000-00000002"
+  ],
+  "okpd2": [
+    "26.20.16.190",
+    "26.40.33.114"
+  ],
+  "plan_number": "202503313000299001",
+  "position_number": "202503313000299001000031",
+  "price": 3862828.93,
+  "published_at": "2025-08-26T08:24:12.178000",
+  "purchase_number": "0131300000625001613",
+  "reg_num": "3366503536925000015",
+  "region": 36,
+  "stage": "E",
+  "subject": "Монтаж системы видеонаблюдения",
+  "suppliers": [
+    "341502621462"
+  ],
+  "updated_at": "2025-08-26T11:24:18",
+  "docs": [
+    {
+      "doc_type": "contract",
+      "published_at": "2025-08-26T08:24:12.178000",
+      "source": {
+        "id": "102304163",
+        "placementDate": "2025-08-26T11:24:12",
+        "publishDate": "2025-08-26T11:24:12.178+03:00",
+        "versionNumber": "0",
+        "foundation": {
+          "fcsOrder": {
+            "order": {
+              "notificationNumber": "0131300000625001613",
+              "lotNumber": "1",
+              "placing": "12011",
+              "placingSingleCustomerText": "Электронный аукцион",
+              "purchaseCode": "253366503536936650100100170023320244",
+              "contractProjectNumber": "01313000006250016130001",
+              "isStructuredForm": "true",
+              "isElectronicContractDocument": "true",
+              "tenderPlan2020Info": {
+                "plan2020Number": "202503313000299001",
+                "position2020Number": "202503313000299001000031"
+              }
+            }
+          }
+        },
+        "conclusionContractSt95Ch17.1": "false",
+        "customer": {
+          "regNum": "03313000299",
+          "consRegistryNum": "203Р9813",
+          "fullName": "МУНИЦИПАЛЬНОЕ БЮДЖЕТНОЕ ОБЩЕОБРАЗОВАТЕЛЬНОЕ УЧРЕЖДЕНИЕ СРЕДНЯЯ ОБЩЕОБРАЗОВАТЕЛЬНАЯ ШКОЛА № 70",
+          "shortName": "МБОУ СОШ № 70",
+          "inn": "3665035369",
+          "kpp": "366501001",
+          "legalForm": {
+            "code": "75403",
+            "singularName": "Муниципальное бюджетное учреждение"
+          },
+          "OKPO": "10608180",
+          "customerCode": "33665035369366501001",
+          "organizationTypeCode": "03",
+          "customerAccountsDetails": {
+            "customerAccountDetails": {
+              "sid": "48500580",
+              "guid": "1EBC832ADD7644FBBFC50FAB80776BB5",
+              "accountType": "02",
+              "personalAccountNumber": "21924380675",
+              "creditOrgName": "УФК по Воронежской области",
+              "detailsCreditOrgText": "ОТДЕЛЕНИЕ ВОРОНЕЖ БАНКА РОССИИ // УФК по Воронежской области, г. Воронеж",
+              "bankAccountNumber": "03234643207010003100",
+              "bik": "012007084",
+              "corrAccountNumber": "40102810945370000023",
+              "electronicContractSid": "136213618"
+            }
+          }
+        },
+        "placer": {
+          "responsibleOrg": {
+            "regNum": "03313000299",
+            "consRegistryNum": "203Р9813",
+            "fullName": "МУНИЦИПАЛЬНОЕ БЮДЖЕТНОЕ ОБЩЕОБРАЗОВАТЕЛЬНОЕ УЧРЕЖДЕНИЕ СРЕДНЯЯ ОБЩЕОБРАЗОВАТЕЛЬНАЯ ШКОЛА № 70"
+          },
+          "responsibleRole": "CU"
+        },
+        "finances": {
+          "financingPlan": {
+            "financeSource": {
+              "extrabudgetFunds": {
+                "isExtrabudgetFunds": "true",
+                "extrabudget": {
+                  "code": "60",
+                  "name": "Средства бюджетных учреждений"
+                }
+              }
+            },
+            "KBKsChange": "false",
+            "stages": {
+              "guid": "D31E5D092D994A6C8527AFAA2052C234",
+              "startDate": "2025-08-26",
+              "sid": "121660336",
+              "electronicContractSid": "20541656",
+              "endDate": "2025-11-28",
+              "payments": {
+                "sid": "180916558",
+                "electronicContractSid": "21906573",
+                "KVR": "244",
+                "paymentYearsInfo": {
+                  "paymentYearInfo": {
+                    "paymentYear": "2025",
+                    "paymentSum": "3862828.93"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "protocolDate": "2025-08-15",
+        "documentBase": "Протокол подведения итогов определения поставщика (подрядчика, исполнителя) № ИЭА2 от 15.08.2025 00:00:00",
+        "documentCode": "120111",
+        "signDate": "2025-08-26",
+        "regNum": "3366503536925000015",
+        "number": "3862-ш",
+        "contractSubject": "Монтаж системы видеонаблюдения",
+        "isOptimyStart": "true",
+        "contractLifeCycle": "false",
+        "isResidentialPremisesPurchase": "false",
+        "priceInfo": {
+          "price": "3862828.93",
+          "priceType": "P",
+          "currency": {
+            "code": "RUB",
+            "name": "РОССИЙСКИЙ РУБЛЬ"
+          },
+          "priceVAT": "0.00",
+          "isWithHoldingUnfulfilledClaimsPenalties": "false"
+        },
+        "quantityContractStages": "1",
+        "executionPeriod": {
+          "startDate": "2025-08-26",
+          "stages": {
+            "sid": "121660336",
+            "electronicContractSid": "20541656",
+            "guid": "D31E5D092D994A6C8527AFAA2052C234",
+            "startDate": "2025-08-26",
+            "endDate": "2025-11-28",
+            "stagePrice": "3862828.93"
+          },
+          "endDate": "2025-11-28"
+        },
+        "enforcement": {
+          "bankGuarantee": {
+            "regNumberNotPublishedOnEIS": "true",
+            "docNumberNotPublishedOnEIS": "true",
+            "currency": {
+              "code": "RUB",
+              "name": "РОССИЙСКИЙ РУБЛЬ"
+            },
+            "guaranteeAmount": "772565.78",
+            "currencyRate": {
+              "rate": "1",
+              "raiting": "1"
+            }
+          }
+        },
+        "isSt14NationalTreatment": "true",
+        "qualityGuaranteeInfo": {
+          "providedPeriod": {
+            "otherPeriodText": "Подрядчик гарантирует Заказчику качество выполненной работы в объеме 100% в течение 60 (шестидесяти) месяцев со дня подписания сторонами документа о приемке или даты устранения замечаний. Гарантия качества результата работы распространяется на все составляющие результата работы."
+          },
+          "warrantyReqsText": "не установлены",
+          "manufacturerWarrantyReqsText": "не установлены",
+          "isQAEnsuramceRequired": "true"
+        },
+        "deliveryPlaceInfo": {
+          "byGARInfo": {
+            "sid": "36871125",
+            "electronicContractSid": "16124988",
+            "countryInfo": {
+              "countryCode": "643",
+              "countryFullName": "Российская Федерация"
+            },
+            "GARInfo": {
+              "GARGuid": "42bec402-7070-4438-ab12-5a8d90724826",
+              "GARAddress": "обл Воронежская, г.о. город Воронеж, г Воронеж, ул Космонавтов, д. 34"
+            }
+          }
+        },
+        "products": {
+          "product": [
+            {
+              "purchaseObjectSid": "188547067",
+              "purchaseObjectExternalSid": "19e7defa-eda8-4760-bdb0-0a346b231604",
+              "electronicContractObjectSid": "55685188",
+              "sid": "753964674",
+              "guid": "E4B2137FE3724683BFF2F4A4472A3B1B",
+              "indexNum": "1.1",
+              "KTRU": {
+                "code": "26.30.30.000-00000010",
+                "name": "Шкаф телекоммуникационный",
+                "versionId": "189917",
+                "versionNumber": "6",
+                "characteristics": {
+                  "characteristicsUsingReferenceInfo": [
+                    {
+                      "name": "Максимальная распределенная нагрузка",
+                      "type": "2",
+                      "kind": "2",
+                      "values": {
+                        "value": {
+                          "OKEI": {
+                            "code": "166"
+                          },
+                          "valueSet": {
+                            "concreteValue": "900"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "name": "Ширина",
+                      "type": "2",
+                      "kind": "2",
+                      "values": {
+                        "value": {
+                          "OKEI": {
+                            "code": "003"
+                          },
+                          "valueSet": {
+                            "concreteValue": "600"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "name": "Тип размещения",
+                      "type": "1",
+                      "kind": "1",
+                      "values": {
+                        "value": {
+                          "qualityDescription": "Напольный"
+                        }
+                      }
+                    },
+                    {
+                      "name": "Высота, U",
+                      "type": "2",
+                      "kind": "2",
+                      "values": {
+                        "value": {
+                          "valueSet": {
+                            "concreteValue": "38"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "name": "Тип конструкции",
+                      "type": "1",
+                      "kind": "2",
+                      "values": {
+                        "value": {
+                          "qualityDescription": "Разборный"
+                        }
+                      }
+                    },
+                    {
+                      "name": "Полезная глубина",
+                      "type": "2",
+                      "kind": "2",
+                      "values": {
+                        "value": {
+                          "OKEI": {
+                            "code": "003"
+                          },
+                          "valueSet": {
+                            "concreteValue": "790"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                },
+                "OKPD2": {
+                  "code": "26.30.30.190",
+                  "name": "Части и комплектующие коммуникационного оборудования прочие"
+                }
+              },
+              "name": "Шкаф телекоммуникационный. Товарный знак: отсутствует",
+              "hierarchyType": "CH",
+              "type": "PRODUCT",
+              "OKEI": {
+                "code": "796"
+              },
+              "price": "40324.23000000000",
+              "volumeSpecifyingMethod": "QF",
+              "quantity": "1",
+              "sum": "40324.23",
+              "VATRateInfo": {
+                "VATCode": "RN",
+                "VATName": "Без НДС"
+              },
+              "originCountry": {
+                "countryCode": "156"
+              },
+              "improvedProductReplacement": "false",
+              "parentContractSubject": {
+                "sid": "753964668"
+              }
+            },
+            {
+              "purchaseObjectSid": "188547060",
+              "purchaseObjectExternalSid": "8076b8d5-c3fb-41e7-90aa-2a84d10eac28",
+              "electronicContractObjectSid": "55685189",
+              "sid": "753964675",
+              "guid": "4000DEE68D3A48EAA7BCF3202EB425F3",
+              "indexNum": "1.2",
+              "KTRU": {
+                "code": "26.30.30.000-00000011",
+                "name": "Шкаф телекоммуникационный",
+                "versionId": "189937",
+                "versionNumber": "7",
+                "characteristics": {
+                  "characteristicsUsingReferenceInfo": [
+                    {
+                      "name": "Максимальная распределенная нагрузка",
+                      "type": "2",
+                      "kind": "2",
+                      "values": {
+                        "value": {
+                          "OKEI": {
+                            "code": "166"
+                          },
+                          "valueSet": {
+                            "concreteValue": "50"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "name": "Ширина",
+                      "type": "2",
+                      "kind": "2",
+                      "values": {
+                        "value": {
+                          "OKEI": {
+                            "code": "003"
+                          },
+                          "valueSet": {
+                            "concreteValue": "600"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "name": "Тип размещения",
+                      "type": "1",
+                      "kind": "1",
+                      "values": {
+                        "value": {
+                          "qualityDescription": "Настенный"
+                        }
+                      }
+                    },
+                    {
+                      "name": "Высота, U",
+                      "type": "2",
+                      "kind": "2",
+                      "values": {
+                        "value": {
+                          "valueSet": {
+                            "concreteValue": "12"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "name": "Полезная глубина",
+                      "type": "2",
+                      "kind": "2",
+                      "values": {
+                        "value": {
+                          "OKEI": {
+                            "code": "003"
+                          },
+                          "valueSet": {
+                            "concreteValue": "490"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "name": "Тип конструкции",
+                      "type": "1",
+                      "kind": "2",
+                      "values": {
+                        "value": {
+                          "qualityDescription": "Разборный"
+                        }
+                      }
+                    }
+                  ]
+                },
+                "OKPD2": {
+                  "code": "26.30.30.190",
+                  "name": "Части и комплектующие коммуникационного оборудования прочие"
+                }
+              },
+              "name": "Шкаф телекоммуникационный. Товарный знак: отсутствует",
+              "hierarchyType": "CH",
+              "type": "PRODUCT",
+              "OKEI": {
+                "code": "796"
+              },
+              "price": "6103.93000000000",
+              "volumeSpecifyingMethod": "QF",
+              "quantity": "1",
+              "sum": "6103.93",
+              "VATRateInfo": {
+                "VATCode": "RN",
+                "VATName": "Без НДС"
+              },
+              "originCountry": {
+                "countryCode": "156"
+              },
+              "improvedProductReplacement": "false",
+              "parentContractSubject": {
+                "sid": "753964668"
+              }
+            },
+            {
+              "purchaseObjectSid": "186815317",
+              "purchaseObjectExternalSid": "e4a75e97-d1bb-47c9-9ef5-ba8c375c05b5",
+              "electronicContractObjectSid": "55685190",
+              "sid": "753964677",
+              "guid": "A9E434CAC1104917B434768D10EFF847",
+              "indexNum": "1.3",
+              "KTRU": {
+                "code": "26.70.13.000-00000008",
+                "name": "Камера видеонаблюдения",
+                "versionId": "187147",
+                "versionNumber": "16",
+                "characteristics": {
+                  "characteristicsUsingReferenceInfo": [
+                    {
+                      "name": "Частота кадров (кадр/сек)",
+                      "type": "2",
+                      "kind": "2",
+                      "values": {
+                        "value": {
+                          "valueSet": {
+                            "concreteValue": "30"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "name": "Разрешение основного видеопотока",
+                      "type": "1",
+                      "kind": "2",
+                      "values": {
+                        "value": {
+                          "qualityDescription": "≥ 2560x1440"
+                        }
+                      }
+                    },
+                    {
+                      "name": "Тип камеры",
+                      "type": "1",
+                      "kind": "1",
+                      "values": {
+                        "value": {
+                          "qualityDescription": "Цифровая"
+                        }
+                      }
+                    },
+                    {
+                      "name": "Материал корпуса (кожуха)",
+                      "type": "1",
+                      "kind": "2",
+                      "values": {
+                        "value": {
+                          "qualityDescription": "Металлический"
+                        }
+                      }
+                    },
+                    {
+                      "name": "Число мегапикселей матрицы",
+                      "type": "2",
+                      "kind": "2",
+                      "values": {
+                        "value": {
+                          "valueSet": {
+                            "concreteValue": "5"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                },
+                "OKPD2": {
+                  "code": "26.40.33.111",
+                  "name": "Видеокамеры для систем видеонаблюдения, видеоаналитики и охранного телевидения"
+                }
+              },
+              "name": "Камера видеонаблюдения. Товарный знак: отсутствует",
+              "hierarchyType": "CH",
+              "type": "PRODUCT",
+              "OKEI": {
+                "code": "796"
+              },
+              "price": "18494.32000000000",
+              "volumeSpecifyingMethod": "QF",
+              "quantity": "1",
+              "sum": "18494.32",
+              "VATRateInfo": {
+                "VATCode": "RN",
+                "VATName": "Без НДС"
+              },
+              "originCountry": {
+                "countryCode": "643"
+              },
+              "improvedProductReplacement": "false",
+              "parentContractSubject": {
+                "sid": "753964668"
+              }
+            },
+            {
+              "purchaseObjectSid": "188547057",
+              "purchaseObjectExternalSid": "c0a33b2a-2b36-4f80-8c8b-0999e150b11d",
+              "electronicContractObjectSid": "55685191",
+              "sid": "753964678",
+              "guid": "EBE4CD855888407EA6A4346866503E78",
+              "indexNum": "1.4",
+              "KTRU": {
+                "code": "26.20.40.110-00000001",
+                "name": "Источник бесперебойного питания",
+                "versionId": "210277",
+                "versionNumber": "17",
+                "characteristics": {
+                  "characteristicsUsingReferenceInfo": [
+                    {
+                      "name": "Возможность подключения внешних батарей",
+                      "type": "1",
+                      "kind": "2",
+                      "values": {
+                        "value": {
+                          "qualityDescription": "Да"
+                        }
+                      }
+                    },
+                    {
+                      "name": "Тип",
+                      "type": "1",
+                      "kind": "2",
+                      "values": {
+                        "value": {
+                          "qualityDescription": "С двойным преобразованием (on-line)"
+                        }
+                      }
+                    },
+                    {
+                      "name": "Активная мощность",
+                      "type": "2",
+                      "kind": "2",
+                      "values": {
+                        "value": {
+                          "OKEI": {
+                            "code": "212"
+                          },
+                          "valueSet": {
+                            "concreteValue": "3000"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "name": "Емкость одного аккумулятора",
+                      "type": "2",
+                      "kind": "2",
+                      "values": {
+                        "value": {
+                          "OKEI": {
+                            "code": "263"
+                          },
+                          "valueSet": {
+                            "concreteValue": "9"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                },
+                "OKPD2": {
+                  "code": "26.20.40.111",
+                  "name": "Источники бесперебойного питания"
+                }
+              },
+              "name": "Источник бесперебойного питания. Товарный знак: отсутствует",
+              "hierarchyType": "CH",
+              "type": "PRODUCT",
+              "OKEI": {
+                "code": "796"
+              },
+              "price": "56489.77000000000",
+              "volumeSpecifyingMethod": "QF",
+              "quantity": "1",
+              "sum": "56489.77",
+              "VATRateInfo": {
+                "VATCode": "RN",
+                "VATName": "Без НДС"
+              },
+              "originCountry": {
+                "countryCode": "643"
+              },
+              "improvedProductReplacement": "false",
+              "parentContractSubject": {
+                "sid": "753964668"
+              }
+            },
+            {
+              "purchaseObjectSid": "188547062",
+              "purchaseObjectExternalSid": "2fb53091-6f32-4b1b-9a5a-b554b15ed9b2",
+              "electronicContractObjectSid": "55685192",
+              "sid": "753964679",
+              "guid": "DBEF0FB5FBDC4EE083C25F88F180598E",
+              "indexNum": "1.5",
+              "KTRU": {
+                "code": "26.30.30.000-00000011",
+                "name": "Шкаф телекоммуникационный",
+                "versionId": "189937",
+                "versionNumber": "7",
+                "characteristics": {
+                  "characteristicsUsingReferenceInfo": [
+                    {
+                      "name": "Тип размещения",
+                      "type": "1",
+                      "kind": "1",
+                      "values": {
+                        "value": {
+                          "qualityDescription": "Настенный"
+                        }
+                      }
+                    },
+                    {
+                      "name": "Тип конструкции",
+                      "type": "1",
+                      "kind": "2",
+                      "values": {
+                        "value": {
+                          "qualityDescription": "Разборный"
+                        }
+                      }
+                    },
+                    {
+                      "name": "Максимальная распределенная нагрузка",
+                      "type": "2",
+                      "kind": "2",
+                      "values": {
+                        "value": {
+                          "OKEI": {
+                            "code": "166"
+                          },
+                          "valueSet": {
+                            "concreteValue": "50"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "name": "Ширина",
+                      "type": "2",
+                      "kind": "2",
+                      "values": {
+                        "value": {
+                          "OKEI": {
+                            "code": "003"
+                          },
+                          "valueSet": {
+                            "concreteValue": "600"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "name": "Полезная глубина",
+                      "type": "2",
+                      "kind": "2",
+                      "values": {
+                        "value": {
+                          "OKEI": {
+                            "code": "003"
+                          },
+                          "valueSet": {
+                            "concreteValue": "490"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "name": "Высота, U",
+                      "type": "2",
+                      "kind": "2",
+                      "values": {
+                        "value": {
+                          "valueSet": {
+                            "concreteValue": "9"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                },
+                "OKPD2": {
+                  "code": "26.30.30.190",
+                  "name": "Части и комплектующие коммуникационного оборудования прочие"
+                }
+              },
+              "name": "Шкаф телекоммуникационный. Товарный знак: отсутствует",
+              "hierarchyType": "CH",
+              "type": "PRODUCT",
+              "OKEI": {
+                "code": "796"
+              },
+              "price": "5661.91000000000",
+              "volumeSpecifyingMethod": "QF",
+              "quantity": "3",
+              "sum": "16985.73",
+              "VATRateInfo": {
+                "VATCode": "RN",
+                "VATName": "Без НДС"
+              },
+              "originCountry": {
+                "countryCode": "156"
+              },
+              "improvedProductReplacement": "false",
+              "parentContractSubject": {
+                "sid": "753964668"
+              }
+            },
+            {
+              "purchaseObjectSid": "188547068",
+              "purchaseObjectExternalSid": "c74c06d4-213e-423b-867e-b98d4644925f",
+              "electronicContractObjectSid": "55685193",
+              "sid": "753964672",
+              "guid": "69AE2D0D839F4D968629C732A367F06E",
+              "indexNum": "1.6",
+              "KTRU": {
+                "code": "26.20.15.000-00000026",
+                "name": "Системный блок",
+                "versionId": "186003",
+                "versionNumber": "28",
+                "characteristics": {
+                  "characteristicsUsingReferenceInfo": [
+                    {
+                      "name": "Объем оперативной установленной памяти",
+                      "type": "2",
+                      "kind": "1",
+                      "values": {
+                        "value": {
+                          "OKEI": {
+                            "code": "2553"
+                          },
+                          "valueSet": {
+                            "concreteValue": "16"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "name": "Количество накопителей типа HDD",
+                      "type": "2",
+                      "kind": "2",
+                      "values": {
+                        "value": {
+                          "OKEI": {
+                            "code": "796"
+                          },
+                          "valueSet": {
+                            "concreteValue": "1"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "name": "Общий объем накопителей SSD форм-фактора 2,5\"",
+                      "type": "2",
+                      "kind": "2",
+                      "values": {
+                        "value": {
+                          "OKEI": {
+                            "code": "2553"
+                          },
+                          "valueSet": {
+                            "concreteValue": "512"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "name": "Скорость передачи данных проводного сетевого контроллера",
+                      "type": "2",
+                      "kind": "2",
+                      "values": {
+                        "value": {
+                          "OKEI": {
+                            "code": "2545"
+                          },
+                          "valueSet": {
+                            "concreteValue": "1000"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "name": "Тип оперативной памяти",
+                      "type": "1",
+                      "kind": "2",
+                      "values": {
+                        "value": {
+                          "qualityDescription": "DDR4"
+                        }
+                      }
+                    }
+                  ]
+                },
+                "OKPD2": {
+                  "code": "26.20.15.120",
+                  "name": "Системные блоки"
+                }
+              },
+              "name": "Системный блок. Товарный знак: отсутствует",
+              "hierarchyType": "CH",
+              "type": "PRODUCT",
+              "OKEI": {
+                "code": "796"
+              },
+              "price": "165547.48000000000",
+              "volumeSpecifyingMethod": "QF",
+              "quantity": "1",
+              "sum": "165547.48",
+              "VATRateInfo": {
+                "VATCode": "RN",
+                "VATName": "Без НДС"
+              },
+              "originCountry": {
+                "countryCode": "156"
+              },
+              "improvedProductReplacement": "false",
+              "parentContractSubject": {
+                "sid": "753964668"
+              }
+            },
+            {
+              "purchaseObjectSid": "188547069",
+              "purchaseObjectExternalSid": "8bddcda5-a1cf-4942-b7c0-e03312477250",
+              "electronicContractObjectSid": "55685194",
+              "sid": "753964680",
+              "guid": "0DF38C4D56D34DB18280D62D03110C3D",
+              "indexNum": "1.7",
+              "KTRU": {
+                "code": "26.20.21.110-00000003",
+                "name": "Накопитель данных внутренний",
+                "versionId": "187150",
+                "versionNumber": "16",
+                "characteristics": {
+                  "characteristicsUsingReferenceInfo": [
+                    {
+                      "name": "Объем накопителя",
+                      "type": "2",
+                      "kind": "2",
+                      "values": {
+                        "value": {
+                          "OKEI": {
+                            "code": "2553"
+                          },
+                          "valueSet": {
+                            "concreteValue": "18000"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "name": "Тип устройства",
+                      "type": "1",
+                      "kind": "1",
+                      "values": {
+                        "value": {
+                          "qualityDescription": "HDD"
+                        }
+                      }
+                    },
+                    {
+                      "name": "Форм фактор",
+                      "type": "1",
+                      "kind": "2",
+                      "values": {
+                        "value": {
+                          "qualityDescription": "3,5 дюйм"
+                        }
+                      }
+                    }
+                  ]
+                },
+                "OKPD2": {
+                  "code": "26.20.22.120",
+                  "name": "Устройства встраиваемые запоминающие полупроводниковые, сохраняющие информацию при выключении питания (твердотельные накопители информации)"
+                }
+              },
+              "name": "Накопитель данных внутренний. Товарный знак: отсутствует",
+              "hierarchyType": "CH",
+              "type": "PRODUCT",
+              "OKEI": {
+                "code": "796"
+              },
+              "price": "29877.06642857143",
+              "volumeSpecifyingMethod": "QF",
+              "quantity": "14",
+              "sum": "418278.93",
+              "VATRateInfo": {
+                "VATCode": "RN",
+                "VATName": "Без НДС"
+              },
+              "originCountry": {
+                "countryCode": "764"
+              },
+              "improvedProductReplacement": "false",
+              "parentContractSubject": {
+                "sid": "753964668"
+              }
+            },
+            {
+              "purchaseObjectSid": "188547065",
+              "purchaseObjectExternalSid": "684953f5-f554-45cc-9a6f-605dbae251e8",
+              "electronicContractObjectSid": "55685195",
+              "sid": "753964681",
+              "guid": "2F40D3304C35456F966FA6643F2C2552",
+              "indexNum": "1.8",
+              "KTRU": {
+                "code": "27.20.22.000-00000001",
+                "name": "Батарея аккумуляторная свинцово-кислотная стационарная",
+                "versionId": "169650",
+                "versionNumber": "6",
+                "characteristics": {
+                  "characteristicsUsingReferenceInfo": [
+                    {
+                      "name": "Возможность использования в ИБП",
+                      "type": "1",
+                      "kind": "2",
+                      "values": {
+                        "value": {
+                          "qualityDescription": "Да"
+                        }
+                      }
+                    },
+                    {
+                      "name": "Тип",
+                      "type": "1",
+                      "kind": "1",
+                      "values": {
+                        "value": {
+                          "qualityDescription": "Закрытая"
+                        }
+                      }
+                    },
+                    {
+                      "name": "Емкость",
+                      "type": "2",
+                      "kind": "2",
+                      "values": {
+                        "value": {
+                          "OKEI": {
+                            "code": "263"
+                          },
+                          "valueSet": {
+                            "concreteValue": "9"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                },
+                "OKPD2": {
+                  "code": "27.20.22.000",
+                  "name": "Аккумуляторы свинцовые, кроме используемых для запуска поршневых двигателей"
+                }
+              },
+              "name": "Батарея аккумуляторная свинцово-кислотная стационарная. Товарный знак: отсутствует",
+              "hierarchyType": "CH",
+              "type": "PRODUCT",
+              "OKEI": {
+                "code": "796"
+              },
+              "price": "55760.44000000000",
+              "volumeSpecifyingMethod": "QF",
+              "quantity": "1",
+              "sum": "55760.44",
+              "VATRateInfo": {
+                "VATCode": "RN",
+                "VATName": "Без НДС"
+              },
+              "originCountry": {
+                "countryCode": "643"
+              },
+              "improvedProductReplacement": "false",
+              "parentContractSubject": {
+                "sid": "753964668"
+              }
+            },
+            {
+              "purchaseObjectSid": "188547054",
+              "purchaseObjectExternalSid": "ac06c714-2b99-4996-84a9-c3525e978680",
+              "electronicContractObjectSid": "55685196",
+              "sid": "753964682",
+              "guid": "575C502BFFC14665A0471B52E6C59A80",
+              "indexNum": "1.9",
+              "OKPD2": {
+                "code": "26.20.16.190",
+                "name": "Устройства ввода/вывода данных прочие"
+              },
+              "name": "Клавиатура и мышь беспроводная. Товарный знак: отсутствует",
+              "hierarchyType": "CH",
+              "type": "PRODUCT",
+              "OKEI": {
+                "code": "796"
+              },
+              "price": "433.01000000000",
+              "volumeSpecifyingMethod": "QF",
+              "quantity": "1",
+              "sum": "433.01",
+              "VATRateInfo": {
+                "VATCode": "RN",
+                "VATName": "Без НДС"
+              },
+              "originCountry": {
+                "countryCode": "156"
+              },
+              "improvedProductReplacement": "false",
+              "parentContractSubject": {
+                "sid": "753964668"
+              }
+            },
+            {
+              "purchaseObjectSid": "188547066",
+              "purchaseObjectExternalSid": "415c823e-9eb0-4080-bf7f-cf0f6b24c995",
+              "electronicContractObjectSid": "55685197",
+              "sid": "753964683",
+              "guid": "E0F81A87AF194CC895B810D8DCE3C551",
+              "indexNum": "1.10",
+              "KTRU": {
+                "code": "26.30.11.110-00000041",
+                "name": "Коммутатор",
+                "versionId": "207220",
+                "versionNumber": "26",
+                "characteristics": {
+                  "characteristicsUsingReferenceInfo": [
+                    {
+                      "name": "Тип блоков питания",
+                      "type": "1",
+                      "kind": "2",
+                      "values": {
+                        "value": {
+                          "qualityDescription": "Фиксированные"
+                        }
+                      }
+                    },
+                    {
+                      "name": "Тип электропитания",
+                      "type": "1",
+                      "kind": "2",
+                      "values": {
+                        "value": {
+                          "qualityDescription": "AC"
+                        }
+                      }
+                    },
+                    {
+                      "name": "Блок питания",
+                      "type": "1",
+                      "kind": "2",
+                      "values": {
+                        "value": {
+                          "qualityDescription": "Встроенный"
+                        }
+                      }
+                    },
+                    {
+                      "name": "Количество портов PoE",
+                      "type": "2",
+                      "kind": "2",
+                      "values": {
+                        "value": {
+                          "OKEI": {
+                            "code": "796"
+                          },
+                          "valueSet": {
+                            "concreteValue": "16"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "name": "Тип коммутатора",
+                      "type": "1",
+                      "kind": "1",
+                      "values": {
+                        "value": {
+                          "qualityDescription": "Управляемый"
+                        }
+                      }
+                    },
+                    {
+                      "name": "Тип передачи данных",
+                      "type": "1",
+                      "kind": "2",
+                      "values": {
+                        "value": {
+                          "qualityDescription": "Ethernet"
+                        }
+                      }
+                    },
+                    {
+                      "name": "Количество блоков питания",
+                      "type": "2",
+                      "kind": "2",
+                      "values": {
+                        "value": {
+                          "OKEI": {
+                            "code": "796"
+                          },
+                          "valueSet": {
+                            "concreteValue": "1"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "name": "Количество портов 1G SFP",
+                      "type": "2",
+                      "kind": "2",
+                      "values": {
+                        "value": {
+                          "OKEI": {
+                            "code": "796"
+                          },
+                          "valueSet": {
+                            "concreteValue": "2"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                },
+                "OKPD2": {
+                  "code": "26.30.11.122",
+                  "name": "Оборудование коммутации и маршрутизации пакетов информации сетей передачи данных"
+                }
+              },
+              "name": "Коммутатор. Товарный знак: отсутствует",
+              "hierarchyType": "CH",
+              "type": "PRODUCT",
+              "OKEI": {
+                "code": "796"
+              },
+              "price": "32405.56714285714",
+              "volumeSpecifyingMethod": "QF",
+              "quantity": "7",
+              "sum": "226838.97",
+              "VATRateInfo": {
+                "VATCode": "RN",
+                "VATName": "Без НДС"
+              },
+              "originCountry": {
+                "countryCode": "156"
+              },
+              "improvedProductReplacement": "false",
+              "parentContractSubject": {
+                "sid": "753964668"
+              }
+            },
+            {
+              "purchaseObjectSid": "188547055",
+              "purchaseObjectExternalSid": "99c7bff1-91b7-4bbe-8cf1-05d92646359f",
+              "electronicContractObjectSid": "55687158",
+              "sid": "753964684",
+              "guid": "34963DE983DB46348C610C681EF7F9F9",
+              "indexNum": "1.11",
+              "KTRU": {
+                "code": "26.20.17.110-00000007",
+                "name": "Монитор, подключаемый к компьютеру",
+                "versionId": "210537",
+                "versionNumber": "15",
+                "characteristics": {
+                  "characteristicsUsingReferenceInfo": [
+                    {
+                      "name": "Разрешение экрана",
+                      "type": "1",
+                      "kind": "2",
+                      "values": {
+                        "value": {
+                          "qualityDescription": "3840 x 2160"
+                        }
+                      }
+                    },
+                    {
+                      "name": "Угол обзора по вертикали, градус",
+                      "type": "2",
+                      "kind": "2",
+                      "values": {
+                        "value": {
+                          "valueSet": {
+                            "concreteValue": "178"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "name": "Интерфейс подключения",
+                      "type": "1",
+                      "kind": "3",
+                      "values": {
+                        "value": [
+                          {
+                            "qualityDescription": "HDMI"
+                          },
+                          {
+                            "qualityDescription": "Display Port"
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "name": "Угол обзора по горизонтали, градус",
+                      "type": "2",
+                      "kind": "2",
+                      "values": {
+                        "value": {
+                          "valueSet": {
+                            "concreteValue": "178"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "name": "Стандарт крепления",
+                      "type": "1",
+                      "kind": "2",
+                      "values": {
+                        "value": {
+                          "qualityDescription": "VESA 100 x 100"
+                        }
+                      }
+                    },
+                    {
+                      "name": "Частота обновления экрана",
+                      "type": "2",
+                      "kind": "2",
+                      "values": {
+                        "value": {
+                          "OKEI": {
+                            "code": "290"
+                          },
+                          "valueSet": {
+                            "concreteValue": "60"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "name": "Размер диагонали",
+                      "type": "2",
+                      "kind": "1",
+                      "values": {
+                        "value": {
+                          "OKEI": {
+                            "code": "039"
+                          },
+                          "valueSet": {
+                            "concreteValue": "27"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "name": "Время отклика, мс",
+                      "type": "2",
+                      "kind": "2",
+                      "values": {
+                        "value": {
+                          "valueSet": {
+                            "concreteValue": "5"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                },
+                "OKPD2": {
+                  "code": "26.20.17.110",
+                  "name": "Мониторы, подключаемые к компьютеру"
+                }
+              },
+              "name": "Монитор, подключаемый к компьютеру. Товарный знак: отсутствует",
+              "hierarchyType": "CH",
+              "type": "PRODUCT",
+              "OKEI": {
+                "code": "796"
+              },
+              "price": "38778.80666666667",
+              "volumeSpecifyingMethod": "QF",
+              "quantity": "3",
+              "sum": "116336.42",
+              "VATRateInfo": {
+                "VATCode": "RN",
+                "VATName": "Без НДС"
+              },
+              "originCountry": {
+                "countryCode": "156"
+              },
+              "improvedProductReplacement": "false",
+              "parentContractSubject": {
+                "sid": "753964668"
+              }
+            },
+            {
+              "purchaseObjectSid": "186815312",
+              "purchaseObjectExternalSid": "4f63ab8c-6faf-43c8-b952-40686b3c0a95",
+              "electronicContractObjectSid": "55687159",
+              "sid": "753964685",
+              "guid": "30719EABA15E4A959FE8922AF6C7B2EF",
+              "indexNum": "1.12",
+              "KTRU": {
+                "code": "26.70.13.000-00000008",
+                "name": "Камера видеонаблюдения",
+                "versionId": "187147",
+                "versionNumber": "16",
+                "characteristics": {
+                  "characteristicsUsingReferenceInfo": [
+                    {
+                      "name": "Разрешение основного видеопотока",
+                      "type": "1",
+                      "kind": "2",
+                      "values": {
+                        "value": {
+                          "qualityDescription": "2560x1440"
+                        }
+                      }
+                    },
+                    {
+                      "name": "Тип камеры",
+                      "type": "1",
+                      "kind": "1",
+                      "values": {
+                        "value": {
+                          "qualityDescription": "Цифровая"
+                        }
+                      }
+                    },
+                    {
+                      "name": "Число мегапикселей матрицы",
+                      "type": "2",
+                      "kind": "2",
+                      "values": {
+                        "value": {
+                          "valueSet": {
+                            "concreteValue": "5"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "name": "Частота кадров (кадр/сек)",
+                      "type": "2",
+                      "kind": "2",
+                      "values": {
+                        "value": {
+                          "valueSet": {
+                            "concreteValue": "30"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                },
+                "OKPD2": {
+                  "code": "26.40.33.111",
+                  "name": "Видеокамеры для систем видеонаблюдения, видеоаналитики и охранного телевидения"
+                }
+              },
+              "name": "Камера видеонаблюдения. Товарный знак: отсутствует",
+              "hierarchyType": "CH",
+              "type": "PRODUCT",
+              "OKEI": {
+                "code": "796"
+              },
+              "price": "19151.62125000000",
+              "volumeSpecifyingMethod": "QF",
+              "quantity": "8",
+              "sum": "153212.97",
+              "VATRateInfo": {
+                "VATCode": "RN",
+                "VATName": "Без НДС"
+              },
+              "originCountry": {
+                "countryCode": "643"
+              },
+              "improvedProductReplacement": "false",
+              "parentContractSubject": {
+                "sid": "753964668"
+              }
+            },
+            {
+              "purchaseObjectSid": "186815313",
+              "purchaseObjectExternalSid": "fa5848fb-35a6-43a7-8baf-5f8cf5b91b2d",
+              "electronicContractObjectSid": "55687160",
+              "sid": "753964686",
+              "guid": "B0EFD9F565544906A11B1B2833C4B718",
+              "indexNum": "1.13",
+              "KTRU": {
+                "code": "26.70.13.000-00000008",
+                "name": "Камера видеонаблюдения",
+                "versionId": "187147",
+                "versionNumber": "16",
+                "characteristics": {
+                  "characteristicsUsingReferenceInfo": [
+                    {
+                      "name": "Светочувствительность",
+                      "type": "2",
+                      "kind": "2",
+                      "values": {
+                        "value": {
+                          "OKEI": {
+                            "code": "283"
+                          },
+                          "valueSet": {
+                            "concreteValue": "0.08"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "name": "Разрешение основного видеопотока",
+                      "type": "1",
+                      "kind": "2",
+                      "values": {
+                        "value": {
+                          "qualityDescription": "2560x1440"
+                        }
+                      }
+                    },
+                    {
+                      "name": "Рабочее напряжение",
+                      "type": "2",
+                      "kind": "2",
+                      "values": {
+                        "value": {
+                          "OKEI": {
+                            "code": "222"
+                          },
+                          "valueSet": {
+                            "concreteValue": "12"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "name": "Тип камеры",
+                      "type": "1",
+                      "kind": "1",
+                      "values": {
+                        "value": {
+                          "qualityDescription": "Цифровая"
+                        }
+                      }
+                    },
+                    {
+                      "name": "Частота кадров (кадр/сек)",
+                      "type": "2",
+                      "kind": "2",
+                      "values": {
+                        "value": {
+                          "valueSet": {
+                            "concreteValue": "30"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "name": "Материал корпуса (кожуха)",
+                      "type": "1",
+                      "kind": "2",
+                      "values": {
+                        "value": {
+                          "qualityDescription": "Металлический"
+                        }
+                      }
+                    }
+                  ]
+                },
+                "OKPD2": {
+                  "code": "26.40.33.111",
+                  "name": "Видеокамеры для систем видеонаблюдения, видеоаналитики и охранного телевидения"
+                }
+              },
+              "name": "Камера видеонаблюдения. Товарный знак: отсутствует",
+              "hierarchyType": "CH",
+              "type": "PRODUCT",
+              "OKEI": {
+                "code": "796"
+              },
+              "price": "11363.11078431373",
+              "volumeSpecifyingMethod": "QF",
+              "quantity": "51",
+              "sum": "579518.65",
+              "VATRateInfo": {
+                "VATCode": "RN",
+                "VATName": "Без НДС"
+              },
+              "originCountry": {
+                "countryCode": "643"
+              },
+              "improvedProductReplacement": "false",
+              "parentContractSubject": {
+                "sid": "753964668"
+              }
+            },
+            {
+              "purchaseObjectSid": "188547051",
+              "purchaseObjectExternalSid": "47094877-f8c7-4208-b8e8-e98ebd42e2a1",
+              "electronicContractObjectSid": "55687161",
+              "sid": "753964673",
+              "guid": "59FD7699414E46B186CCC3B5AB5BB40A",
+              "indexNum": "1.14",
+              "KTRU": {
+                "code": "26.30.11.110-00000053",
+                "name": "Коммутатор",
+                "versionId": "207357",
+                "versionNumber": "21",
+                "characteristics": {
+                  "characteristicsUsingReferenceInfo": [
+                    {
+                      "name": "Тип передачи данных",
+                      "type": "1",
+                      "kind": "2",
+                      "values": {
+                        "value": {
+                          "qualityDescription": "Ethernet"
+                        }
+                      }
+                    },
+                    {
+                      "name": "Тип электропитания",
+                      "type": "1",
+                      "kind": "2",
+                      "values": {
+                        "value": {
+                          "qualityDescription": "AC"
+                        }
+                      }
+                    },
+                    {
+                      "name": "Блок питания",
+                      "type": "1",
+                      "kind": "2",
+                      "values": {
+                        "value": {
+                          "qualityDescription": "Внешний"
+                        }
+                      }
+                    },
+                    {
+                      "name": "Количество блоков питания",
+                      "type": "2",
+                      "kind": "2",
+                      "values": {
+                        "value": {
+                          "OKEI": {
+                            "code": "796"
+                          },
+                          "valueSet": {
+                            "concreteValue": "1"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "name": "Тип коммутатора",
+                      "type": "1",
+                      "kind": "1",
+                      "values": {
+                        "value": {
+                          "qualityDescription": "Неуправляемый"
+                        }
+                      }
+                    },
+                    {
+                      "name": "Тип блоков питания",
+                      "type": "1",
+                      "kind": "2",
+                      "values": {
+                        "value": {
+                          "qualityDescription": "Сменные"
+                        }
+                      }
+                    },
+                    {
+                      "name": "Количество портов 1G SFP",
+                      "type": "2",
+                      "kind": "2",
+                      "values": {
+                        "value": {
+                          "OKEI": {
+                            "code": "796"
+                          },
+                          "valueSet": {
+                            "concreteValue": "2"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "name": "Количество портов PoE",
+                      "type": "2",
+                      "kind": "2",
+                      "values": {
+                        "value": {
+                          "OKEI": {
+                            "code": "796"
+                          },
+                          "valueSet": {
+                            "concreteValue": "8"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                },
+                "OKPD2": {
+                  "code": "26.30.11.122",
+                  "name": "Оборудование коммутации и маршрутизации пакетов информации сетей передачи данных"
+                }
+              },
+              "name": "Коммутатор. Товарный знак: отсутствует",
+              "hierarchyType": "CH",
+              "type": "PRODUCT",
+              "OKEI": {
+                "code": "796"
+              },
+              "price": "12470.60000000000",
+              "volumeSpecifyingMethod": "QF",
+              "quantity": "1",
+              "sum": "12470.60",
+              "VATRateInfo": {
+                "VATCode": "RN",
+                "VATName": "Без НДС"
+              },
+              "originCountry": {
+                "countryCode": "156"
+              },
+              "improvedProductReplacement": "false",
+              "parentContractSubject": {
+                "sid": "753964668"
+              }
+            },
+            {
+              "purchaseObjectSid": "186815315",
+              "purchaseObjectExternalSid": "59daeb21-5615-4229-b20f-9eef456a4a6c",
+              "electronicContractObjectSid": "55687162",
+              "sid": "753964687",
+              "guid": "B6A182D67A39406DA9213BC1E58E2AFC",
+              "indexNum": "1.15",
+              "KTRU": {
+                "code": "26.70.13.000-00000008",
+                "name": "Камера видеонаблюдения",
+                "versionId": "187147",
+                "versionNumber": "16",
+                "characteristics": {
+                  "characteristicsUsingReferenceInfo": [
+                    {
+                      "name": "Разрешение основного видеопотока",
+                      "type": "1",
+                      "kind": "2",
+                      "values": {
+                        "value": {
+                          "qualityDescription": "2560x1440"
+                        }
+                      }
+                    },
+                    {
+                      "name": "Частота кадров (кадр/сек)",
+                      "type": "2",
+                      "kind": "2",
+                      "values": {
+                        "value": {
+                          "valueSet": {
+                            "concreteValue": "30"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "name": "Рабочее напряжение",
+                      "type": "2",
+                      "kind": "2",
+                      "values": {
+                        "value": {
+                          "OKEI": {
+                            "code": "222"
+                          },
+                          "valueSet": {
+                            "concreteValue": "12"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "name": "Тип камеры",
+                      "type": "1",
+                      "kind": "1",
+                      "values": {
+                        "value": {
+                          "qualityDescription": "Цифровая"
+                        }
+                      }
+                    },
+                    {
+                      "name": "Материал корпуса (кожуха)",
+                      "type": "1",
+                      "kind": "2",
+                      "values": {
+                        "value": {
+                          "qualityDescription": "Металлический"
+                        }
+                      }
+                    },
+                    {
+                      "name": "Число мегапикселей матрицы",
+                      "type": "2",
+                      "kind": "2",
+                      "values": {
+                        "value": {
+                          "valueSet": {
+                            "concreteValue": "5"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                },
+                "OKPD2": {
+                  "code": "26.40.33.111",
+                  "name": "Видеокамеры для систем видеонаблюдения, видеоаналитики и охранного телевидения"
+                }
+              },
+              "name": "Камера видеонаблюдения. Товарный знак: отсутствует",
+              "hierarchyType": "CH",
+              "type": "PRODUCT",
+              "OKEI": {
+                "code": "796"
+              },
+              "price": "11219.04615384615",
+              "volumeSpecifyingMethod": "QF",
+              "quantity": "13",
+              "sum": "145847.60",
+              "VATRateInfo": {
+                "VATCode": "RN",
+                "VATName": "Без НДС"
+              },
+              "originCountry": {
+                "countryCode": "643"
+              },
+              "improvedProductReplacement": "false",
+              "parentContractSubject": {
+                "sid": "753964668"
+              }
+            },
+            {
+              "purchaseObjectSid": "186815316",
+              "purchaseObjectExternalSid": "492b9637-cf4a-4220-a643-9ca62894b325",
+              "electronicContractObjectSid": "55687163",
+              "sid": "753964688",
+              "guid": "B5022B8D8BEC455787BFB2667C4F5144",
+              "indexNum": "1.16",
+              "KTRU": {
+                "code": "33.20.40.000-00000002",
+                "name": "Услуги по монтажу электронного и оптического оборудования",
+                "versionId": "180630",
+                "versionNumber": "8",
+                "OKPD2": {
+                  "code": "33.20.4",
+                  "name": "Услуги по монтажу электронного и оптического оборудования"
+                }
+              },
+              "name": "Услуги по монтажу электронного и оптического оборудования",
+              "hierarchyType": "CH",
+              "type": "WORK",
+              "OKEI": {
+                "code": "876"
+              },
+              "price": "1337115.47000000000",
+              "volumeSpecifyingMethod": "QF",
+              "quantity": "1",
+              "sum": "1337115.47",
+              "VATRateInfo": {
+                "VATCode": "RN",
+                "VATName": "Без НДС"
+              },
+              "improvedProductReplacement": "false",
+              "parentContractSubject": {
+                "sid": "753964668"
+              }
+            },
+            {
+              "purchaseObjectSid": "186815314",
+              "purchaseObjectExternalSid": "40b0b8f3-ec0a-48a4-a3d3-eb7c518d0073",
+              "electronicContractObjectSid": "55687164",
+              "sid": "753964669",
+              "guid": "E5068F9827D24B2B8F785E5D6E52FF83",
+              "indexNum": "1.17",
+              "KTRU": {
+                "code": "26.70.13.000-00000008",
+                "name": "Камера видеонаблюдения",
+                "versionId": "187147",
+                "versionNumber": "16",
+                "characteristics": {
+                  "characteristicsUsingReferenceInfo": [
+                    {
+                      "name": "Разрешение основного видеопотока",
+                      "type": "1",
+                      "kind": "2",
+                      "values": {
+                        "value": {
+                          "qualityDescription": "1920x1080"
+                        }
+                      }
+                    },
+                    {
+                      "name": "Тип камеры",
+                      "type": "1",
+                      "kind": "1",
+                      "values": {
+                        "value": {
+                          "qualityDescription": "Цифровая"
+                        }
+                      }
+                    },
+                    {
+                      "name": "Частота кадров (кадр/сек)",
+                      "type": "2",
+                      "kind": "2",
+                      "values": {
+                        "value": {
+                          "valueSet": {
+                            "concreteValue": "60"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "name": "Потребляемая мощность",
+                      "type": "2",
+                      "kind": "2",
+                      "values": {
+                        "value": {
+                          "OKEI": {
+                            "code": "212"
+                          },
+                          "valueSet": {
+                            "concreteValue": "6"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "name": "Число мегапикселей матрицы",
+                      "type": "2",
+                      "kind": "2",
+                      "values": {
+                        "value": {
+                          "valueSet": {
+                            "concreteValue": "2"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                },
+                "OKPD2": {
+                  "code": "26.40.33.111",
+                  "name": "Видеокамеры для систем видеонаблюдения, видеоаналитики и охранного телевидения"
+                }
+              },
+              "name": "Камера видеонаблюдения. Товарный знак: отсутствует",
+              "hierarchyType": "CH",
+              "type": "PRODUCT",
+              "OKEI": {
+                "code": "796"
+              },
+              "price": "20286.13000000000",
+              "volumeSpecifyingMethod": "QF",
+              "quantity": "1",
+              "sum": "20286.13",
+              "VATRateInfo": {
+                "VATCode": "RN",
+                "VATName": "Без НДС"
+              },
+              "originCountry": {
+                "countryCode": "156"
+              },
+              "improvedProductReplacement": "false",
+              "parentContractSubject": {
+                "sid": "753964668"
+              }
+            },
+            {
+              "purchaseObjectSid": "188547056",
+              "purchaseObjectExternalSid": "cb3a35f8-49e9-49f2-8997-b9446360349f",
+              "electronicContractObjectSid": "55687165",
+              "sid": "753964670",
+              "guid": "949F0E8EF70D46D4A79BC3862CFE4824",
+              "indexNum": "1.18",
+              "OKPD2": {
+                "code": "26.40.33.114",
+                "name": "Видеорегистраторы"
+              },
+              "name": "Видеосервер. Товарный знак: отсутствует",
+              "hierarchyType": "CH",
+              "type": "PRODUCT",
+              "OKEI": {
+                "code": "796"
+              },
+              "price": "474873.59000000000",
+              "volumeSpecifyingMethod": "QF",
+              "quantity": "1",
+              "sum": "474873.59",
+              "VATRateInfo": {
+                "VATCode": "RN",
+                "VATName": "Без НДС"
+              },
+              "originCountry": {
+                "countryCode": "643"
+              },
+              "improvedProductReplacement": "false",
+              "parentContractSubject": {
+                "sid": "753964668"
+              }
+            },
+            {
+              "purchaseObjectSid": "188547061",
+              "purchaseObjectExternalSid": "52660dea-109b-44cb-9e6b-168423a31995",
+              "electronicContractObjectSid": "55687166",
+              "sid": "753964671",
+              "guid": "4886D71DEBD040C8AE91AA20095EEA07",
+              "indexNum": "1.19",
+              "KTRU": {
+                "code": "26.30.11.110-00000041",
+                "name": "Коммутатор",
+                "versionId": "207220",
+                "versionNumber": "26",
+                "characteristics": {
+                  "characteristicsUsingReferenceInfo": [
+                    {
+                      "name": "Тип блоков питания",
+                      "type": "1",
+                      "kind": "2",
+                      "values": {
+                        "value": {
+                          "qualityDescription": "Фиксированные"
+                        }
+                      }
+                    },
+                    {
+                      "name": "Тип электропитания",
+                      "type": "1",
+                      "kind": "2",
+                      "values": {
+                        "value": {
+                          "qualityDescription": "AC"
+                        }
+                      }
+                    },
+                    {
+                      "name": "Блок питания",
+                      "type": "1",
+                      "kind": "2",
+                      "values": {
+                        "value": {
+                          "qualityDescription": "Встроенный"
+                        }
+                      }
+                    },
+                    {
+                      "name": "Тип передачи данных",
+                      "type": "1",
+                      "kind": "2",
+                      "values": {
+                        "value": {
+                          "qualityDescription": "Ethernet"
+                        }
+                      }
+                    },
+                    {
+                      "name": "Тип коммутатора",
+                      "type": "1",
+                      "kind": "1",
+                      "values": {
+                        "value": {
+                          "qualityDescription": "Управляемый"
+                        }
+                      }
+                    },
+                    {
+                      "name": "Количество портов 1G SFP",
+                      "type": "2",
+                      "kind": "2",
+                      "values": {
+                        "value": {
+                          "OKEI": {
+                            "code": "796"
+                          },
+                          "valueSet": {
+                            "concreteValue": "10"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "name": "Количество блоков питания",
+                      "type": "2",
+                      "kind": "2",
+                      "values": {
+                        "value": {
+                          "OKEI": {
+                            "code": "796"
+                          },
+                          "valueSet": {
+                            "concreteValue": "1"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                },
+                "OKPD2": {
+                  "code": "26.30.11.122",
+                  "name": "Оборудование коммутации и маршрутизации пакетов информации сетей передачи данных"
+                }
+              },
+              "name": "Коммутатор. Товарный знак: отсутствует",
+              "hierarchyType": "CH",
+              "type": "PRODUCT",
+              "OKEI": {
+                "code": "796"
+              },
+              "price": "17910.69000000000",
+              "volumeSpecifyingMethod": "QF",
+              "quantity": "1",
+              "sum": "17910.69",
+              "VATRateInfo": {
+                "VATCode": "RN",
+                "VATName": "Без НДС"
+              },
+              "originCountry": {
+                "countryCode": "158"
+              },
+              "improvedProductReplacement": "false",
+              "parentContractSubject": {
+                "sid": "753964668"
+              }
+            }
+          ],
+          "parentProduct": {
+            "purchaseObjectSid": "186815311",
+            "purchaseObjectExternalSid": "4eb01ef8-5573-49e5-84c3-3776c8aba213",
+            "electronicContractObjectSid": "55685187",
+            "sid": "753964668",
+            "guid": "5667031CA6D64387975A48176917212C",
+            "indexNum": "1",
+            "KTRU": {
+              "code": "33.20.40.000-00000002",
+              "name": "Услуги по монтажу электронного и оптического оборудования",
+              "versionId": "180630",
+              "versionNumber": "8",
+              "OKPD2": {
+                "code": "33.20.4",
+                "name": "Услуги по монтажу электронного и оптического оборудования"
+              }
+            },
+            "name": "Услуги по монтажу электронного и оптического оборудования",
+            "hierarchyType": "P",
+            "type": "WORK",
+            "volumeSpecifyingMethod": "QF",
+            "sum": "3862828.93",
+            "improvedProductReplacement": "false"
+          },
+          "quantityUndefined": "false"
+        },
+        "suppliersInfo": {
+          "supplierInfo": {
+            "individualPersonRFIndEntr": {
+              "EGRIPInfo": {
+                "OGRNIP": "325344300057629",
+                "lastName": "КАРАБИЦКИЙ",
+                "firstName": "НИКОЛАЙ",
+                "middleName": "ВЛАДИМИРОВИЧ",
+                "INN": "341502621462",
+                "address": "404621, ВОЛГОГРАДСКАЯ ОБЛАСТЬ, Г. ЛЕНИНСК, УЛ. КРАСНАЯ ЗВЕЗДА, Д. 24"
+              },
+              "otherInfo": {
+                "isIP": "true",
+                "statusInfo": {
+                  "code": "30",
+                  "name": "субъект малого предпринимательства"
+                },
+                "postAddressInfo": {
+                  "mailingAdress": "404621, ВОЛГОГРАДСКАЯ ОБЛАСТЬ, м.р-н. ЛЕНИНСКИЙ, ГОРОД ЛЕНИНСК, Г ЛЕНИНСК, УЛ КРАСНАЯ ЗВЕЗДА, Д. 24"
+                },
+                "contactEMail": "nik@horizont-teh.ru",
+                "contactPhone": "7 9050622772"
+              }
+            },
+            "supplierAccountsDetails": {
+              "supplierAccountDetails": {
+                "sid": "48500581",
+                "guid": "82FDDDCCDE4C4F29B85B355DA1130805",
+                "accountType": "03",
+                "creditOrgName": "АО \"ТБанк\"",
+                "detailsCreditOrgText": "АО \"ТБанк\", г. Москва",
+                "bankAccountNumber": "40802810800008249561",
+                "bik": "044525974",
+                "corrAccountNumber": "30101810145250000974",
+                "counterparty160Name": "КАРАБИЦКИЙ НИКОЛАЙ ВЛАДИМИРОВИЧ (ИП)",
+                "electronicContractSid": "136213857"
+              }
+            },
+            "contractorRegistryNum": "25069891"
+          }
+        },
+        "href": "https://zakupki.gov.ru/epz/contract/contractCard/common-info.html?reestrNumber=3366503536925000015",
+        "printForm": {
+          "url": "https://zakupki.gov.ru/epz/contract/printForm/view.html?contractInfoId=102304163",
+          "docRegNumber": "33665035369250000150001"
+        },
+        "scanDocuments": {
+          "CPEPAttachment": [
+            {
+              "publishedContentId": "A8C41D7C589D4091B0AB2F00DFCBD102",
+              "fileName": "Приложение Проект контракта.doc",
+              "docDescription": "Контракт № 3862-ш от 26.08.2025 11:13:52",
+              "docRegNumber": "33665035369250000150002",
+              "url": "https://zakupki.gov.ru/44fz/filestore/public/1.0/download/rgk2/file.html?uid=A8C41D7C589D4091B0AB2F00DFCBD102"
+            },
+            {
+              "publishedContentId": "35669C5D9F1C40D89809D41F6349C338",
+              "fileName": "Печатная форма электронного контракта.html",
+              "docDescription": "Печатная форма электронного контракта.html",
+              "docRegNumber": "33665035369250000150003",
+              "url": "https://zakupki.gov.ru/44fz/filestore/public/1.0/download/rgk2/file.html?uid=35669C5D9F1C40D89809D41F6349C338"
+            },
+            {
+              "publishedContentId": "F0B10E4D1AC446FABF48D5F4BF96A4D7",
+              "fileName": "Электронный контракт.xml",
+              "docDescription": "Электронный контракт.xml",
+              "docRegNumber": "33665035369250000150004",
+              "url": "https://zakupki.gov.ru/44fz/filestore/public/1.0/download/rgk2/file.html?uid=F0B10E4D1AC446FABF48D5F4BF96A4D7"
+            }
+          ]
+        },
+        "addInformationFromClassifiers": {
+          "country": [
+            {
+              "countryCode": "156",
+              "countryFullName": "Китайская Народная Республика"
+            },
+            {
+              "countryCode": "158",
+              "countryFullName": "ТАЙВАНЬ (КИТАЙ)"
+            },
+            {
+              "countryCode": "643",
+              "countryFullName": "Российская Федерация"
+            },
+            {
+              "countryCode": "764",
+              "countryFullName": "Королевство Таиланд"
+            }
+          ],
+          "OKEI": [
+            {
+              "code": "166",
+              "nationalCode": "КГ",
+              "trueNationalCode": "КГ",
+              "fullName": "Килограмм",
+              "nationalName": "КГ"
+            },
+            {
+              "code": "222",
+              "nationalCode": "В",
+              "trueNationalCode": "В",
+              "fullName": "Вольт",
+              "nationalName": "В"
+            },
+            {
+              "code": "003",
+              "nationalCode": "ММ",
+              "trueNationalCode": "ММ",
+              "fullName": "Миллиметр",
+              "nationalName": "ММ"
+            },
+            {
+              "code": "212",
+              "nationalCode": "ВТ",
+              "trueNationalCode": "ВТ",
+              "fullName": "Ватт",
+              "nationalName": "ВТ"
+            },
+            {
+              "code": "2545",
+              "nationalCode": "МБИТ/С",
+              "trueNationalCode": "МБИТ/С",
+              "fullName": "Мегабит в секунду",
+              "nationalName": "МБИТ/С"
+            },
+            {
+              "code": "796",
+              "nationalCode": "ШТ",
+              "trueNationalCode": "ШТ",
+              "fullName": "Штука",
+              "nationalName": "ШТ"
+            },
+            {
+              "code": "2553",
+              "nationalCode": "ГБАЙТ",
+              "trueNationalCode": "ГБАЙТ",
+              "fullName": "Гигабайт",
+              "nationalName": "ГБАЙТ"
+            },
+            {
+              "code": "039",
+              "nationalCode": "ДЮЙМ",
+              "trueNationalCode": "ДЮЙМ",
+              "fullName": "Дюйм (25,4 мм)",
+              "nationalName": "ДЮЙМ"
+            },
+            {
+              "code": "876",
+              "nationalCode": "усл. ед",
+              "trueNationalCode": "УСЛ ЕД",
+              "fullName": "Условная единица",
+              "nationalName": "усл. ед"
+            },
+            {
+              "code": "290",
+              "nationalCode": "ГЦ",
+              "trueNationalCode": "ГЦ",
+              "fullName": "Герц",
+              "nationalName": "ГЦ"
+            },
+            {
+              "code": "283",
+              "nationalCode": "ЛК",
+              "trueNationalCode": "ЛК",
+              "fullName": "Люкс",
+              "nationalName": "ЛК"
+            },
+            {
+              "code": "263",
+              "nationalCode": "А.Ч",
+              "trueNationalCode": "А.Ч",
+              "fullName": "Ампер-час (3,6 кКл)",
+              "nationalName": "А.Ч"
+            }
+          ]
+        },
+        "currentContractStage": "E",
+        "okpd2okved2": "true",
+        "isUnilateralRefusal": "true",
+        "isIncludeKOKS": "false",
+        "useProgramRights": "false",
+        "purchaseFromDate": "2025-07-11",
+        "@schemeVersion": "15.2"
+      }
+    },
+    {
+      "doc_type": "contractAvailableForElAct",
+      "published_at": "2025-08-26T11:24:18",
+      "source": {
+        "id": "60384930",
+        "regNum": "3366503536925000015",
+        "isAvailable": "true",
+        "availableDT": "2025-08-26T11:24:18",
+        "@schemeVersion": "15.2"
+      }
+    }
+  ]
+}

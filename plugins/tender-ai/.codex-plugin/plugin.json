@@ -1,0 +1,41 @@
+{
+  "name": "tender-ai",
+  "version": "0.7.0",
+  "description": "Помощник по госзакупкам 44-ФЗ для монтажа слаботочки: разбор закупки, жалобы в УФАС, запросы разъяснений + MCP zakupki-eis для скачивания документов с ЕИС напрямую.",
+  "author": {
+    "name": "Artem"
+  },
+  "homepage": "https://github.com/murderfacc-oss/tender-ai-tools",
+  "repository": "https://github.com/murderfacc-oss/tender-ai-tools",
+  "keywords": [
+    "44-fz",
+    "223-fz",
+    "zakupki",
+    "tender",
+    "fas",
+    "ufas",
+    "eis",
+    "russia",
+    "slabotochka"
+  ],
+  "skills": "./skills/",
+  "mcpServers": "./.mcp.json",
+  "interface": {
+    "displayName": "Tender AI",
+    "shortDescription": "Инструменты для работы с закупками 44-ФЗ и 223-ФЗ.",
+    "longDescription": "Tender AI помогает разбирать закупочную документацию, готовить запросы разъяснений и жалобы в УФАС, а также работать с документами ЕИС через MCP.",
+    "developerName": "Artem",
+    "category": "Productivity",
+    "capabilities": [
+      "Research",
+      "Write"
+    ],
+    "websiteURL": "https://github.com/murderfacc-oss/tender-ai-tools",
+    "defaultPrompt": [
+      "Разбери закупку и найди риски",
+      "Подготовь запрос разъяснений",
+      "Составь жалобу в УФАС"
+    ],
+    "brandColor": "#0169CC"
+  }
+}

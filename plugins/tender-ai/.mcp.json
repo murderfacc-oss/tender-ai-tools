@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "zakupki-eis": {
+      "command": "python",
+      "args": ["${CLAUDE_PLUGIN_ROOT}/mcp/launcher.py"]
+    }
+  }
+}

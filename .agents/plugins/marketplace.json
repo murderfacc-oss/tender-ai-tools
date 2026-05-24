@@ -8,7 +8,7 @@
       "name": "tender-ai",
       "source": {
         "source": "local",
-        "path": "./"
+        "path": "./plugins/tender-ai"
       },
       "policy": {
         "installation": "AVAILABLE",
